@@ -1,0 +1,16 @@
+{
+  "messageMe": [
+    {
+      "id": "0",
+      "name": "Everyone"
+    },
+    {
+      "id": "1",
+      "name": "People I follow"
+    },
+    {
+      "id": "2",
+      "name": "No body"
+    }
+  ]
+}

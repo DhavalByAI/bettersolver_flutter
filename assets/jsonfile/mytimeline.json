@@ -1,0 +1,16 @@
+{
+  "myTimeline": [
+    {
+      "id": "everyone",
+      "name": "Everyone"
+    },
+    {
+      "id": "ifollow",
+      "name": "People I follow"
+    },
+    {
+      "id": "nobody",
+      "name": "No body"
+    }
+  ]
+}

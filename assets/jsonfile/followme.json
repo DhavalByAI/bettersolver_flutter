@@ -1,0 +1,12 @@
+{
+  "followMe": [
+    {
+      "id": "0",
+      "name": "Everyone"
+    },
+    {
+      "id": "1",
+      "name": "People I follow"
+    }
+  ]
+}

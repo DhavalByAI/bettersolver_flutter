@@ -1,0 +1,12 @@
+{
+  "sataus": [
+    {
+      "id": "0",
+      "name": "online"
+    },
+    {
+      "id": "1",
+      "name": "offline"
+    }
+  ]
+}
