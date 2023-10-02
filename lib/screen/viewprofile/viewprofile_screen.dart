@@ -560,9 +560,9 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                                     ),
                                     Row(
                                       children: [
-                                        Flexible(
+                                        const Flexible(
                                           child: Row(
-                                            children: const [
+                                            children: [
                                               CircleAvatar(
                                                 radius: 16,
                                                 child: Icon(
@@ -706,68 +706,68 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
             ),
           ),
 
-          Container(
-            margin: const EdgeInsets.only(left: 15, top: 20, right: 15),
-            child: Row(
-              children: [
-                Container(
-                  decoration: Palette.RoundGradient,
-                  height: 50,
-                  width: 50,
-                  child: Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: Container(
-                        // height: 50,
-                        // width: 50,
+          // Container(
+          //   margin: const EdgeInsets.only(left: 15, top: 20, right: 15),
+          //   child: Row(
+          //     children: [
+          //       Container(
+          //         decoration: Palette.RoundGradient,
+          //         height: 50,
+          //         width: 50,
+          //         child: Padding(
+          //             padding: const EdgeInsets.all(1.0),
+          //             child: Container(
+          //               // height: 50,
+          //               // width: 50,
 
-                        decoration: BoxDecoration(
-                            color: kWhite,
-                            borderRadius: BorderRadius.circular(30),
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/categoriesicon.png'))),
-                      )),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CategoriesScreen(
-                                    userid: uid,
-                                  )));
-                    },
-                    child: Container(
-                      // width: MediaQuery.of(context).size.width / 1.3,
-                      height: 50,
-                      decoration: Palette.cardShapGradient,
-                      child: Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: Container(
-                            decoration: const BoxDecoration(
-                                color: kWhite,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    bottomLeft: Radius.circular(30),
-                                    bottomRight: Radius.circular(25))),
-                            child: Container(
-                                margin: const EdgeInsets.only(left: 15),
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'CATEGORIES',
-                                  style: Palette.greytext12,
-                                ))),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          //               decoration: BoxDecoration(
+          //                   color: kWhite,
+          //                   borderRadius: BorderRadius.circular(30),
+          //                   image: const DecorationImage(
+          //                       image: AssetImage(
+          //                           'assets/images/categoriesicon.png'))),
+          //             )),
+          //       ),
+          //       const SizedBox(
+          //         width: 10,
+          //       ),
+          //       Expanded(
+          //         child: InkWell(
+          //           onTap: () {
+          //             Navigator.push(
+          //                 context,
+          //                 MaterialPageRoute(
+          //                     builder: (context) => CategoriesScreen(
+          //                           userid: uid,
+          //                         )));
+          //           },
+          //           child: Container(
+          //             // width: MediaQuery.of(context).size.width / 1.3,
+          //             height: 50,
+          //             decoration: Palette.cardShapGradient,
+          //             child: Padding(
+          //               padding: const EdgeInsets.all(1.0),
+          //               child: Container(
+          //                   decoration: const BoxDecoration(
+          //                       color: kWhite,
+          //                       borderRadius: BorderRadius.only(
+          //                           topLeft: Radius.circular(30),
+          //                           bottomLeft: Radius.circular(30),
+          //                           bottomRight: Radius.circular(25))),
+          //                   child: Container(
+          //                       margin: const EdgeInsets.only(left: 15),
+          //                       alignment: Alignment.centerLeft,
+          //                       child: Text(
+          //                         'CATEGORIES',
+          //                         style: Palette.greytext12,
+          //                       ))),
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
 
           Container(
             margin: const EdgeInsets.only(left: 15, top: 20, right: 15),

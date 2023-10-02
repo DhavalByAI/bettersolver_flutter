@@ -1,31 +1,17 @@
 import 'package:bettersolver/bloc/category_details_bloc.dart';
-import 'package:bettersolver/bloc/enable_disable_comment_bloc.dart';
-import 'package:bettersolver/bloc/liked_bloc.dart';
-import 'package:bettersolver/bloc/pinpost_bloc.dart';
-import 'package:bettersolver/bloc/report_post_bloc.dart';
-import 'package:bettersolver/bloc/saved_post_bloc.dart';
 import 'package:bettersolver/models/category_details_model.dart';
 import 'package:bettersolver/screen/ListofPosts.dart';
-import 'package:bettersolver/screen/create_post/get_post_comment_screen.dart';
-import 'package:bettersolver/screen/create_post/post_comment_screen.dart';
 import 'package:bettersolver/style/constants.dart';
-import 'package:bettersolver/style/palette.dart';
-import 'package:bettersolver/utils/base_constant.dart';
 import 'package:bettersolver/utils/loading.dart';
 import 'package:bettersolver/utils/response.dart';
-import 'package:bettersolver/widgets/error_dialouge.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
-import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 class Photo extends StatefulWidget {
   String? groupid;
 
-  Photo({this.groupid});
+  Photo({super.key, this.groupid});
 
   @override
   State<Photo> createState() => _PhotoState();
@@ -34,15 +20,15 @@ class Photo extends StatefulWidget {
 class _PhotoState extends State<Photo> {
   CategoryDetailsBloc? _categoryDetailsBloc;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  final GlobalKey<State> _keyLoaderlike = new GlobalKey<State>();
-  final GlobalKey<State> _keyLoadersavepost = new GlobalKey<State>();
-  final GlobalKey<State> _keyLoadercomment = new GlobalKey<State>();
-  final GlobalKey<State> _keyLoaderreport = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
+  final GlobalKey<State> _keyLoaderlike = GlobalKey<State>();
+  final GlobalKey<State> _keyLoadersavepost = GlobalKey<State>();
+  final GlobalKey<State> _keyLoadercomment = GlobalKey<State>();
+  final GlobalKey<State> _keyLoaderreport = GlobalKey<State>();
   final GlobalKey<State> _keyLoaderhide = GlobalKey<State>();
   final GlobalKey<State> _keyLoaderpin = GlobalKey<State>();
 
-  final GlobalKey<State> _keyError = new GlobalKey<State>();
+  final GlobalKey<State> _keyError = GlobalKey<State>();
 
   TextEditingController reportTextController = TextEditingController();
 
@@ -81,7 +67,7 @@ class _PhotoState extends State<Photo> {
     return Scaffold(
         backgroundColor: kWhite,
         appBar: AppBar(
-          title: Text('Photos'),
+          title: const Text('Photos'),
           centerTitle: true,
           backgroundColor: kWhite,
           elevation: 0,
@@ -97,7 +83,7 @@ class _PhotoState extends State<Photo> {
                     return _listpost(snapshot.data.data);
 
                   case Status.ERROR:
-                    return Text(
+                    return const Text(
                       'Errror msg',
                     );
                 }

@@ -13,6 +13,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({super.key});
+
   @override
   State<NotificationScreen> createState() => _NotificationScreenState();
 }
@@ -20,7 +22,7 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   NotificationSettingBloc? _notificationSettingBloc;
 
-  final GlobalKey<State> _keyLoaderget = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoaderget = GlobalKey<State>();
 
   var data;
 
@@ -34,7 +36,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   bool timeline = false;
   bool remember = false;
 
-  int _postReact = 0;
+  final int _postReact = 0;
 
   var _reacted = '0';
   var _comment = '0';
@@ -160,7 +162,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       temp_i == 0 ? updateValues(snapshot.data.data) : null;
                       return _detail(snapshot.data.data);
                     case Status.ERROR:
-                      return Text(
+                      return const Text(
                         'Errror msg',
                       );
                   }
@@ -272,7 +274,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
           CheckboxListTile(
             title: Text(
-              'Someone shared my posts',
+              'Someone reshared my post on their timeline',
               style: Palette.greytext14,
             ),
             value: shared,

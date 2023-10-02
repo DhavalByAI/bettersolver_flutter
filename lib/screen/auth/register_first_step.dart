@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:convert';
-
 import 'package:bettersolver/screen/auth/register_second_step.dart';
 import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
@@ -20,22 +19,22 @@ import 'package:http/http.dart' as http;
 class RegisterFirstScreen extends StatefulWidget {
   String? email, fname, date;
 
-  RegisterFirstScreen({this.email, this.fname, this.date});
+  RegisterFirstScreen({super.key, this.email, this.fname, this.date});
 
   @override
   State<RegisterFirstScreen> createState() => _RegisterFirstScreenState();
 }
 
 class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
-  String _image = '';
+  final String _image = '';
 
   String? _imgFilePath;
   String? _imgFileName;
   String? _imgFileFormate;
   String? _logoImg;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  final GlobalKey<State> _keyError = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
+  final GlobalKey<State> _keyError = GlobalKey<State>();
 
   @override
   void initState() {
@@ -61,18 +60,18 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
                 child: Container(
                   height: 150,
                   width: 150,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
                               'assets/images/bettersolver_logo.png'))),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Container(
-              margin: EdgeInsets.only(left: 15, right: 15),
+              margin: const EdgeInsets.only(left: 15, right: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -186,13 +185,13 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Card(
               elevation: 8,
               color: kWhite,
-              margin: EdgeInsets.only(left: 40, right: 40),
+              margin: const EdgeInsets.only(left: 40, right: 40),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(33)),
               child: Container(
@@ -208,27 +207,27 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             Text(
                               'ADD PHOTO',
                               style: Palette.blackText30,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               'Show your unique personality and style.',
                               style: Palette.blackText11,
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             roundedRectBorderWidget
                           ],
                         )),
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             _gradientBtn()
@@ -242,10 +241,10 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
     return DottedBorder(
       borderType: BorderType.RRect,
       //strokeCap: StrokeCap.round,
-      dashPattern: [8, 8],
+      dashPattern: const [8, 8],
       strokeWidth: 2,
-      radius: Radius.circular(80),
-      padding: EdgeInsets.all(6),
+      radius: const Radius.circular(80),
+      padding: const EdgeInsets.all(6),
       color: kThemeColorBlue,
       child: _imgFilePath == null && _logoImg == null
           ? InkWell(
@@ -257,7 +256,7 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
                 backgroundColor: Colors.transparent,
                 // backgroundImage: AssetImage('assets/images/addphoto.png'),
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/images/addphoto.png'))),
                 ),
@@ -335,9 +334,9 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
     try {
       // String filePath = (await FilePicker.platform) as String;
       // FilePickerResult? filePath = await FilePicker.platform.pickFiles(type: FileType.image);
-      var _file = await FilePicker.platform.pickFiles();
-      var file = _file!.files.first.name;
-      var filepath = _file.files.first.path;
+      var file0 = await FilePicker.platform.pickFiles();
+      var file = file0!.files.first.name;
+      var filepath = file0.files.first.path;
 
       if (filepath == '') {
         return;
@@ -348,8 +347,8 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
         _imgFilePath = filepath;
         _imgFileName = file;
 
-        final _extension = p.extension(filepath!, 2);
-        this._imgFileFormate = _extension;
+        final extension = p.extension(filepath!, 2);
+        _imgFileFormate = extension;
 
         _imgFileName = filepath.split('/').last;
 
@@ -358,7 +357,7 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
         //_uploadImage();
       });
     } on PlatformException catch (e) {
-      print("Error while picking the file: " + e.toString());
+      print("Error while picking the file: $e");
     }
   }
 
@@ -366,7 +365,7 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 50,
-      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       decoration: Palette.buttonGradient,
       child: InkWell(
         onTap: () {
@@ -401,21 +400,21 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
   Future<void> _addphotoApi() async {
     // LoadingDialog.showLoadingDialog(context, _keyLoader);
     SharedPreferences pref = await SharedPreferences.getInstance();
-    var _userid = pref.getString("userid");
-    var _sid = pref.getString("s");
+    var userid = pref.getString("userid");
+    var sid = pref.getString("s");
 
-    print('seesion id $_sid');
-    print('_userid $_userid');
+    print('seesion id $sid');
+    print('_userid $userid');
 
     try {
       var request = http.MultipartRequest(
         "POST",
-        Uri.parse(BaseConstant.BASE_URL +
-            'demo2/app_api.php?application=phone&type=display'),
+        Uri.parse(
+            '${BaseConstant.BASE_URL}demo2/app_api.php?application=phone&type=display'),
       );
       // request.headers[HttpHeaders.authorizationHeader] = "Bearer $token";
-      request.fields['user_id'] = _userid!;
-      request.fields['s'] = _sid!;
+      request.fields['user_id'] = userid!;
+      request.fields['s'] = sid!;
 
       if (_imgFilePath == null) {
         _imgFilePath = null;
@@ -438,11 +437,11 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
           Map<String, dynamic> decode = json.decode(value);
           String statustext = decode['api_text'];
           var data = decode['data'];
-          var profile_image = data['avatar'];
+          var profileImage = data['avatar'];
 
           //set response
           if (statustext.contains('success')) {
-            pref.setString('profilephoto', profile_image);
+            pref.setString('profilephoto', profileImage);
             // Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterSecondScreen(
             //   date: widget.date,
             //   email: widget.email,

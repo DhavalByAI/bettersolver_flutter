@@ -178,11 +178,47 @@ class _SignUpState extends State<SignUp> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Radio(
-                            activeColor: kThemeColorBlue,
-                            value: 1,
-                            groupValue: _radioValue,
-                            onChanged: _handleRadioValueChange,
+                          SizedBox(
+                            height: 36,
+                            width: 32,
+                            child: Radio(
+                              activeColor: kThemeColorBlue,
+                              value: 2,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(right: 8),
+                              child:
+                                  Text('Female', style: Palette.themText15L)),
+                        ],
+                      ),
+                    ),
+                  )),
+              Container(
+                  decoration: Palette.buttonGradient,
+                  child: Padding(
+                    padding: const EdgeInsets.all(0.8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(33),
+                        color: kWhite,
+                      ),
+                      // decoration: Palette.buttonGradient,
+
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 36,
+                            width: 32,
+                            child: Radio(
+                              activeColor: kThemeColorBlue,
+                              value: 1,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
                           ),
                           Container(
                               margin: const EdgeInsets.only(right: 15),
@@ -205,44 +241,20 @@ class _SignUpState extends State<SignUp> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Radio(
-                            activeColor: kThemeColorBlue,
-                            value: 2,
-                            groupValue: _radioValue,
-                            onChanged: _handleRadioValueChange,
+                          SizedBox(
+                            height: 36,
+                            width: 32,
+                            child: Radio(
+                              activeColor: kThemeColorBlue,
+                              value: 3,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
                           ),
                           Container(
                               margin: const EdgeInsets.only(right: 15),
-                              child:
-                                  Text('Female', style: Palette.themText15L)),
-                        ],
-                      ),
-                    ),
-                  )),
-              Container(
-                  decoration: Palette.buttonGradient,
-                  child: Padding(
-                    padding: const EdgeInsets.all(0.8),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(33),
-                        color: kWhite,
-                      ),
-                      // decoration: Palette.buttonGradient,
-
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Radio(
-                            activeColor: kThemeColorBlue,
-                            value: 3,
-                            groupValue: _radioValue,
-                            onChanged: _handleRadioValueChange,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(right: 15),
-                              child:
-                                  Text('Custom', style: Palette.themText15L)),
+                              child: Text('Custom(them)',
+                                  style: Palette.themText15L)),
                         ],
                       ),
                     ),

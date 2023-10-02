@@ -18,6 +18,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import '../../utils/base_constant.dart';
+import 'terms.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   // Optional clientId
@@ -38,7 +39,7 @@ class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController forgotPasswordController = TextEditingController();
-
+  bool isTerms = true;
   bool _obsecurePass = true;
 
   String type = 'user_login';
@@ -212,7 +213,43 @@ class _LoginState extends State<Login> {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: Checkbox(
+                      value: isTerms,
+                      onChanged: (value) {
+                        setState(() {
+                          isTerms = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  Text("  By Logging In, you agree to our ",
+                      style: Palette.greytext12),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const Terms());
+                    },
+                    child: Text("Terms & Policies",
+                        style: Palette.greytext12.copyWith(color: Colors.blue)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
           ),
           // RaisedButton(
           //   shape: RoundedRectangleBorder(
@@ -362,8 +399,10 @@ class _LoginState extends State<Login> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUp()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUp()));
                   },
                   child: const Text("Sign up"))
             ],
@@ -664,6 +703,9 @@ class _LoginState extends State<Login> {
           if (emailController.text.isEmpty) {
             ErrorDialouge.showErrorDialogue(
                 context, _keyLoader, "Please enter your username");
+          } else if (!isTerms) {
+            ErrorDialouge.showErrorDialogue(
+                context, _keyLoader, "Please accept Terms & Policies");
           } else if (passwordController.text.isEmpty) {
             ErrorDialouge.showErrorDialogue(
                 context, _keyLoader, "Please enter your password");

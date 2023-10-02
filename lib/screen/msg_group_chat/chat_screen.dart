@@ -61,235 +61,210 @@ class _ChatScreenState extends State<ChatScreen> {
             return true;
           },
           child: Scaffold(
-            body: Stack(
+            resizeToAvoidBottomInset: true,
+            // persistentFooterButtons: const [],
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      height: 120,
-                      decoration: Palette.loginGradient,
-                      child: Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        decoration: const BoxDecoration(
-                            color: kWhite,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25))),
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Icon(
-                                  Icons.arrow_back,
-                                  size: 25,
-                                )),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  CachedNetworkImageProvider(widget.image),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.name,
-                                    style: Palette.blacktext20M,
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    '◉ ${widget.lastSeen}',
-                                    style: Palette.greytext14,
-                                  )
-                                ],
-                              ),
-                            ),
-                            // Container(
-                            //   height: 40,
-                            //   width: 40,
-                            //   margin: const EdgeInsets.only(right: 15),
-                            //   decoration: const BoxDecoration(
-                            //       image: DecorationImage(
-                            //           image: AssetImage(
-                            //               'assets/images/doticon.png'))),
-                            // )
-                          ],
-                        ),
-                      ),
+                Container(
+                  height: 100,
+                  decoration: Palette.loginGradient,
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                      bottom: 8,
                     ),
-                    // const Spacer(),
-                    Flexible(
-                      child: SingleChildScrollView(
-                        controller: sc,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, bottom: 80, left: 10, right: 10),
-                          child: ListView.separated(
-                            controller: sc,
-                            addAutomaticKeepAlives: true,
-                            shrinkWrap: true,
-                            primary: false,
-                            itemCount:
-                                _.messages.isEmpty ? 0 : _.messages.length,
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(
-                                height: 8,
-                              );
+                    decoration: const BoxDecoration(
+                        color: kWhite,
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(25),
+                            bottomLeft: Radius.circular(25))),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
                             },
-                            itemBuilder: (context, index) {
-                              // MediaQuery.of(context).viewInsets.bottom == 0
-                              //     ? sc.animateTo(sc.position.maxScrollExtent,
-                              //         duration: Duration(milliseconds: 500),
-                              //         curve: Curves.fastOutSlowIn)
-                              //     : null;
-                              return _.messages[index]['position'] == 'right'
-                                  ? Row(
+                            child: const Icon(
+                              Icons.arrow_back,
+                              size: 25,
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundImage:
+                              CachedNetworkImageProvider(widget.image),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.name,
+                                style: Palette.blacktext20M,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                '◉ ${widget.lastSeen}',
+                                style: Palette.greytext14,
+                              )
+                            ],
+                          ),
+                        ),
+                        // Container(
+                        //   height: 40,
+                        //   width: 40,
+                        //   margin: const EdgeInsets.only(right: 15),
+                        //   decoration: const BoxDecoration(
+                        //       image: DecorationImage(
+                        //           image: AssetImage(
+                        //               'assets/images/doticon.png'))),
+                        // )
+                      ],
+                    ),
+                  ),
+                ),
+                // const Spacer(),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 0, left: 10, right: 10),
+                    child: ListView.separated(
+                      controller: sc,
+                      addAutomaticKeepAlives: true,
+                      shrinkWrap: true,
+                      primary: false,
+                      itemCount: _.messages.isEmpty ? 0 : _.messages.length,
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          height: 8,
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        // MediaQuery.of(context).viewInsets.bottom == 0
+                        //     ? sc.animateTo(sc.position.maxScrollExtent,
+                        //         duration: Duration(milliseconds: 500),
+                        //         curve: Curves.fastOutSlowIn)
+                        //     : null;
+                        return _.messages[index]['position'] == 'right'
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  const Spacer(),
+                                  Flexible(
+                                    flex: 6,
+                                    child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Spacer(),
-                                        Flexible(
-                                          flex: 6,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                decoration: const BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(12),
-                                                    bottomLeft:
-                                                        Radius.circular(12),
-                                                    // bottomRight: Radius.circular(20),
-                                                    topRight:
-                                                        Radius.circular(12),
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 8),
-                                                  child: Text(
-                                                      _.messages[index]['text'],
-                                                      softWrap: true,
-                                                      style:
-                                                          GoogleFonts.reemKufi(
-                                                              color: Colors
-                                                                  .white)),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              (_.messages.length - 1 == index &&
-                                                      _.messages[index]
-                                                              ['seen'] !=
-                                                          '0')
-                                                  ? Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        const Icon(
-                                                          Icons
-                                                              .remove_red_eye_rounded,
-                                                          size: 10,
-                                                        ),
-                                                        Text(
-                                                            " ${formatTimeDifference(_.messages[index]['seen'])}",
-                                                            style: GoogleFonts
-                                                                .reemKufi(
-                                                                    fontSize:
-                                                                        10,
-                                                                    color: Colors
-                                                                        .black)),
-                                                      ],
-                                                    )
-                                                  : const SizedBox()
-                                            ],
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(12),
+                                              bottomLeft: Radius.circular(12),
+                                              // bottomRight: Radius.circular(20),
+                                              topRight: Radius.circular(12),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 14,
-                                          backgroundImage:
-                                              CachedNetworkImageProvider(
-                                                  widget.image),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12, vertical: 8),
+                                            child: Text(
+                                                _.messages[index]['text'],
+                                                softWrap: true,
+                                                style: GoogleFonts.reemKufi(
+                                                    color: Colors.white)),
+                                          ),
                                         ),
                                         const SizedBox(
-                                          width: 6,
+                                          height: 1,
                                         ),
-                                        Flexible(
-                                          flex: 6,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  Colors.grey.withOpacity(0.5),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(12),
-                                                // bottomLeft: Radius.circular(12),
-                                                bottomRight:
-                                                    Radius.circular(12),
-                                                topRight: Radius.circular(12),
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 8),
-                                              child: Text(
-                                                  _.messages[index]['text'],
-                                                  style: GoogleFonts.reemKufi(
-                                                      color: Colors.black)),
-                                            ),
-                                          ),
-                                        ),
-                                        const Spacer(),
+                                        (_.messages.length - 1 == index &&
+                                                _.messages[index]['seen'] !=
+                                                    '0')
+                                            ? Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Icon(
+                                                    Icons
+                                                        .remove_red_eye_rounded,
+                                                    size: 10,
+                                                  ),
+                                                  Text(
+                                                      " ${formatTimeDifference(_.messages[index]['seen'])}",
+                                                      style:
+                                                          GoogleFonts.reemKufi(
+                                                              fontSize: 10,
+                                                              color: Colors
+                                                                  .black)),
+                                                ],
+                                              )
+                                            : const SizedBox()
                                       ],
-                                    );
-                            },
-                          ),
-                        ),
-                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 14,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        widget.image),
+                                  ),
+                                  const SizedBox(
+                                    width: 6,
+                                  ),
+                                  Flexible(
+                                    flex: 6,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(12),
+                                          // bottomLeft: Radius.circular(12),
+                                          bottomRight: Radius.circular(12),
+                                          topRight: Radius.circular(12),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Text(_.messages[index]['text'],
+                                            style: GoogleFonts.reemKufi(
+                                                color: Colors.black)),
+                                      ),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                ],
+                              );
+                      },
                     ),
-                  ],
+                  ),
                 ),
                 Container(
+                  // color: Colors.red,
                   alignment: Alignment.bottomCenter,
                   child: Card(
                       elevation: 0.0,
@@ -306,6 +281,18 @@ class _ChatScreenState extends State<ChatScreen> {
                               child: Container(
                                 margin: const EdgeInsets.only(left: 5, top: 5),
                                 child: TextField(
+                                  onTap: () {
+                                    log('ontap');
+                                    sc.animateTo(
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        sc.position.viewportDimension + 1000,
+                                        curve: Curves.linear);
+                                    // Timer(
+                                    //     const Duration(milliseconds: 300),
+                                    //     () => sc.jumpTo(
+                                    //         sc.position.maxScrollExtent));
+                                  },
                                   controller: msgcontroller,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(

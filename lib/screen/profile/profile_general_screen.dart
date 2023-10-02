@@ -9,7 +9,6 @@ import 'package:bettersolver/utils/error.dart';
 import 'package:bettersolver/utils/loading.dart';
 import 'package:bettersolver/utils/response.dart';
 import 'package:bettersolver/widgets/loading_dialogue.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 
 import 'package:flutter/material.dart';
@@ -183,56 +182,56 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 270,
+              height: 20,
               decoration: Palette.loginGradient,
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
                   Container(
-                    height: 250,
+                    height: 10,
                     decoration: const BoxDecoration(
                         color: kWhite,
                         borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(30.0),
                             bottomLeft: Radius.circular(30.0))),
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        height: 130,
-                        width: 130,
-                        margin: const EdgeInsets.only(top: 30),
-                        decoration: Palette.RoundGradient,
-                        child: Padding(
-                          padding: const EdgeInsets.all(2),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(80),
-                                image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: CachedNetworkImageProvider(_image))),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(top: 10),
-                          //alignment: Alignment.bottomCenter,
-                          child: Text(
-                            '$firstName $lastName',
-                            style: Palette.greytext18B,
-                          )),
-                      Container(
-                          margin: const EdgeInsets.only(top: 5),
-                          //alignment: Alignment.bottomCenter,
-                          child: Text(
-                            '@$username',
-                            style: Palette.greytext14,
-                          )),
-                    ],
-                  ),
+                  // Column(
+                  //   children: [
+                  //     Container(
+                  //       height: 130,
+                  //       width: 130,
+                  //       margin: const EdgeInsets.only(top: 30),
+                  //       decoration: Palette.RoundGradient,
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(2),
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.circular(80),
+                  //               image: DecorationImage(
+                  //                   fit: BoxFit.fill,
+                  //                   image: CachedNetworkImageProvider(_image))),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const SizedBox(
+                  //       height: 6,
+                  //     ),
+                  //     Container(
+                  //         margin: const EdgeInsets.only(top: 10),
+                  //         //alignment: Alignment.bottomCenter,
+                  //         child: Text(
+                  //           '$firstName $lastName',
+                  //           style: Palette.greytext18B,
+                  //         )),
+                  //     Container(
+                  //         margin: const EdgeInsets.only(top: 5),
+                  //         //alignment: Alignment.bottomCenter,
+                  //         child: Text(
+                  //           '@$username',
+                  //           style: Palette.greytext14,
+                  //         )),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

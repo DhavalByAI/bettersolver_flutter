@@ -7,12 +7,12 @@ import 'package:bettersolver/bloc/liked_bloc.dart';
 import 'package:bettersolver/bloc/saved_post_bloc.dart';
 import 'package:bettersolver/screen/ListOfPosts_controller.dart';
 import 'package:bettersolver/screen/create_post/create_post_controller.dart';
-import 'package:bettersolver/screen/profile/video_player.dart';
-import 'package:bettersolver/screen/viewprofile/viewprofile_screen.dart';
 import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
 import 'package:bettersolver/utils/base_constant.dart';
 import 'package:bettersolver/widgets/loading_dialogue.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -23,24 +23,31 @@ import 'package:just_audio/just_audio.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_polls/simple_polls.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
+
 import '../bloc/edit_post_bloc.dart';
 import '../bloc/report_post_bloc.dart';
-import 'create_post/get_post_comment_screen.dart';
-import 'package:easy_image_viewer/easy_image_viewer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:simple_polls/simple_polls.dart';
+import 'create_post/get_post_comment_screen.dart';
+import 'msg_group_chat/message_screen.dart';
+import 'profile/video_player.dart';
+import 'profile_screen.dart';
+import 'viewprofile/viewprofile_screen.dart';
 
 class ListOfPosts extends StatefulWidget {
   List posts;
   String url;
   RefreshController refreshController;
+  ScrollController? sc;
+  bool? isAppbar;
   ListOfPosts(
       {super.key,
       required this.posts,
       required this.url,
+      this.sc,
+      this.isAppbar,
       required this.refreshController});
 
   @override
@@ -92,6 +99,7 @@ class _MyWidgetState extends State<ListOfPosts> {
         // _.ispinpostList.clear();
         return Flexible(
           child: SmartRefresher(
+            scrollController: widget.sc,
             controller: widget.refreshController,
             onRefresh: _.onRefresh,
             onLoading: _.onLoading,
@@ -142,343 +150,375 @@ class _MyWidgetState extends State<ListOfPosts> {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: List.generate(_.posts != null ? _.posts.length : 0,
-                    (index) {
-                  String postid = _.posts[index]['post_id'];
-                  String posteduserid = _.posts[index]['user_id'];
-                  String username = _.posts[index]['publisher']['username'];
-                  String profileimage = _.posts[index]['publisher']['avatar'];
-                  String fname =
-                      _.posts[index]['publisher']['first_name'] ?? '-';
-                  String lname =
-                      _.posts[index]['publisher']['last_name'] ?? '-';
-                  String posttime = _.posts[index]['post_time'];
-                  String postUserId = _.posts[index]['user_id'];
-                  String commentstatus = _.posts[index]['comments_status'];
-                  bool iscommentstatus = false;
-
-                  if (commentstatus.contains("1")) {
-                    iscommentstatus = true;
-                  } else {
-                    iscommentstatus = false;
-                  }
-                  //  print('Comment_statu-------');
-                  String comment = _.posts[index]['post_comments'];
-                  String title = _.posts[index]['title'] ?? '-';
-                  int feelingType = 10;
-                  // if (_.posts[index]['postText'].toString().startsWith('<')) {
-                  //   var temp =
-                  //       emojiText(_.posts[index]['postText'].toString());
-                  // }
-                  String postText = _.posts[index]['Orginaltext'].toString();
-                  postText = EmojiParser().emojify(postText);
-
-                  String postFeelingText = '';
-                  if (_.posts[index]['postFeeling'] != '') {
-                    String postFeeling = _.posts[index]['postFeeling'];
-                    postFeelingText = " Feeling $postFeeling";
-                    feelingType = 0;
-                  } else if (_.posts[index]['postListening'] != '') {
-                    String postFeeling = _.posts[index]['postListening'];
-                    postFeelingText = " Listening To $postFeeling";
-                    feelingType = 1;
-                  } else if (_.posts[index]['postTraveling'] != '') {
-                    String postFeeling = _.posts[index]['postTraveling'];
-                    postFeelingText = " Travelling To $postFeeling";
-                    feelingType = 2;
-                  } else if (_.posts[index]['postWatching'] != '') {
-                    String postFeeling = _.posts[index]['postWatching'];
-                    postFeelingText = " Watching $postFeeling";
-                    feelingType = 3;
-                  } else if (_.posts[index]['postPlaying'] != '') {
-                    String postFeeling = _.posts[index]['postPlaying'];
-                    postFeelingText = " Playing $postFeeling";
-                    feelingType = 4;
-                  }
-
-                  List feelingIcon = [
-                    Icons.emoji_emotions_outlined,
-                    Icons.headphones_rounded,
-                    Icons.travel_explore_rounded,
-                    Icons.remove_red_eye_rounded,
-                    Icons.sports_basketball_rounded
-                  ];
-                  // .startsWith('<')
-                  //     ? EmojiParser().emojify(':expressionless:')
-                  //     : _.posts[index]['postText'];
-                  // String postText = _.posts[index]['postText'] ?? '-';
-                  String groupId = _.posts[index]['group_id'];
-
-                  bool savepost = _.posts[index]['is_post_saved'];
-                  bool liked = _.posts[index]['reaction']['is_reacted'];
-
-                  int likecount = _.posts[index]['reaction']['count'];
-
-                  String? shareUrl = _.posts[index]['post_url'];
-
-                  _.islikeboollist
-                      .add(_.posts[index]['reaction']['is_reacted']);
-                  _.isReacting.add(false);
-                  _.issavepostboollist.add(_.posts[index]['is_post_saved']);
-
-                  var commentdata = _.posts[index];
-
-                  var multiImage = _.posts[index]['multi_image'];
-                  List? multiphoto = _.posts[index]['photo_multi'];
-
-                  String post = _.posts[index]['postFile_full'];
-
-                  // String post = BaseConstant.BASE_URL_DEMO + _post;
-
-                  String? videothumb = _.posts[index]['postFileThumb'];
-                  String videothumb0 = BaseConstant.BASE_URL_DEMO + videothumb!;
-                  String? groupTitle = _.posts[index]['group_title'];
-                  bool pinpoststatus = _.posts[index]['is_post_pinned'];
-                  List options = _.posts[index]['options'];
-                  _.aud.add(AudioCl(player: AudioPlayer()));
-                  _.ispinpostList.add(pinpoststatus);
-
-                  return Container(
-                    color: kWhite,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        index == 0
-                            ? const Divider(color: kWhite)
-                            : const Divider(thickness: 5.0),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                profileid != posteduserid
-                                    ? Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ViewProfileScreen(
-                                                  userviewid: postUserId,
-                                                )))
-                                    : null;
-                              },
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                margin:
-                                    const EdgeInsets.only(left: 15, top: 15),
-                                decoration: Palette.RoundGradient,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: CircleAvatar(
-                                    backgroundImage: CachedNetworkImageProvider(
-                                        profileimage),
-                                  ),
+                children: [
+                  (widget.isAppbar ?? false)
+                      ? Container(
+                          height: 85,
+                          decoration: Palette.loginGradient,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12)
+                                .copyWith(top: 30, left: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'better  solver',
+                                  style: Palette.whiettext20B
+                                      .copyWith(fontSize: 26),
                                 ),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const Profile()));
+                                          },
+                                          child: Image.asset(
+                                            'assets/images/profilewhite.png',
+                                            height: 25,
+                                            width: 25,
+                                          )),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const MessageScreen()));
+                                          },
+                                          child: Image.asset(
+                                            'assets/images/messagewhite.png',
+                                            height: 25,
+                                            width: 25,
+                                          )),
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  GetBuilder<ListOfPostsController>(
-                                    initState: (_) {},
-                                    builder: (_) {
-                                      for (var element in _.categoryList) {
-                                        groupTitle == element['group_title']
-                                            ? groupTitle = element['name']
-                                            : null;
-                                      }
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              profileid != posteduserid
-                                                  ? Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ViewProfileScreen(
-                                                                userviewid:
-                                                                    postUserId,
-                                                              )))
-                                                  : null;
-                                            },
-                                            child: Text(
-                                              "$fname $lname",
-                                              style: Palette.blacktext16,
-                                            ),
-                                          ),
-                                          groupTitle != null
-                                              ? const Icon(
-                                                  Icons.arrow_right_rounded,
-                                                  color: Colors.grey,
-                                                  size: 30)
-                                              : const SizedBox(),
-                                          groupTitle != null
-                                              ? Flexible(
-                                                  child: Text(
-                                                    groupTitle!,
-                                                    style: Palette.greytext12
-                                                        .copyWith(fontSize: 10),
-                                                  ),
-                                                )
-                                              : const SizedBox(),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      profileid != posteduserid
-                                          ? Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ViewProfileScreen(
-                                                        userviewid: postUserId,
-                                                      )))
-                                          : null;
-                                    },
-                                    child: Text(
-                                      "  @$username",
-                                      style: Palette.greytext12
-                                          .copyWith(fontSize: 12),
+                          ),
+                        )
+                      : const SizedBox(),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(
+                        _.posts != null ? _.posts.length : 0, (index) {
+                      String postid = _.posts[index]['post_id'];
+                      String posteduserid = _.posts[index]['user_id'];
+                      String username = _.posts[index]['publisher']['username'];
+                      String profileimage =
+                          _.posts[index]['publisher']['avatar'];
+                      String fname =
+                          _.posts[index]['publisher']['first_name'] ?? '-';
+                      String lname =
+                          _.posts[index]['publisher']['last_name'] ?? '-';
+                      String posttime = _.posts[index]['post_time'];
+                      String postUserId = _.posts[index]['user_id'];
+                      String commentstatus = _.posts[index]['comments_status'];
+                      bool iscommentstatus = false;
+
+                      if (commentstatus.contains("1")) {
+                        iscommentstatus = true;
+                      } else {
+                        iscommentstatus = false;
+                      }
+                      //  print('Comment_statu-------');
+                      String comment = _.posts[index]['post_comments'];
+                      String title = _.posts[index]['title'] ?? '-';
+                      int feelingType = 10;
+                      // if (_.posts[index]['postText'].toString().startsWith('<')) {
+                      //   var temp =
+                      //       emojiText(_.posts[index]['postText'].toString());
+                      // }
+                      String postText =
+                          _.posts[index]['Orginaltext'].toString();
+                      postText = EmojiParser().emojify(postText);
+
+                      String postFeelingText = '';
+                      if (_.posts[index]['postFeeling'] != '') {
+                        String postFeeling = _.posts[index]['postFeeling'];
+                        postFeelingText = " Feeling $postFeeling";
+                        feelingType = 0;
+                      } else if (_.posts[index]['postListening'] != '') {
+                        String postFeeling = _.posts[index]['postListening'];
+                        postFeelingText = " Listening To $postFeeling";
+                        feelingType = 1;
+                      } else if (_.posts[index]['postTraveling'] != '') {
+                        String postFeeling = _.posts[index]['postTraveling'];
+                        postFeelingText = " Travelling To $postFeeling";
+                        feelingType = 2;
+                      } else if (_.posts[index]['postWatching'] != '') {
+                        String postFeeling = _.posts[index]['postWatching'];
+                        postFeelingText = " Watching $postFeeling";
+                        feelingType = 3;
+                      } else if (_.posts[index]['postPlaying'] != '') {
+                        String postFeeling = _.posts[index]['postPlaying'];
+                        postFeelingText = " Playing $postFeeling";
+                        feelingType = 4;
+                      }
+
+                      List feelingIcon = [
+                        Icons.emoji_emotions_outlined,
+                        Icons.headphones_rounded,
+                        Icons.travel_explore_rounded,
+                        Icons.remove_red_eye_rounded,
+                        Icons.sports_basketball_rounded
+                      ];
+                      // .startsWith('<')
+                      //     ? EmojiParser().emojify(':expressionless:')
+                      //     : _.posts[index]['postText'];
+                      // String postText = _.posts[index]['postText'] ?? '-';
+                      String groupId = _.posts[index]['group_id'];
+
+                      bool savepost = _.posts[index]['is_post_saved'];
+                      bool liked = _.posts[index]['reaction']['is_reacted'];
+
+                      int likecount = _.posts[index]['reaction']['count'];
+
+                      String? shareUrl = _.posts[index]['post_url'];
+
+                      _.islikeboollist
+                          .add(_.posts[index]['reaction']['is_reacted']);
+                      _.isReacting.add(false);
+                      _.issavepostboollist.add(_.posts[index]['is_post_saved']);
+
+                      var commentdata = _.posts[index];
+
+                      var multiImage = _.posts[index]['multi_image'];
+                      List? multiphoto = _.posts[index]['photo_multi'];
+
+                      String post = _.posts[index]['postFile_full'];
+
+                      // String post = BaseConstant.BASE_URL_DEMO + _post;
+
+                      String? videothumb = _.posts[index]['postFileThumb'];
+                      String videothumb0 =
+                          BaseConstant.BASE_URL_DEMO + videothumb!;
+                      String? groupTitle = _.posts[index]['group_title'];
+                      bool pinpoststatus = _.posts[index]['is_post_pinned'];
+                      List options = _.posts[index]['options'];
+                      _.aud.add(AudioCl(player: AudioPlayer()));
+                      _.ispinpostList.add(pinpoststatus);
+
+                      return Container(
+                        color: kWhite,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            index == 0
+                                ? const Divider(color: kWhite)
+                                : const Divider(thickness: 5.0),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    profileid != posteduserid
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ViewProfileScreen(
+                                                      userviewid: postUserId,
+                                                    )))
+                                        : null;
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    width: 50,
+                                    margin: const EdgeInsets.only(
+                                        left: 15, top: 15),
+                                    decoration: Palette.RoundGradient,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                                profileimage),
+                                      ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const SizedBox(
-                                        width: 3,
+                                        height: 10,
                                       ),
-                                      const Icon(
-                                        Icons.access_time,
-                                        size: 13,
-                                        color: kGreyone,
+                                      GetBuilder<ListOfPostsController>(
+                                        initState: (_) {},
+                                        builder: (_) {
+                                          for (var element in _.categoryList) {
+                                            groupTitle == element['group_title']
+                                                ? groupTitle = element['name']
+                                                : null;
+                                          }
+                                          return Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  profileid != posteduserid
+                                                      ? Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ViewProfileScreen(
+                                                                    userviewid:
+                                                                        postUserId,
+                                                                  )))
+                                                      : null;
+                                                },
+                                                child: Text(
+                                                  "$fname $lname",
+                                                  style: Palette.blacktext16,
+                                                ),
+                                              ),
+                                              groupTitle != null
+                                                  ? const Icon(
+                                                      Icons.arrow_right_rounded,
+                                                      color: Colors.grey,
+                                                      size: 30)
+                                                  : const SizedBox(),
+                                              groupTitle != null
+                                                  ? Flexible(
+                                                      child: Text(
+                                                        groupTitle!,
+                                                        style: Palette
+                                                            .greytext12
+                                                            .copyWith(
+                                                                fontSize: 10),
+                                                      ),
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          profileid != posteduserid
+                                              ? Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ViewProfileScreen(
+                                                            userviewid:
+                                                                postUserId,
+                                                          )))
+                                              : null;
+                                        },
+                                        child: Text(
+                                          "  @$username",
+                                          style: Palette.greytext12
+                                              .copyWith(fontSize: 12),
+                                        ),
                                       ),
                                       const SizedBox(
-                                        width: 5,
+                                        height: 4,
                                       ),
-                                      Flexible(
-                                        child: Text(
-                                          posttime,
-                                          style: Palette.greytext12
-                                              .copyWith(fontSize: 10),
-                                        ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const SizedBox(
+                                            width: 3,
+                                          ),
+                                          const Icon(
+                                            Icons.access_time,
+                                            size: 13,
+                                            color: kGreyone,
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Flexible(
+                                            child: Text(
+                                              posttime,
+                                              style: Palette.greytext12
+                                                  .copyWith(fontSize: 10),
+                                            ),
+                                          )
+                                        ],
                                       )
                                     ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            // _popupmenuforour(postid, iscommentstatus, pinpoststatus,
-                            //     index, title, postText, group_id)
+                                  ),
+                                ),
+                                // _popupmenuforour(postid, iscommentstatus, pinpoststatus,
+                                //     index, title, postText, group_id)
 
-                            profileid == posteduserid
-                                ? _popupmenuforour(
-                                    postid,
-                                    iscommentstatus,
-                                    pinpoststatus,
-                                    index,
-                                    title,
-                                    postText,
-                                    groupId)
-                                : _popupmenuForOther(postid, index)
-                          ],
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 20, top: 10),
-                            child: Text(
-                              title,
-                              style:
-                                  Palette.blacktext14B.copyWith(fontSize: 16),
-                            )),
-                        options.isNotEmpty && options != []
-                            ? const SizedBox()
-                            : postFeelingText != ''
-                                ? Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 20, top: 6, bottom: 10),
-                                    child: Row(
-                                      children: [
-                                        Text(postText),
-                                        const Text(" - "),
-                                        feelingType != 10
-                                            ? Icon(
-                                                feelingIcon[feelingType],
-                                                size: 16,
-                                              )
-                                            : const SizedBox(),
-                                        Text(postFeelingText),
-                                      ],
-                                    ))
-                                : (postText != '')
+                                profileid == posteduserid
+                                    ? _popupmenuforour(
+                                        postid,
+                                        iscommentstatus,
+                                        pinpoststatus,
+                                        index,
+                                        title,
+                                        postText,
+                                        groupId)
+                                    : _popupmenuForOther(postid, index)
+                              ],
+                            ),
+                            Container(
+                                margin:
+                                    const EdgeInsets.only(left: 20, top: 10),
+                                child: Text(
+                                  title,
+                                  style: Palette.blacktext14B
+                                      .copyWith(fontSize: 16),
+                                )),
+                            options.isNotEmpty && options != []
+                                ? const SizedBox()
+                                : postFeelingText != ''
                                     ? Container(
                                         margin: const EdgeInsets.only(
                                             left: 20, top: 6, bottom: 10),
-                                        child: Text(postText),
-                                      )
-                                    : const SizedBox(
-                                        height: 6,
-                                      ),
-                        post.contains(".jpeg") ||
-                                post.contains(".jpg") ||
-                                post.contains(".png")
-                            ? GestureDetector(
-                                onDoubleTap: () {
-                                  // setState(() {
-                                  //   _.islikeboollist[index] =
-                                  //       !_.islikeboollist[index];
-                                  //   if (_.islikeboollist[index] == true) {
-                                  //     setState(() {
-                                  //       _.posts[index]['reaction']['count']++;
-                                  //     });
-                                  //   } else {
-                                  //     setState(() {
-                                  //       _.posts[index]['reaction']['count']--;
-                                  //     });
-                                  //   }
-                                  LikedBloc(
-                                      postid,
-                                      "2",
-                                      _.posts[index]['reaction']['is_reacted'],
-                                      widget.url);
-
-                                  // });
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height / 2,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          fit: BoxFit.contain,
-                                          image: CachedNetworkImageProvider(
-                                              post))),
-                                ),
-                              )
-                            : post.contains('.mp4')
+                                        child: Row(
+                                          children: [
+                                            Text(postText),
+                                            const Text(" - "),
+                                            feelingType != 10
+                                                ? Icon(
+                                                    feelingIcon[feelingType],
+                                                    size: 16,
+                                                  )
+                                                : const SizedBox(),
+                                            Text(postFeelingText),
+                                          ],
+                                        ))
+                                    : (postText != '')
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                left: 20, top: 6, bottom: 10),
+                                            child: Text(postText),
+                                          )
+                                        : const SizedBox(
+                                            height: 6,
+                                          ),
+                            post.contains(".jpeg") ||
+                                    post.contains(".jpg") ||
+                                    post.contains(".png")
                                 ? GestureDetector(
-                                    onDoubleTap: () async {
+                                    onDoubleTap: () {
                                       // setState(() {
                                       //   _.islikeboollist[index] =
                                       //       !_.islikeboollist[index];
                                       //   if (_.islikeboollist[index] == true) {
                                       //     setState(() {
-                                      //       _.posts[index]['reaction']
-                                      //           ['count']++;
+                                      //       _.posts[index]['reaction']['count']++;
                                       //     });
                                       //   } else {
                                       //     setState(() {
-                                      //       _.posts[index]['reaction']
-                                      //           ['count']--;
+                                      //       _.posts[index]['reaction']['count']--;
                                       //     });
                                       //   }
                                       LikedBloc(
@@ -490,192 +530,25 @@ class _MyWidgetState extends State<ListOfPosts> {
 
                                       // });
                                     },
-                                    child: VideoPlayer(post: post))
-                                // ? VideoPost(post: _post)
-                                : multiImage == '1' && post != " "
-                                    ? SizedBox(
-                                        height: 395,
-                                        child: StaggeredGridView.countBuilder(
-                                          // padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                                          crossAxisCount: 4,
-                                          itemCount: multiphoto!.length,
-                                          primary: true,
-                                          //shrinkWrap: false,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            String mulimage =
-                                                multiphoto[index]['image'];
-                                            return InkWell(
-                                              onTap: () {
-                                                log("  multiphoto.length ${multiphoto.length}");
-                                                log("multiphoto[index]['image'] ${multiphoto[index]['image']}");
-                                                MultiImageProvider
-                                                    multiImageProvider =
-                                                    MultiImageProvider(
-                                                        List.generate(
-                                                            multiphoto.length,
-                                                            ((index) {
-                                                          return Image(
-                                                              image:
-                                                                  CachedNetworkImageProvider(
-                                                            multiphoto[index]
-                                                                ['image'],
-                                                          )).image;
-                                                        })),
-                                                        initialIndex: index);
-                                                showImageViewerPager(
-                                                    context,
-                                                    backgroundColor: Colors
-                                                        .black
-                                                        .withAlpha(110),
-                                                    multiImageProvider,
-                                                    swipeDismissible: true,
-                                                    doubleTapZoomable: true,
-                                                    useSafeArea: true);
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image:
-                                                            CachedNetworkImageProvider(
-                                                                mulimage))),
-                                              ),
-                                            );
-                                          },
-                                          mainAxisSpacing: 5.0,
-                                          crossAxisSpacing: 5.0,
-                                          staggeredTileBuilder: (int index) {
-                                            return StaggeredTile.count(
-                                                multiphoto.length == 2 ? 4 : 2,
-                                                2);
-                                          },
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                        options.isNotEmpty && options != []
-                            ? GetBuilder<ListOfPostsController>(
-                                initState: (_) {},
-                                builder: (_) {
-                                  return SimplePollsWidget(
-                                    onSelection: (PollFrameModel model,
-                                        PollOptions selectedOptionModel) {
-                                      _.pollVoteUp(
-                                          postID: postid.toString(),
-                                          voteID: selectedOptionModel.id
-                                              .toString());
-                                      // print('Now total polls are : ' +
-                                      //     model.totalPolls.toString());
-                                      // print('Selected option has label : ' +
-                                      //     selectedOptionModel.id);
-                                    },
-                                    onReset: (PollFrameModel model) {
-                                      print(
-                                          'Poll has been reset, this happens only in case of editable polls');
-                                    },
-                                    optionsBorderShape: const StadiumBorder(),
-                                    model: PollFrameModel(
-                                      title: Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          postText,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                      totalPolls: options[0]['all'],
-                                      endTime: DateTime.now()
-                                          .toUtc()
-                                          .add(const Duration(days: 10)),
-                                      hasVoted:
-                                          _.posts[index]['voted_id'] != null,
-                                      editablePoll: false,
-                                      options: List.generate(
-                                          options.length,
-                                          (j) => PollOptions(
-                                                label: options[j]['text'],
-                                                pollsCount: int.parse(
-                                                    options[j]['option_votes']),
-                                                isSelected: _.posts[index]
-                                                        ['voted_id'] ==
-                                                    options[j]['id'],
-                                                id: options[j]['id'],
-                                              )),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              2,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.contain,
+                                              image: CachedNetworkImageProvider(
+                                                  post))),
                                     ),
-                                  );
-                                },
-                              )
-                            : const SizedBox(),
-                        _.posts[index]['postRecord'] != '' &&
-                                _.posts[index]['postRecord'] != null
-                            ? AudioPl(_, index)
-                            : const SizedBox(),
-                        _.isReacting[index]
-                            ? Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                elevation: 10,
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white54,
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: List.generate(
-                                      _.reactionsURL.length,
-                                      (subIndex) => InkWell(
-                                        onTap: () {
-                                          // _.selectedReaction[index] = subIndex;
-                                          _.isReacting[index] = false;
-                                          log(subIndex.toString());
-                                          LikedBloc(
-                                              postid,
-                                              _.reactionsURL[subIndex].id,
-                                              false,
-                                              widget.url);
-
-                                          // _.update();
-                                        },
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              _.reactionsURL[subIndex].url,
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
-                                              CircularProgressIndicator(
-                                                  value: downloadProgress
-                                                      .progress),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(height: 10),
-                        Container(
-                          margin: const EdgeInsets.only(left: 15, right: 15),
-                          child: Row(
-                            children: [
-                              Column(
-                                children: [
-                                  CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor:
-                                          kThemeColorLightGrey.withOpacity(0.4),
-                                      child: GestureDetector(
-                                        onTap: () {
+                                  )
+                                : post.contains('.mp4')
+                                    ? GestureDetector(
+                                        onDoubleTap: () async {
                                           // setState(() {
                                           //   _.islikeboollist[index] =
                                           //       !_.islikeboollist[index];
-                                          //   if (_.islikeboollist[index] ==
-                                          //       true) {
+                                          //   if (_.islikeboollist[index] == true) {
                                           //     setState(() {
                                           //       _.posts[index]['reaction']
                                           //           ['count']++;
@@ -695,221 +568,449 @@ class _MyWidgetState extends State<ListOfPosts> {
 
                                           // });
                                         },
-                                        onLongPress: () {
-                                          _.isReacting[index] = true;
-                                          _.update();
+                                        child: VideoPlayer(post: post))
+                                    // ? VideoPost(post: _post)
+                                    : multiImage == '1' && post != " "
+                                        ? SizedBox(
+                                            height: 395,
+                                            child:
+                                                StaggeredGridView.countBuilder(
+                                              // padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                                              crossAxisCount: 4,
+                                              itemCount: multiphoto!.length,
+                                              primary: true,
+                                              //shrinkWrap: false,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                String mulimage =
+                                                    multiphoto[index]['image'];
+                                                return InkWell(
+                                                  onTap: () {
+                                                    log("  multiphoto.length ${multiphoto.length}");
+                                                    log("multiphoto[index]['image'] ${multiphoto[index]['image']}");
+                                                    MultiImageProvider
+                                                        multiImageProvider =
+                                                        MultiImageProvider(
+                                                            List.generate(
+                                                                multiphoto
+                                                                    .length,
+                                                                ((index) {
+                                                              return Image(
+                                                                  image:
+                                                                      CachedNetworkImageProvider(
+                                                                multiphoto[
+                                                                        index]
+                                                                    ['image'],
+                                                              )).image;
+                                                            })),
+                                                            initialIndex:
+                                                                index);
+                                                    showImageViewerPager(
+                                                        context,
+                                                        backgroundColor: Colors
+                                                            .black
+                                                            .withAlpha(110),
+                                                        multiImageProvider,
+                                                        swipeDismissible: true,
+                                                        doubleTapZoomable: true,
+                                                        useSafeArea: true);
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image:
+                                                                CachedNetworkImageProvider(
+                                                                    mulimage))),
+                                                  ),
+                                                );
+                                              },
+                                              mainAxisSpacing: 5.0,
+                                              crossAxisSpacing: 5.0,
+                                              staggeredTileBuilder:
+                                                  (int index) {
+                                                return StaggeredTile.count(
+                                                    multiphoto.length == 2
+                                                        ? 4
+                                                        : 2,
+                                                    2);
+                                              },
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                            options.isNotEmpty && options != []
+                                ? GetBuilder<ListOfPostsController>(
+                                    initState: (_) {},
+                                    builder: (_) {
+                                      return SimplePollsWidget(
+                                        onSelection: (PollFrameModel model,
+                                            PollOptions selectedOptionModel) {
+                                          _.pollVoteUp(
+                                              postID: postid.toString(),
+                                              voteID: selectedOptionModel.id
+                                                  .toString());
+                                          // print('Now total polls are : ' +
+                                          //     model.totalPolls.toString());
+                                          // print('Selected option has label : ' +
+                                          //     selectedOptionModel.id);
                                         },
-                                        child: _.posts[index]['reaction']
-                                                    ['type'] !=
-                                                ""
-                                            ? SizedBox(
-                                                height: 30,
-                                                width: 30,
-                                                child: CachedNetworkImage(
-                                                  imageUrl: _
-                                                      .reactionsURL[_
-                                                          .reactionsURL
-                                                          .indexWhere((element) =>
-                                                              element.id.contains(
-                                                                  _.posts[index]
-                                                                          [
-                                                                          'reaction']
-                                                                      [
-                                                                      'type']))]
-                                                      .url,
-                                                  progressIndicatorBuilder: (context,
-                                                          url,
+                                        onReset: (PollFrameModel model) {
+                                          print(
+                                              'Poll has been reset, this happens only in case of editable polls');
+                                        },
+                                        optionsBorderShape:
+                                            const StadiumBorder(),
+                                        model: PollFrameModel(
+                                          title: Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              postText,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                          totalPolls: options[0]['all'],
+                                          endTime: DateTime.now()
+                                              .toUtc()
+                                              .add(const Duration(days: 10)),
+                                          hasVoted: _.posts[index]
+                                                  ['voted_id'] !=
+                                              null,
+                                          editablePoll: false,
+                                          options: List.generate(
+                                              options.length,
+                                              (j) => PollOptions(
+                                                    label: options[j]['text'],
+                                                    pollsCount: int.parse(
+                                                        options[j]
+                                                            ['option_votes']),
+                                                    isSelected: _.posts[index]
+                                                            ['voted_id'] ==
+                                                        options[j]['id'],
+                                                    id: options[j]['id'],
+                                                  )),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : const SizedBox(),
+                            _.posts[index]['postRecord'] != '' &&
+                                    _.posts[index]['postRecord'] != null
+                                ? AudioPl(_, index)
+                                : const SizedBox(),
+                            _.isReacting[index]
+                                ? Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    elevation: 10,
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white54,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: List.generate(
+                                          _.reactionsURL.length,
+                                          (subIndex) => InkWell(
+                                            onTap: () {
+                                              // _.selectedReaction[index] = subIndex;
+                                              _.isReacting[index] = false;
+                                              log(subIndex.toString());
+                                              LikedBloc(
+                                                  postid,
+                                                  _.reactionsURL[subIndex].id,
+                                                  false,
+                                                  widget.url);
+
+                                              // _.update();
+                                            },
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  _.reactionsURL[subIndex].url,
+                                              progressIndicatorBuilder:
+                                                  (context, url,
                                                           downloadProgress) =>
                                                       CircularProgressIndicator(
                                                           value:
                                                               downloadProgress
                                                                   .progress),
-                                                  errorWidget: (context, url,
-                                                          error) =>
+                                              errorWidget:
+                                                  (context, url, error) =>
                                                       const Icon(Icons.error),
-                                                ),
-                                              )
-                                            // : _.islikeboollist[index]
-                                            //     ? const Icon(
-                                            //         Icons.favorite,
-                                            //         color: kred,
-                                            //       )
-                                            : Icon(
-                                                Icons.favorite_outline_sharp,
-                                                color: Colors.black87
-                                                    .withOpacity(0.6),
-                                              ),
-                                      )),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    '${_.posts[index]['reaction']['count']}',
-                                    style: Palette.greytext12,
-                                  )
-                                ],
-                              ),
-                              Visibility(
-                                visible: iscommentstatus,
-                                child: Row(
-                                  children: [
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    Column(
-                                      children: [
-                                        GetBuilder<ListOfPostsController>(
-                                          initState: (_) {},
-                                          builder: (_) {
-                                            return InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            CommentScreen(
-                                                              commentdata:
-                                                                  commentdata,
-                                                            )));
-
-                                                //         .then(
-                                                // (value) => (value) {
-
-                                                //       setState(() {
-                                                //         _.fetchallpost(_.pageno);
-                                                //         _.update();
-                                                //         print(_.posts[index]
-                                                //             ['post_comments']);
-                                                //       });
-                                                //   });
-                                              },
-                                              child: CircleAvatar(
-                                                radius: 20,
-                                                backgroundColor:
-                                                    kThemeColorLightGrey
-                                                        .withOpacity(0.4),
-                                                child: Container(
-                                                  height: 20,
-                                                  width: 20,
-                                                  decoration: const BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/images/comment.png'))),
-                                                ),
-                                              ),
-                                            );
-                                          },
+                                            ),
+                                          ),
                                         ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          comment,
-                                          style: Palette.greytext12,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Share.share(
-                                          'check out this post on Better Solver ${_.posts[index]['post_url']}',
-                                          subject:
-                                              '${_.posts[index]['title']}');
-                                      // sharePostDialogue(shareUrl);
-                                    },
-                                    child: CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor:
-                                          kThemeColorLightGrey.withOpacity(0.4),
-                                      child: Container(
-                                        height: 20,
-                                        width: 20,
-                                        decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/images/postshareicon.png'))),
                                       ),
                                     ),
+                                  )
+                                : const SizedBox(),
+                            const SizedBox(height: 10),
+                            Container(
+                              margin:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Row(
+                                children: [
+                                  Column(
+                                    children: [
+                                      CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor: kThemeColorLightGrey
+                                              .withOpacity(0.4),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              // setState(() {
+                                              //   _.islikeboollist[index] =
+                                              //       !_.islikeboollist[index];
+                                              //   if (_.islikeboollist[index] ==
+                                              //       true) {
+                                              //     setState(() {
+                                              //       _.posts[index]['reaction']
+                                              //           ['count']++;
+                                              //     });
+                                              //   } else {
+                                              //     setState(() {
+                                              //       _.posts[index]['reaction']
+                                              //           ['count']--;
+                                              //     });
+                                              //   }
+                                              LikedBloc(
+                                                  postid,
+                                                  "2",
+                                                  _.posts[index]['reaction']
+                                                      ['is_reacted'],
+                                                  widget.url);
+
+                                              // });
+                                            },
+                                            onLongPress: () {
+                                              _.isReacting[index] = true;
+                                              _.update();
+                                            },
+                                            child: _.posts[index]['reaction']
+                                                        ['type'] !=
+                                                    ""
+                                                ? SizedBox(
+                                                    height: 30,
+                                                    width: 30,
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: _
+                                                          .reactionsURL[_
+                                                              .reactionsURL
+                                                              .indexWhere((element) =>
+                                                                  element.id.contains(
+                                                                      _.posts[index]
+                                                                              [
+                                                                              'reaction']
+                                                                          [
+                                                                          'type']))]
+                                                          .url,
+                                                      progressIndicatorBuilder: (context,
+                                                              url,
+                                                              downloadProgress) =>
+                                                          CircularProgressIndicator(
+                                                              value:
+                                                                  downloadProgress
+                                                                      .progress),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                              Icons.error),
+                                                    ),
+                                                  )
+                                                // : _.islikeboollist[index]
+                                                //     ? const Icon(
+                                                //         Icons.favorite,
+                                                //         color: kred,
+                                                //       )
+                                                : Icon(
+                                                    Icons
+                                                        .favorite_outline_sharp,
+                                                    color: Colors.black87
+                                                        .withOpacity(0.6),
+                                                  ),
+                                          )),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '${_.posts[index]['reaction']['count']}',
+                                        style: Palette.greytext12,
+                                      )
+                                    ],
+                                  ),
+                                  Visibility(
+                                    visible: iscommentstatus,
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Column(
+                                          children: [
+                                            GetBuilder<ListOfPostsController>(
+                                              initState: (_) {},
+                                              builder: (_) {
+                                                return InkWell(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                CommentScreen(
+                                                                  commentdata:
+                                                                      commentdata,
+                                                                )));
+
+                                                    //         .then(
+                                                    // (value) => (value) {
+
+                                                    //       setState(() {
+                                                    //         _.fetchallpost(_.pageno);
+                                                    //         _.update();
+                                                    //         print(_.posts[index]
+                                                    //             ['post_comments']);
+                                                    //       });
+                                                    //   });
+                                                  },
+                                                  child: CircleAvatar(
+                                                    radius: 20,
+                                                    backgroundColor:
+                                                        kThemeColorLightGrey
+                                                            .withOpacity(0.4),
+                                                    child: Container(
+                                                      height: 20,
+                                                      width: 20,
+                                                      decoration: const BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  'assets/images/comment.png'))),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              comment,
+                                              style: Palette.greytext12,
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   const SizedBox(
-                                    height: 5,
+                                    width: 15,
                                   ),
-                                  Text(
-                                    '',
-                                    style: Palette.greytext12,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          Share.share(
+                                              'check out this post on Better Solver ${_.posts[index]['post_url']}',
+                                              subject:
+                                                  '${_.posts[index]['title']}');
+                                          // sharePostDialogue(shareUrl);
+                                        },
+                                        child: CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor: kThemeColorLightGrey
+                                              .withOpacity(0.4),
+                                          child: Container(
+                                            height: 20,
+                                            width: 20,
+                                            decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/images/postshareicon.png'))),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '',
+                                        style: Palette.greytext12,
+                                      )
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  pinpoststatus == true
+                                      ? Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            const Icon(
+                                              Icons.push_pin,
+                                              color: Colors.cyanAccent,
+                                              size: 28,
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              '',
+                                              style: Palette.greytext12,
+                                            )
+                                          ],
+                                        )
+                                      : const SizedBox(),
+                                  Column(
+                                    children: [
+                                      GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _.issavepostboollist[index] =
+                                                  !_.issavepostboollist[index];
+                                              SavepostBloc(postid,
+                                                  _keyLoadersavepost, context);
+                                              _.fetchallpost(
+                                                  _.pageno, widget.url);
+                                            });
+                                          },
+                                          child: _.issavepostboollist[index]
+                                              ? const Icon(
+                                                  Icons.bookmark,
+                                                  color: Colors.blueAccent,
+                                                  size: 28,
+                                                )
+                                              : const Icon(
+                                                  Icons.bookmark_outline_sharp,
+                                                  color: kGreyone,
+                                                  size: 28,
+                                                )),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        '',
+                                        style: Palette.greytext12,
+                                      )
+                                    ],
                                   )
                                 ],
                               ),
-                              const Spacer(),
-                              pinpoststatus == true
-                                  ? Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        const Icon(
-                                          Icons.push_pin,
-                                          color: Colors.cyanAccent,
-                                          size: 28,
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          '',
-                                          style: Palette.greytext12,
-                                        )
-                                      ],
-                                    )
-                                  : const SizedBox(),
-                              Column(
-                                children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _.issavepostboollist[index] =
-                                              !_.issavepostboollist[index];
-                                          SavepostBloc(postid,
-                                              _keyLoadersavepost, context);
-                                          _.fetchallpost(_.pageno, widget.url);
-                                        });
-                                      },
-                                      child: _.issavepostboollist[index]
-                                          ? const Icon(
-                                              Icons.bookmark,
-                                              color: Colors.blueAccent,
-                                              size: 28,
-                                            )
-                                          : const Icon(
-                                              Icons.bookmark_outline_sharp,
-                                              color: kGreyone,
-                                              size: 28,
-                                            )),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    '',
-                                    style: Palette.greytext12,
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                }),
+                      );
+                    }),
+                  ),
+                ],
               ),
             ),
           ),
@@ -989,7 +1090,10 @@ class _MyWidgetState extends State<ListOfPosts> {
                                 : snapshot.data!.inMilliseconds.toDouble(),
                         activeColor: Colors.black,
                         inactiveColor: Colors.black54,
+                        allowedInteraction: SliderInteraction.tapOnly,
                         onChanged: (value) {
+                          log(value.toString());
+                          
                           // log('${value.toString()}--->${_.aud[index].duration!.inMilliseconds.toString()}');
                         },
                       );
@@ -1322,8 +1426,8 @@ class _MyWidgetState extends State<ListOfPosts> {
                     Navigator.pop(context);
                     edit_post_dialogue(postid, postTitle, postText, groupid);
                   },
-                  child: Row(
-                    children: const <Widget>[
+                  child: const Row(
+                    children: <Widget>[
                       Icon(Icons.edit, color: Colors.yellow),
                       SizedBox(width: 10),
                       Text('Edit Post'),
@@ -1334,8 +1438,8 @@ class _MyWidgetState extends State<ListOfPosts> {
               PopupMenuItem(
                 value: 'Value2',
                 child: InkWell(
-                  child: Row(
-                    children: const <Widget>[
+                  child: const Row(
+                    children: <Widget>[
                       Icon(Icons.delete, color: Colors.red),
                       SizedBox(width: 10),
                       Text('Delete Post'),
@@ -1441,8 +1545,8 @@ class _MyWidgetState extends State<ListOfPosts> {
                     showAlertDialogForReport(
                         context: context, postid: postid, index: index);
                   },
-                  child: Row(
-                    children: const <Widget>[
+                  child: const Row(
+                    children: <Widget>[
                       Icon(Icons.flag_outlined, color: Colors.yellow),
                       SizedBox(width: 10),
                       Text('Report Post'),

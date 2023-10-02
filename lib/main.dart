@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ).copyWith(
-          accentTextTheme: GoogleFonts.reemKufiTextTheme(),
+          // accentTextTheme: GoogleFonts.reemKufiTextTheme(),
           primaryTextTheme: GoogleFonts.reemKufiTextTheme(),
           textTheme: GoogleFonts.reemKufiTextTheme()),
       debugShowCheckedModeBanner: false,

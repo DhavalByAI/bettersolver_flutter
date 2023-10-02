@@ -1,7 +1,5 @@
 import 'package:bettersolver/screen/ListofPosts.dart';
 import 'package:bettersolver/screen/home_screen_controller.dart';
-import 'package:bettersolver/screen/msg_group_chat/message_screen.dart';
-import 'package:bettersolver/screen/profile_screen.dart';
 import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +22,7 @@ class _HomeScreenState extends State<GetHomeScreen> {
   List ispinpostList = [];
   String? profileid;
   String? profilePic;
-
+  ScrollController sc = ScrollController();
   TextEditingController reportTextController = TextEditingController();
 
   // List categoryList = [];
@@ -46,60 +44,61 @@ class _HomeScreenState extends State<GetHomeScreen> {
     profileid = pref.getString('userid');
   }
 
-  RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController refreshController = RefreshController(
+    initialRefresh: false,
+  );
 
   @override
   Widget build(BuildContext context) {
     Get.put(HomeScreenController());
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: AppBar(
-        title: Text(
-          'better   solver',
-          style: Palette.whiettext20B.copyWith(fontSize: 26),
-        ),
-        toolbarHeight: 65,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: Palette.loginGradient,
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: Row(
-              children: [
-                InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Profile()));
-                    },
-                    child: Image.asset(
-                      'assets/images/profilewhite.png',
-                      height: 25,
-                      width: 25,
-                    )),
-                const SizedBox(
-                  width: 10,
-                ),
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MessageScreen()));
-                    },
-                    child: Image.asset(
-                      'assets/images/messagewhite.png',
-                      height: 25,
-                      width: 25,
-                    )),
-              ],
-            ),
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'better  solver',
+      //     style: Palette.whiettext20B.copyWith(fontSize: 26),
+      //   ),
+      //   toolbarHeight: 65,
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   flexibleSpace: Container(
+      //     decoration: Palette.loginGradient,
+      //   ),
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 15),
+      //       child: Row(
+      //         children: [
+      //           InkWell(
+      //               onTap: () {
+      //                 Navigator.push(context,
+      //                     MaterialPageRoute(builder: (context) => Profile()));
+      //               },
+      //               child: Image.asset(
+      //                 'assets/images/profilewhite.png',
+      //                 height: 25,
+      //                 width: 25,
+      //               )),
+      //           const SizedBox(
+      //             width: 10,
+      //           ),
+      //           InkWell(
+      //               onTap: () {
+      //                 Navigator.push(
+      //                     context,
+      //                     MaterialPageRoute(
+      //                         builder: (context) => const MessageScreen()));
+      //               },
+      //               child: Image.asset(
+      //                 'assets/images/messagewhite.png',
+      //                 height: 25,
+      //                 width: 25,
+      //               )),
+      //         ],
+      //       ),
+      //     )
+      //   ],
+      // ),
       body: GetBuilder<HomeScreenController>(
         initState: (_) {},
         builder: (_) {
@@ -133,7 +132,6 @@ class _HomeScreenState extends State<GetHomeScreen> {
       builder: (_) {
         return _.posts.isNotEmpty
             ? Column(
-                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   // Container(
                   //   margin: const EdgeInsets.only(left: 15, right: 15, top: 20),
@@ -200,8 +198,60 @@ class _HomeScreenState extends State<GetHomeScreen> {
                   //   ),
                   // ),
 
+                  // AppBar(
+                  //   title: Text(
+                  //     'better  solver',
+                  //     style: Palette.whiettext20B.copyWith(fontSize: 26),
+                  //   ),
+                  //   toolbarHeight: 65,
+                  //   backgroundColor: Colors.transparent,
+                  //   elevation: 0,
+                  //   flexibleSpace: Container(
+                  //     decoration: Palette.loginGradient,
+                  //   ),
+                  //   actions: [
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(right: 15),
+                  //       child: Row(
+                  //         children: [
+                  //           InkWell(
+                  //               onTap: () {
+                  //                 Navigator.push(
+                  //                     context,
+                  //                     MaterialPageRoute(
+                  //                         builder: (context) => Profile()));
+                  //               },
+                  //               child: Image.asset(
+                  //                 'assets/images/profilewhite.png',
+                  //                 height: 25,
+                  //                 width: 25,
+                  //               )),
+                  //           const SizedBox(
+                  //             width: 10,
+                  //           ),
+                  //           InkWell(
+                  //               onTap: () {
+                  //                 Navigator.push(
+                  //                     context,
+                  //                     MaterialPageRoute(
+                  //                         builder: (context) =>
+                  //                             const MessageScreen()));
+                  //               },
+                  //               child: Image.asset(
+                  //                 'assets/images/messagewhite.png',
+                  //                 height: 25,
+                  //                 width: 25,
+                  //               )),
+                  //         ],
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+
                   ListOfPosts(
+                    isAppbar: true,
                     posts: _.posts,
+                    sc: sc,
                     refreshController: refreshController,
                     url:
                         'demo2/app_api.php?application=phone&type=get_post_all',
@@ -307,7 +357,7 @@ class _HomeScreenState extends State<GetHomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        CreatePollPostScreen()));
+                                        const CreatePollPostScreen()));
                           });
                         },
                         child: Container(

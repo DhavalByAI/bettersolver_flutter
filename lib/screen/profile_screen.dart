@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
+  const Profile({super.key});
+
   @override
   State<Profile> createState() => _ProfileState();
 }
@@ -26,7 +28,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   UserDetailBloc? _userDetailBloc;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   List userdataList = [];
   shared(
       {required String userName,
@@ -96,7 +98,7 @@ class _ProfileState extends State<Profile> {
                 break;
               case Status.ERROR:
                 return Container(
-                  child: Text(
+                  child: const Text(
                     'Errror msg',
                   ),
                 );
@@ -120,7 +122,7 @@ class _ProfileState extends State<Profile> {
     String username = userDetailModel.user_data['username'];
     List followingData = userDetailModel.user_data['following'];
     List followerData = userDetailModel.user_data['followers'];
-    String _uid = userDetailModel.user_data['user_id'];
+    String uid = userDetailModel.user_data['user_id'];
     shared(
         userName: username,
         avtarURL: profileimage,
@@ -301,7 +303,7 @@ class _ProfileState extends State<Profile> {
                                   //_showMoreBottomSheet();
                                 },
                                 child: const Icon(
-                                  Icons.segment_outlined,
+                                  Icons.settings,
                                   color: kWhite,
                                 )),
                           ),
@@ -418,7 +420,7 @@ class _ProfileState extends State<Profile> {
                               child: Column(
                                 children: [
                                   Text(
-                                    '$postCount',
+                                    postCount,
                                     style: Palette.greytext20B,
                                   ),
                                   Text(
@@ -470,7 +472,7 @@ class _ProfileState extends State<Profile> {
                               child: Column(
                                 children: [
                                   Text(
-                                    '$following',
+                                    following,
                                     style: Palette.greytext20B,
                                   ),
                                   Text(
@@ -521,7 +523,7 @@ class _ProfileState extends State<Profile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => TimeLineScreen(
-                                      userid: _uid,
+                                      userid: uid,
                                     )));
                       },
                       child: _textDesign('MY TIMELINE')),
@@ -561,7 +563,7 @@ class _ProfileState extends State<Profile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => CategoriesScreen(
-                                      userid: _uid,
+                                      userid: uid,
                                     )));
                       },
                       child: _textDesign('CATEGORIES')),
@@ -601,7 +603,7 @@ class _ProfileState extends State<Profile> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PhotoScreen(
-                                    userid: _uid,
+                                    userid: uid,
                                   )));
                     },
                     child: _textDesign('PHOTOS'),
@@ -642,7 +644,7 @@ class _ProfileState extends State<Profile> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => VideoScreen(
-                                    userid: _uid,
+                                    userid: uid,
                                   )));
                     },
                     child: _textDesign('VIDEOS'),
@@ -681,7 +683,8 @@ class _ProfileState extends State<Profile> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SavePostListScreen()));
+                                builder: (context) =>
+                                    const SavePostListScreen()));
                       },
                       child: _textDesign('SAVED POSTS')),
                 ),
@@ -869,7 +872,7 @@ class _ProfileState extends State<Profile> {
                 margin: const EdgeInsets.only(left: 15),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '$text',
+                  text,
                   style: Palette.greytext12,
                 ))),
       ),

@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'c_card.dart';
+
 class CategoryDetailScreen extends StatefulWidget {
   String? groupid;
 
@@ -103,12 +105,12 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         return Column(
           children: [
             Container(
-              height: 380,
+              height: 330,
               decoration: Palette.loginGradient,
               child: Stack(
                 children: [
                   Container(
-                    height: 360,
+                    height: 315,
                     decoration: const BoxDecoration(
                         color: kWhite,
                         borderRadius: BorderRadius.only(
@@ -143,34 +145,88 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                           const SizedBox(
                             width: 20,
                           ),
-                          Expanded(
-                              child: Text(
-                            groupname,
-                            style: Palette.whiettext18,
-                          )),
+                          const Spacer(),
+                          // Expanded(
+                          //     child: Text(
+                          //   groupname,
+                          //   style: Palette.whiettext18,
+                          // )),
                           jointext == 'LEFT'
-                              ? InkWell(
+                              ? GestureDetector(
                                   onTap: () async {
                                     showAlertDialog(context: context);
                                   },
-                                  child: Container(
-                                      margin: const EdgeInsets.only(right: 10),
-                                      child: Text(
-                                        jointext,
-                                        style: Palette.whiteText15,
+                                  child: cCard(
+                                      color: Colors.green,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.verified_user_outlined,
+                                              size: 16,
+                                              color: Colors.white,
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            Text(
+                                              'Joined',
+                                              style: Palette.whiteText15,
+                                            )
+                                          ],
+                                        ),
                                       )),
                                 )
-                              : InkWell(
+                              : GestureDetector(
                                   onTap: () {
                                     _.fetchjoingroup();
                                   },
-                                  child: Container(
-                                      margin: const EdgeInsets.only(right: 10),
-                                      child: Text(
-                                        jointext,
-                                        style: Palette.whiteText15,
+                                  child: cCard(
+                                      color: Colors.blue,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.add,
+                                              size: 16,
+                                              color: Colors.white,
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            Text(
+                                              'Join',
+                                              style: Palette.whiteText15,
+                                            )
+                                          ],
+                                        ),
                                       )),
-                                )
+                                ),
+                          // jointext == 'LEFT'
+                          //     ? InkWell(
+                          //         onTap: () async {
+
+                          //         },
+                          //         child: Container(
+                          //             margin: const EdgeInsets.only(right: 10),
+                          //             child: Text(
+                          //               jointext,
+                          //               style: Palette.whiteText15,
+                          //             )),
+                          //       )
+                          //     : InkWell(
+                          //         onTap: () {
+                          //           _.fetchjoingroup();
+                          //         },
+                          //         child: Container(
+                          //             margin: const EdgeInsets.only(right: 10),
+                          //             child: Text(
+                          //               jointext,
+                          //               style: Palette.whiteText15,
+                          //             )),
+                          //       )
                         ],
                       ),
                     ),
@@ -191,9 +247,11 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(80),
                                   image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image:
-                                          CachedNetworkImageProvider(image))),
+                                    fit: BoxFit.fill,
+                                    image: CachedNetworkImageProvider(image),
+                                    // colorFilter: const ColorFilter.mode(
+                                    //     Colors.black, BlendMode.color)
+                                  )),
                             ),
                           ),
                         ),
@@ -259,60 +317,6 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              Container(
-                                decoration: Palette.RoundGradient,
-                                height: 30,
-                                width: 30,
-                                child: Padding(
-                                    padding: const EdgeInsets.all(1.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: kWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          image: const DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/images/publicicon.png'))),
-                                    )),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                // width: MediaQuery.of(context).size.width / 1.3,
-                                width: 120,
-                                height: 35,
-                                decoration: Palette.cardShapGradient,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(1.0),
-                                  child: Container(
-                                      decoration: const BoxDecoration(
-                                          color: kWhite,
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30),
-                                              bottomLeft: Radius.circular(30),
-                                              bottomRight:
-                                                  Radius.circular(25))),
-                                      child: Container(
-                                          margin:
-                                              const EdgeInsets.only(left: 2),
-                                          alignment: Alignment.centerLeft,
-                                          padding: const EdgeInsets.all(10),
-                                          child: Text(
-                                            privacytype,
-                                            style: Palette.greytext9,
-                                          ))),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                              top: 10, right: 10, left: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
                               // Container(
                               //   decoration: Palette.RoundGradient,
                               //   height: 30,
@@ -322,10 +326,11 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                               //       child: Container(
                               //         decoration: BoxDecoration(
                               //             color: kWhite,
-                              //             borderRadius: BorderRadius.circular(30),
+                              //             borderRadius:
+                              //                 BorderRadius.circular(30),
                               //             image: const DecorationImage(
                               //                 image: AssetImage(
-                              //                     'assets/images/kandaicon.png'))),
+                              //                     'assets/images/publicicon.png'))),
                               //       )),
                               // ),
                               // const SizedBox(
@@ -333,8 +338,8 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                               // ),
                               // Container(
                               //   // width: MediaQuery.of(context).size.width / 1.3,
-                              //   height: 30,
                               //   width: 120,
+                              //   height: 35,
                               //   decoration: Palette.cardShapGradient,
                               //   child: Padding(
                               //     padding: const EdgeInsets.all(1.0),
@@ -344,67 +349,19 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                               //             borderRadius: BorderRadius.only(
                               //                 topLeft: Radius.circular(30),
                               //                 bottomLeft: Radius.circular(30),
-                              //                 bottomRight: Radius.circular(25))),
+                              //                 bottomRight:
+                              //                     Radius.circular(25))),
                               //         child: Container(
-                              //             margin: const EdgeInsets.only(left: 2),
-                              //             padding: const EdgeInsets.all(10),
+                              //             margin:
+                              //                 const EdgeInsets.only(left: 2),
                               //             alignment: Alignment.centerLeft,
+                              //             padding: const EdgeInsets.all(10),
                               //             child: Text(
-                              //               groupname,
+                              //               privacytype,
                               //               style: Palette.greytext9,
                               //             ))),
                               //   ),
                               // ),
-                              Container(
-                                decoration: Palette.RoundGradient,
-                                height: 30,
-                                width: 30,
-                                child: Padding(
-                                    padding: const EdgeInsets.all(1.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: kWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          image: const DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/images/addfriendicon.png'))),
-                                    )),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                // width: MediaQuery.of(context).size.width / 1.3,
-                                height: 35,
-                                width: 120,
-
-                                decoration: Palette.cardShapGradient,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(1.0),
-                                  child: Container(
-                                      decoration: const BoxDecoration(
-                                          color: kWhite,
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30),
-                                              bottomLeft: Radius.circular(30),
-                                              bottomRight:
-                                                  Radius.circular(25))),
-                                      child: Container(
-                                          margin:
-                                              const EdgeInsets.only(left: 2),
-                                          padding: const EdgeInsets.all(10),
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            'ADD YOUR FRIEND',
-                                            style: Palette.greytext9,
-                                          ))),
-                                ),
-                              ),
-
-                              const SizedBox(
-                                width: 20,
-                              ),
                               Container(
                                 decoration: Palette.RoundGradient,
                                 height: 30,
@@ -453,6 +410,153 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                             ],
                           ),
                         ),
+                        // Container(
+                        //   margin: const EdgeInsets.only(
+                        //       top: 10, right: 10, left: 10),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //     children: [
+                        //       // Container(
+                        //       //   decoration: Palette.RoundGradient,
+                        //       //   height: 30,
+                        //       //   width: 30,
+                        //       //   child: Padding(
+                        //       //       padding: const EdgeInsets.all(1.0),
+                        //       //       child: Container(
+                        //       //         decoration: BoxDecoration(
+                        //       //             color: kWhite,
+                        //       //             borderRadius: BorderRadius.circular(30),
+                        //       //             image: const DecorationImage(
+                        //       //                 image: AssetImage(
+                        //       //                     'assets/images/kandaicon.png'))),
+                        //       //       )),
+                        //       // ),
+                        //       // const SizedBox(
+                        //       //   width: 10,
+                        //       // ),
+                        //       // Container(
+                        //       //   // width: MediaQuery.of(context).size.width / 1.3,
+                        //       //   height: 30,
+                        //       //   width: 120,
+                        //       //   decoration: Palette.cardShapGradient,
+                        //       //   child: Padding(
+                        //       //     padding: const EdgeInsets.all(1.0),
+                        //       //     child: Container(
+                        //       //         decoration: const BoxDecoration(
+                        //       //             color: kWhite,
+                        //       //             borderRadius: BorderRadius.only(
+                        //       //                 topLeft: Radius.circular(30),
+                        //       //                 bottomLeft: Radius.circular(30),
+                        //       //                 bottomRight: Radius.circular(25))),
+                        //       //         child: Container(
+                        //       //             margin: const EdgeInsets.only(left: 2),
+                        //       //             padding: const EdgeInsets.all(10),
+                        //       //             alignment: Alignment.centerLeft,
+                        //       //             child: Text(
+                        //       //               groupname,
+                        //       //               style: Palette.greytext9,
+                        //       //             ))),
+                        //       //   ),
+                        //       // ),
+
+                        //       // Container(
+                        //       //   decoration: Palette.RoundGradient,
+                        //       //   height: 30,
+                        //       //   width: 30,
+                        //       //   child: Padding(
+                        //       //       padding: const EdgeInsets.all(1.0),
+                        //       //       child: Container(
+                        //       //         decoration: BoxDecoration(
+                        //       //             color: kWhite,
+                        //       //             borderRadius:
+                        //       //                 BorderRadius.circular(30),
+                        //       //             image: const DecorationImage(
+                        //       //                 image: AssetImage(
+                        //       //                     'assets/images/addfriendicon.png'))),
+                        //       //       )),
+                        //       // ),
+                        //       // const SizedBox(
+                        //       //   width: 10,
+                        //       // ),
+                        //       // Container(
+                        //       //   // width: MediaQuery.of(context).size.width / 1.3,
+                        //       //   height: 35,
+                        //       //   width: 120,
+
+                        //       //   decoration: Palette.cardShapGradient,
+                        //       //   child: Padding(
+                        //       //     padding: const EdgeInsets.all(1.0),
+                        //       //     child: Container(
+                        //       //         decoration: const BoxDecoration(
+                        //       //             color: kWhite,
+                        //       //             borderRadius: BorderRadius.only(
+                        //       //                 topLeft: Radius.circular(30),
+                        //       //                 bottomLeft: Radius.circular(30),
+                        //       //                 bottomRight:
+                        //       //                     Radius.circular(25))),
+                        //       //         child: Container(
+                        //       //             margin:
+                        //       //                 const EdgeInsets.only(left: 2),
+                        //       //             padding: const EdgeInsets.all(10),
+                        //       //             alignment: Alignment.centerLeft,
+                        //       //             child: Text(
+                        //       //               'ADD YOUR FRIEND',
+                        //       //               style: Palette.greytext9,
+                        //       //             ))),
+                        //       //   ),
+                        //       // ),
+
+                        //       // const SizedBox(
+                        //       //   width: 20,
+                        //       // ),
+                        //       // Container(
+                        //       //   decoration: Palette.RoundGradient,
+                        //       //   height: 30,
+                        //       //   width: 30,
+                        //       //   child: Padding(
+                        //       //       padding: const EdgeInsets.all(1.0),
+                        //       //       child: Container(
+                        //       //         decoration: BoxDecoration(
+                        //       //             color: kWhite,
+                        //       //             borderRadius:
+                        //       //                 BorderRadius.circular(30),
+                        //       //             image: const DecorationImage(
+                        //       //                 image: AssetImage(
+                        //       //                     'assets/images/posticon.png'))),
+                        //       //       )),
+                        //       // ),
+                        //       // const SizedBox(
+                        //       //   width: 10,
+                        //       // ),
+                        //       // Container(
+                        //       //   // width: MediaQuery.of(context).size.width / 1.3,
+                        //       //   width: 120,
+                        //       //   height: 35,
+                        //       //   decoration: Palette.cardShapGradient,
+                        //       //   child: Padding(
+                        //       //     padding: const EdgeInsets.all(1.0),
+                        //       //     child: Container(
+                        //       //         decoration: const BoxDecoration(
+                        //       //             color: kWhite,
+                        //       //             borderRadius: BorderRadius.only(
+                        //       //                 topLeft: Radius.circular(30),
+                        //       //                 bottomLeft: Radius.circular(30),
+                        //       //                 bottomRight:
+                        //       //                     Radius.circular(25))),
+                        //       //         child: Container(
+                        //       //             margin:
+                        //       //                 const EdgeInsets.only(left: 2),
+                        //       //             alignment: Alignment.centerLeft,
+                        //       //             padding: const EdgeInsets.all(10),
+                        //       //             child: Text(
+                        //       //               '$postcount POSTS',
+                        //       //               style: Palette.greytext9,
+                        //       //             ))),
+                        //       //   ),
+                        //       // ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -519,8 +623,9 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                               color: kWhite,
                               borderRadius: BorderRadius.circular(30),
                               image: const DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/categoriesicon.png'))),
+                                image: AssetImage(
+                                    'assets/images/categoriesicon.png'),
+                              )),
                         )),
                   ),
                   const SizedBox(

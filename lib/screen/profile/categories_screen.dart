@@ -103,7 +103,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           childAspectRatio: 1.2),
       itemBuilder: (BuildContext context, int index) {
         log(categoriesList[index].toString());
-        String name = categoriesList[index]['group_title'];
+        String name = categoriesList[index]['name'];
         String imagephoto = categoriesList[index]['avatar'];
         String id = categoriesList[index]['group_id'];
 

@@ -17,12 +17,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
+
   @override
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  GlobalKey<State> _KeyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _KeyLoader = GlobalKey<State>();
 
   @override
   Widget build(BuildContext context) {
@@ -83,15 +85,20 @@ class _SettingScreenState extends State<SettingScreen> {
                           child: Padding(
                               padding: const EdgeInsets.all(1.0),
                               child: Container(
-                                // height: 50,
-                                // width: 50,
-
+                                // color: Colors.white,
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/settingicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/general.png'))
+                                ),
+                                // color: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child:
+                                      Image.asset('assets/images/general.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -103,7 +110,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ProfileGeneralScreen()));
+                                        const ProfileGeneralScreen()));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width / 1.4,
@@ -140,11 +147,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/profileicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/profileicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child:
+                                      Image.asset('assets/images/profile1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -192,11 +205,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/securityicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/securityicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Image.asset(
+                                      'assets/images/security1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -244,11 +263,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/socialicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/socialicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Image.asset(
+                                      'assets/images/socialLink1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -296,11 +321,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/displayicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/displayicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child:
+                                      Image.asset('assets/images/display1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -325,7 +356,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  CoverPageScreen()));
+                                                  const CoverPageScreen()));
                                     },
                                     child: _textDesign('DISPLAY & COVERPAGE'))),
                           ),
@@ -348,11 +379,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/blockusericon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/blockusericon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child:
+                                      Image.asset('assets/images/block1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -377,7 +414,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  BlockUserScreen()));
+                                                  const BlockUserScreen()));
                                     },
                                     child: _textDesign('BLOCK USER'))),
                           ),
@@ -400,11 +437,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/notificationicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/notificationicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Image.asset(
+                                      'assets/images/notification1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -453,11 +496,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/verificationicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/verificationicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Image.asset(
+                                      'assets/images/verification1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -482,7 +531,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  VerificationScreen()));
+                                                  const VerificationScreen()));
                                     },
                                     child: _textDesign('VERIFICATION'))),
                           ),
@@ -505,11 +554,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/feedbackicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/feedbackicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Image.asset(
+                                      'assets/images/feedback1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -534,7 +589,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  FeedBackScreen()));
+                                                  const FeedBackScreen()));
                                     },
                                     child: _textDesign('FEEDBACK'))),
                           ),
@@ -557,11 +612,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/informationicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/informationicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Image.asset(
+                                      'assets/images/myInformation1.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -586,7 +647,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  InformationScreen()));
+                                                  const InformationScreen()));
                                     },
                                     child: _textDesign('MY INFORMATION'))),
                           ),
@@ -609,11 +670,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // width: 50,
 
                                 decoration: BoxDecoration(
-                                    color: kWhite,
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/deleteicon.png'))),
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/deleteicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child:
+                                      Image.asset('assets/images/delete.png'),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -664,7 +731,7 @@ class _SettingScreenState extends State<SettingScreen> {
           children: [
             Expanded(
                 child: Text(
-              '$text',
+              text,
               style: Palette.greytext12,
             )),
             Container(
@@ -702,8 +769,8 @@ class _SettingScreenState extends State<SettingScreen> {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Logout"),
-      content: Text("Are you sure you want to logout?"),
+      title: const Text("Logout"),
+      content: const Text("Are you sure you want to logout?"),
       actions: [
         cancelButton,
         continueButton,
@@ -744,8 +811,8 @@ class _SettingScreenState extends State<SettingScreen> {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Delete"),
-      content: Text("Are you sure you want to delete account?"),
+      title: const Text("Delete"),
+      content: const Text("Are you sure you want to delete account?"),
       actions: [
         cancelButton,
         continueButton,
@@ -763,7 +830,9 @@ class _SettingScreenState extends State<SettingScreen> {
   void logoutUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => Login()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Login()),
+        (route) => false);
   }
 }

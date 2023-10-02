@@ -69,6 +69,7 @@ dependencies:
   record: ^4.4.4
   flutter_sound_record: ^3.2.1
   just_audio: ^0.9.33
+  video_player: ^2.7.1
   # provider: ^6.0.0
   # flutter_svg: ^0.23.0+1
 

@@ -1,6 +1,5 @@
 import 'package:bettersolver/bloc/famoususer_bloc.dart';
 import 'package:bettersolver/bloc/signup_step_follow_bloc.dart';
-import 'package:bettersolver/bloc/signup_steptwo_bloc.dart';
 import 'package:bettersolver/bottom_navigation.dart';
 import 'package:bettersolver/models/commondata_model.dart';
 import 'package:bettersolver/style/constants.dart';
@@ -10,15 +9,13 @@ import 'package:bettersolver/utils/response.dart';
 import 'package:bettersolver/widgets/error_dialouge.dart';
 import 'package:bettersolver/widgets/loading_dialogue.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterThiredScreen extends StatefulWidget {
   String? uid, sid;
 
-  RegisterThiredScreen({this.uid, this.sid});
+  RegisterThiredScreen({super.key, this.uid, this.sid});
 
   @override
   State<RegisterThiredScreen> createState() => _RegisterThiredScreenState();
@@ -26,8 +23,8 @@ class RegisterThiredScreen extends StatefulWidget {
 
 class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
   FamousUserBloc? _famousUserBloc;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  final GlobalKey<State> keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
+  final GlobalKey<State> keyLoader = GlobalKey<State>();
 
   var _userid;
 
@@ -37,7 +34,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
 
   List isrequets = [];
 
-  bool _isrequest = false;
+  final bool _isrequest = false;
 
   int count = 0;
 
@@ -72,16 +69,16 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
               child: Container(
                 height: 150,
                 width: 150,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image:
                             AssetImage('assets/images/bettersolver_logo.png'))),
               ),
             ),
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Container(
-            margin: EdgeInsets.only(left: 15, right: 15),
+            margin: const EdgeInsets.only(left: 15, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -94,7 +91,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                       decoration: Palette.buttonGradient,
                       child: Padding(
                         padding: const EdgeInsets.all(0.9),
-                        child: Container(
+                        child: SizedBox(
                             height: 30,
                             width: 30,
                             // decoration: BoxDecoration(
@@ -134,7 +131,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                       decoration: Palette.buttonGradient,
                       child: Padding(
                         padding: const EdgeInsets.all(0.9),
-                        child: Container(
+                        child: SizedBox(
                             height: 30,
                             width: 30,
                             // decoration: BoxDecoration(
@@ -197,11 +194,11 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
               ],
             ),
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Card(
             elevation: 8,
             color: kWhite,
-            margin: EdgeInsets.only(left: 40, right: 40),
+            margin: const EdgeInsets.only(left: 40, right: 40),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(33)),
             child: Container(
@@ -209,7 +206,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                 child: Padding(
                     padding: const EdgeInsets.all(0.9),
                     child: Container(
-                      height: 320,
+                      height: 370,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: kWhite,
@@ -218,22 +215,25 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
                                 alignment: Alignment.center,
-                                child: Text('Lorem Ipsum',
+                                child: Text('Follow People',
                                     style: Palette.blackText30)),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Text(
-                              'Please follow.json at least three users & navigate to home feeds',
+                              'Please follow at least three users & navigate to home feeds',
                               style: Palette.blackText11,
                             ),
-                            Container(
-                              height: 220,
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            SizedBox(
+                              height: 260,
                               child: StreamBuilder(
                                   // stream: _famousUserBloc
                                   //     .FamousUserBlocDataStream,
@@ -247,18 +247,15 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                                           return Loading(
                                               loadingMessage:
                                                   snapshot.data.message);
-                                          break;
                                         case Status.COMPLETED:
                                           return _adduserList(
                                               snapshot.data.data);
-                                          break;
                                         case Status.ERROR:
                                           return Container(
-                                            child: Text(
+                                            child: const Text(
                                               'Errror msg',
                                             ),
                                           );
-                                          break;
                                       }
                                     }
                                     return Container();
@@ -269,7 +266,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                       ),
                     ))),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _gradientBtn()
         ],
       ),
@@ -281,7 +278,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
 
     return GridView.builder(
       itemCount: userlist != null ? userlist.length : 0,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         //  crossAxisSpacing: 5.0,
         // mainAxisSpacing: 5.0,
@@ -318,7 +315,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                       fit: BoxFit.fill,
                       image: CachedNetworkImageProvider(image))),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Expanded(
@@ -356,7 +353,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                           ? Container(
                               height: 20,
                               width: 20,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
                                           'assets/images/accepticon.png'))),
@@ -364,7 +361,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                           : Container(
                               height: 20,
                               width: 20,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
                                           'assets/images/requesticon.png'))),
@@ -432,7 +429,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 50,
-      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       decoration: Palette.buttonGradient,
       child: InkWell(
         onTap: () {
@@ -448,7 +445,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
 
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => Home()),
+                  MaterialPageRoute(builder: (context) => const Home()),
                   (route) => false);
             } else {
               ErrorDialouge.showErrorDialogue(

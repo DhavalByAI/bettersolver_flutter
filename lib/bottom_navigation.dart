@@ -17,20 +17,20 @@ class _HomeState extends State<Home> {
   int currentIndex = 0;
 
   List<Widget> _children = [];
-  List<String> icon = [
-    'assets/images/homewhite.png',
-    'assets/images/searchwhite.png',
-    'assets/images/creatpostwhite.png',
-    'assets/images/categorywhite.png',
-    'assets/images/notificationwhite.png',
+  List<String> selectedIcon = [
+    'assets/images/1.png',
+    'assets/images/2.png',
+    'assets/images/3.png',
+    'assets/images/4.png',
+    'assets/images/5.png',
   ];
 
-  List<String> selectedIcon = [
-    'assets/images/home.png',
-    'assets/images/searchwhite.png',
-    'assets/images/creatpost.png',
-    'assets/images/category.png',
-    'assets/images/notification.png',
+  List<String> icon = [
+    'assets/images/1S.png',
+    'assets/images/2S.png',
+    'assets/images/3S.png',
+    'assets/images/4S.png',
+    'assets/images/5S.png',
   ];
 
   @override
@@ -55,7 +55,8 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: Container(
           margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           decoration: BoxDecoration(
-              color: kThemeColorLightBlue,
+              color: Colors.white,
+              // color: kThemeColorLightBlue,
               borderRadius: BorderRadius.circular(0),
               // border: Border.all(color: kWhite, width: 2),
               boxShadow: [

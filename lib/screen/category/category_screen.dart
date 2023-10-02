@@ -5,7 +5,6 @@ import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
 import 'package:bettersolver/utils/loading.dart';
 import 'package:bettersolver/utils/response.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../bottom_navigation.dart';
@@ -135,13 +134,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         // width: 50,
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                            color: kWhite,
-                            borderRadius: BorderRadius.circular(30),
-                            image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: CachedNetworkImageProvider(
-                                  image,
-                                ))),
+                          color: kWhite,
+                          borderRadius: BorderRadius.circular(30),
+                          // image: DecorationImage(
+                          //     fit: BoxFit.contain,
+                          //     image: CachedNetworkImageProvider(
+                          //       image,
+                          //     ))
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: Image.network(image),
+                        ),
                       )),
                 ),
                 const SizedBox(
