@@ -2,9 +2,11 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:bettersolver/screen/ListofPosts.dart';
 import 'package:bettersolver/screen/create_post/create_post_controller.dart';
+import 'package:bettersolver/screen/home_screen_controller.dart';
 import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:images_picker/images_picker.dart';
@@ -70,6 +72,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   ];
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
@@ -200,7 +204,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   hintText: "Title / Subject",
                   counterText: "${_.titleController.text.length} / 25 ",
                   hintStyle: Palette.greytext12,
-                  labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+                  labelStyle: GoogleFonts.roboto(color: Colors.grey),
                   enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
@@ -227,7 +231,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           width: MediaQuery.of(context).size.width,
           child: DropdownButtonFormField(
             // icon: Icon(Icons.add_location),
-            style: GoogleFonts.reemKufi(
+            style: GoogleFonts.roboto(
               color: Colors.grey,
               fontWeight: FontWeight.w400,
               fontSize: 12.0,
@@ -235,8 +239,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             value: _.categoryType,
             hint: Text(
               'Select Category',
-              style: GoogleFonts.reemKufi(
-                  fontWeight: FontWeight.w400, fontSize: 12),
+              style:
+                  GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
             ),
             items: _.categoryList.map((item) {
               return DropdownMenuItem(
@@ -319,7 +323,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                       counterText:
                                           "${_.captionController.text.length} / 320  ",
 
-                                      //labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+                                      //labelStyle: GoogleFonts.roboto(color: Colors.grey),
                                       enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.transparent,
@@ -690,7 +694,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     // counterText:
                     //     "${_.optionController[index].text.length} / 50",
                     hintStyle: Palette.greytext12,
-                    labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+                    labelStyle: GoogleFonts.roboto(color: Colors.grey),
                     enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey, width: 1),
                       // borderRadius: BorderRadius.circular(30.0),
@@ -836,7 +840,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           width: MediaQuery.of(context).size.width,
           child: DropdownButtonFormField(
             // icon: Icon(Icons.add_location),
-            style: GoogleFonts.reemKufi(
+            style: GoogleFonts.roboto(
               color: Colors.grey,
               fontWeight: FontWeight.w400,
               fontSize: 12.0,
@@ -844,8 +848,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             value: privacyType,
             hint: Text(
               'Everyone',
-              style: GoogleFonts.reemKufi(
-                  fontWeight: FontWeight.w400, fontSize: 12),
+              style:
+                  GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
             ),
             items: privacyList.map((item) {
               return DropdownMenuItem(
@@ -952,7 +956,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               decoration: InputDecoration(
                 hintText: hinttext,
                 hintStyle: Palette.greytext12,
-                //labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+                //labelStyle: GoogleFonts.roboto(color: Colors.grey),
                 enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 1),
                   // borderRadius: BorderRadius.circular(30.0),
@@ -976,7 +980,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           width: MediaQuery.of(context).size.width,
           child: DropdownButtonFormField(
             // icon: Icon(Icons.add_location),
-            style: GoogleFonts.reemKufi(
+            style: GoogleFonts.roboto(
               color: Colors.grey,
               fontWeight: FontWeight.w400,
               fontSize: 12.0,
@@ -984,8 +988,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             value: moodType,
             hint: Text(
               'Feeling',
-              style: GoogleFonts.reemKufi(
-                  fontWeight: FontWeight.w400, fontSize: 12),
+              style:
+                  GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
             ),
             items: moodList.map((item) {
               return DropdownMenuItem(
@@ -1035,7 +1039,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
             menuMaxHeight: 300,
             // icon: Icon(Icons.add_location),
-            style: GoogleFonts.reemKufi(
+            style: GoogleFonts.roboto(
               color: Colors.grey,
               fontWeight: FontWeight.w400,
               fontSize: 12.0,
@@ -1043,8 +1047,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             value: feelingType,
             hint: Text(
               'Happy',
-              style: GoogleFonts.reemKufi(
-                  fontWeight: FontWeight.w400, fontSize: 12),
+              style:
+                  GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
             ),
             items: feelingList.map((item) {
               return DropdownMenuItem(
@@ -1142,14 +1146,20 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               color: kThemeColorGrey, borderRadius: BorderRadius.circular(33)),
           child: InkWell(
             onTap: () {
+              CreatePostController _ = Get.find();
+              _.titleController.clear();
+              _.captionController.clear();
+              _.feelingValueController.clear();
               _.file = null;
-              Get.back();
+              _.update();
+              // Get.back();
+              // Get.off(() => const Home());
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  "CANCEL",
+                  "CLEAR",
                   style: Palette.whiettext18,
                 ),
               ),

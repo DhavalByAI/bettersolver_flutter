@@ -112,7 +112,7 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
                   //     child: const DottedLine()),
                   Text(
                     '- - - - - - - - - - - - -',
-                    style: GoogleFonts.reemKufi(color: kThemeColorBlue),
+                    style: GoogleFonts.roboto(color: kThemeColorBlue),
                   ),
                   Card(
                     elevation: 8,
@@ -148,7 +148,7 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
                   ),
                   Text(
                     '- - - - - - - - - - - - -',
-                    style: GoogleFonts.reemKufi(color: kThemeColorGreen),
+                    style: GoogleFonts.roboto(color: kThemeColorGreen),
                   ),
                   Card(
                     elevation: 8,

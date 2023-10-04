@@ -171,7 +171,7 @@ class _CreatePollPostScreenState extends State<CreatePollPostScreen> {
             decoration: InputDecoration(
               hintText: "Title / Subject",
               hintStyle: Palette.greytext12,
-              labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+              labelStyle: GoogleFonts.roboto(color: Colors.grey),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1),
                 // borderRadius: BorderRadius.circular(30.0),
@@ -196,7 +196,7 @@ class _CreatePollPostScreenState extends State<CreatePollPostScreen> {
           width: MediaQuery.of(context).size.width,
           child: DropdownButtonFormField(
             // icon: Icon(Icons.add_location),
-            style: GoogleFonts.reemKufi(
+            style: GoogleFonts.roboto(
               color: Colors.grey,
               fontWeight: FontWeight.w400,
               fontSize: 12.0,
@@ -204,8 +204,8 @@ class _CreatePollPostScreenState extends State<CreatePollPostScreen> {
             value: _.categoryType,
             hint: Text(
               'Select Category',
-              style: GoogleFonts.reemKufi(
-                  fontWeight: FontWeight.w400, fontSize: 12),
+              style:
+                  GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
             ),
             items: _.categoryList.map((item) {
               return DropdownMenuItem(
@@ -250,7 +250,7 @@ class _CreatePollPostScreenState extends State<CreatePollPostScreen> {
         decoration: InputDecoration(
           hintText: "Ask Something",
           hintStyle: Palette.greytext12,
-          labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+          labelStyle: GoogleFonts.roboto(color: Colors.grey),
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey, width: 1),
             // borderRadius: BorderRadius.circular(30.0),
@@ -273,7 +273,7 @@ class _CreatePollPostScreenState extends State<CreatePollPostScreen> {
   //       decoration: InputDecoration(
   //         hintText: "Option",
   //         hintStyle: Palette.greytext12,
-  //         labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+  //         labelStyle: GoogleFonts.roboto(color: Colors.grey),
   //         enabledBorder: const UnderlineInputBorder(
   //           borderSide: BorderSide(color: Colors.grey, width: 1),
   //           // borderRadius: BorderRadius.circular(30.0),
@@ -330,7 +330,7 @@ class _CreatePollPostScreenState extends State<CreatePollPostScreen> {
           width: MediaQuery.of(context).size.width,
           child: DropdownButtonFormField(
             // icon: Icon(Icons.add_location),
-            style: GoogleFonts.reemKufi(
+            style: GoogleFonts.roboto(
               color: Colors.grey,
               fontWeight: FontWeight.w400,
               fontSize: 12.0,
@@ -338,8 +338,8 @@ class _CreatePollPostScreenState extends State<CreatePollPostScreen> {
             value: privacyType,
             hint: Text(
               'Everyone',
-              style: GoogleFonts.reemKufi(
-                  fontWeight: FontWeight.w400, fontSize: 12),
+              style:
+                  GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
             ),
             items: privacyList.map((item) {
               return DropdownMenuItem(
@@ -442,7 +442,7 @@ class _CreatePollPostScreenState extends State<CreatePollPostScreen> {
             decoration: InputDecoration(
               hintText: "Option ${index + 1}",
               hintStyle: Palette.greytext12,
-              labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+              labelStyle: GoogleFonts.roboto(color: Colors.grey),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1),
                 // borderRadius: BorderRadius.circular(30.0),

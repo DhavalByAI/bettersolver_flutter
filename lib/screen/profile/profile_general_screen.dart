@@ -298,7 +298,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
                   ),
                   DropdownButtonFormField(
                     isExpanded: true,
-                    style: GoogleFonts.reemKufi(
+                    style: GoogleFonts.roboto(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
                       fontSize: 10.0,
@@ -306,7 +306,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
                     value: "99",
                     hint: Text(
                       'Select Country',
-                      style: GoogleFonts.reemKufi(
+                      style: GoogleFonts.roboto(
                           fontWeight: FontWeight.w400, fontSize: 12),
                     ),
                     items: countryList.map((item) {
@@ -356,7 +356,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
       controller: _dateController,
       format: format,
       //initialValue: DateTime.now(),
-      style: GoogleFonts.reemKufi(
+      style: GoogleFonts.roboto(
         color: Colors.black,
         fontWeight: FontWeight.w600,
       ),
@@ -419,8 +419,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
               decoration: InputDecoration(
                 hintText: "User name ",
                 // labelText: "Email",
-                labelStyle:
-                    GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+                labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
                 enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 1),
                   // borderRadius: BorderRadius.circular(30.0),
@@ -451,8 +450,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
               decoration: InputDecoration(
                 hintText: "phone",
                 // labelText: "Email",
-                labelStyle:
-                    GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+                labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
 
                 enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -486,7 +484,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
             hintText: "EMAIL",
             // labelText: "Email",
             hintMaxLines: 2,
-            labelStyle: GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+            labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
             enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey, width: 1),
               // borderRadius: BorderRadius.circular(30.0),
@@ -523,7 +521,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
   //             // SizedBox(width: 5,),
   //             Text(
   //                 formattedDob,
-  //               style: GoogleFonts.reemKufi(
+  //               style: GoogleFonts.roboto(
   //                   color: kDarkThemecolor, fontWeight: FontWeight.w400),
   //             ),
   //           ],
@@ -589,7 +587,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
   //     width: MediaQuery.of(context).size.width / 1.5,
   //     child: DropdownButtonFormField(
   //       // icon: Icon(Icons.add_location),
-  //       style: GoogleFonts.reemKufi(
+  //       style: GoogleFonts.roboto(
   //         color: Colors.grey,
   //         fontWeight: FontWeight.w400,
   //         fontSize: 10.0,
@@ -597,7 +595,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
   //       value: countryType,
   //       hint:Text(
   //         'Select Country',
-  //         style: GoogleFonts.reemKufi(
+  //         style: GoogleFonts.roboto(
   //
   //             fontWeight: FontWeight.w400,
   //             fontSize: 12),
@@ -636,7 +634,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
   //     margin: EdgeInsets.only(left: 15, right: 15),
   //     child: DropdownButtonFormField(
   //       // icon: Icon(Icons.add_location),
-  //       style: GoogleFonts.reemKufi(
+  //       style: GoogleFonts.roboto(
   //         color: Colors.black,
   //         fontWeight: FontWeight.w500,
   //         fontSize: 16.0,
@@ -644,7 +642,7 @@ class _ProfileGeneralScreenState extends State<ProfileGeneralScreen> {
   //       value: occupationType,
   //       hint:Text(
   //         'Select Location',
-  //         style: GoogleFonts.reemKufi(
+  //         style: GoogleFonts.roboto(
   //
   //             //fontWeight: FontWeight.w400,
   //             fontSize: 12),

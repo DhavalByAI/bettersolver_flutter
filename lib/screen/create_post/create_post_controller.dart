@@ -227,7 +227,7 @@ class CreatePostController extends GetxController {
                     // counterText:
                     //     "${_.optionController[index].text.length} / 50",
                     hintStyle: Palette.greytext12,
-                    labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+                    labelStyle: GoogleFonts.roboto(color: Colors.grey),
                     enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey, width: 1),
                       // borderRadius: BorderRadius.circular(30.0),

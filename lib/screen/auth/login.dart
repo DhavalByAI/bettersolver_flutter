@@ -50,26 +50,24 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<State> _keyError = GlobalKey<State>();
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  // FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn googleSignIn = GoogleSignIn();
-  var fcmToken;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _auth = FirebaseAuth.instance;
-    setupToken();
+    // _auth = FirebaseAuth.instance;
     var random = Random();
     s = random.nextInt(100000);
 
     print("::::::::::::$s");
   }
 
-  setupToken() async {
-    fcmToken = await FirebaseMessaging.instance.getToken();
-    print('fcmToken_login:::::::::::::::::::$fcmToken');
-  }
+  // setupToken() async {
+  //   // fcmToken = await FirebaseMessaging.instance.getToken();
+  //   // print('fcmToken_login:::::::::::::::::::$fcmToken');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +265,7 @@ class _LoginState extends State<Login> {
           //         alignment: Alignment.center,
           //         child: Text(
           //           "SIGN IN",
-          //           style: GoogleFonts.reemKufi(
+          //           style: GoogleFonts.roboto(
           //               fontSize: 18,
           //               fontWeight: FontWeight.w700,
           //               fontStyle: FontStyle.normal,
@@ -537,7 +535,7 @@ class _LoginState extends State<Login> {
   //       width: MediaQuery.of(context).size.width,
   //       fieldWidth: 20,
   //       style: Palette.blacktext16,
-  //       // GoogleFonts.reemKufi(
+  //       // GoogleFonts.roboto(
   //       //     fontSize: 17
   //       //
   //       // ),
@@ -556,7 +554,7 @@ class _LoginState extends State<Login> {
   //   return TextField(
   //     controller: controller,
   //     keyboardType: TextInputType.number,
-  //     style: GoogleFonts.reemKufi(
+  //     style: GoogleFonts.roboto(
   //           fontWeight: FontWeight.w500, fontSize: 16),
   //     decoration: InputDecoration(
   //       fillColor: kWhite,
@@ -581,7 +579,7 @@ class _LoginState extends State<Login> {
   //       // ),
   //       contentPadding: const EdgeInsets.all(15.0),
   //       hintText: label,
-  //       labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+  //       labelStyle: GoogleFonts.roboto(color: Colors.grey),
   //     ),
   //   );
   // }
@@ -598,8 +596,7 @@ class _LoginState extends State<Login> {
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.emailAddress,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -626,7 +623,7 @@ class _LoginState extends State<Login> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -646,8 +643,7 @@ class _LoginState extends State<Login> {
           controller: controller,
           obscureText: _obsecurePass,
           keyboardType: TextInputType.text,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -685,7 +681,7 @@ class _LoginState extends State<Login> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -715,7 +711,7 @@ class _LoginState extends State<Login> {
             LoadingDialog.showLoadingDialog(context, _keyLoader);
             // Loading();
             LoginBloc(type, emailController.text, passwordController.text,
-                s.toString(), keyLoader, context, fcmToken);
+                s.toString(), keyLoader, context, 'token');
           }
         },
         child: Padding(

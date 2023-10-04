@@ -3,6 +3,7 @@ import 'package:bettersolver/screen/home_screen_controller.dart';
 import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'create_post/create_poll_post_screen.dart';
@@ -29,6 +30,8 @@ class _HomeScreenState extends State<GetHomeScreen> {
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     shared();
     super.initState();
   }
@@ -50,6 +53,8 @@ class _HomeScreenState extends State<GetHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     Get.put(HomeScreenController());
     return Scaffold(
       backgroundColor: kWhite,

@@ -5,10 +5,12 @@ import 'package:bettersolver/bloc/enable_disable_comment_bloc.dart';
 import 'package:bettersolver/bloc/hide_post_bloc.dart';
 import 'package:bettersolver/bloc/liked_bloc.dart';
 import 'package:bettersolver/bloc/saved_post_bloc.dart';
+import 'package:bettersolver/models/all_post_model.dart';
 import 'package:bettersolver/screen/ListOfPosts_controller.dart';
 import 'package:bettersolver/screen/create_post/create_post_controller.dart';
 import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
+import 'package:bettersolver/utils/apiprovider.dart';
 import 'package:bettersolver/utils/base_constant.dart';
 import 'package:bettersolver/widgets/loading_dialogue.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -26,10 +28,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_polls/simple_polls.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../bloc/edit_post_bloc.dart';
 import '../bloc/report_post_bloc.dart';
-
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'create_post/get_post_comment_screen.dart';
 import 'msg_group_chat/message_screen.dart';
 import 'profile/video_player.dart';
@@ -161,11 +163,12 @@ class _MyWidgetState extends State<ListOfPosts> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'better  solver',
-                                  style: Palette.whiettext20B
-                                      .copyWith(fontSize: 26),
-                                ),
+                                Text('better  solver',
+                                    style: GoogleFonts.reemKufi(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 26,
+                                      color: kWhite,
+                                    )),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 12),
                                   child: Row(
@@ -234,6 +237,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                       String comment = _.posts[index]['post_comments'];
                       String title = _.posts[index]['title'] ?? '-';
                       int feelingType = 10;
+                      int rfeelingType = 10;
                       // if (_.posts[index]['postText'].toString().startsWith('<')) {
                       //   var temp =
                       //       emojiText(_.posts[index]['postText'].toString());
@@ -263,6 +267,44 @@ class _MyWidgetState extends State<ListOfPosts> {
                         String postFeeling = _.posts[index]['postPlaying'];
                         postFeelingText = " Playing $postFeeling";
                         feelingType = 4;
+                      }
+                      String rPostFeelingText = '';
+                      if (_.posts[index]['sharePostData'] != null) {
+                        if (_.posts[index]['sharePostData']['postFeeling'] !=
+                            '') {
+                          String postFeeling =
+                              _.posts[index]['sharePostData']['postFeeling'];
+                          rPostFeelingText = " Feeling $postFeeling";
+                          rfeelingType = 0;
+                        } else if (_.posts[index]['sharePostData']
+                                ['postListening'] !=
+                            '') {
+                          String postFeeling =
+                              _.posts[index]['sharePostData']['postListening'];
+                          rPostFeelingText = " Listening To $postFeeling";
+                          rfeelingType = 1;
+                        } else if (_.posts[index]['sharePostData']
+                                ['postTraveling'] !=
+                            '') {
+                          String postFeeling =
+                              _.posts[index]['sharePostData']['postTraveling'];
+                          rPostFeelingText = " Travelling To $postFeeling";
+                          rfeelingType = 2;
+                        } else if (_.posts[index]['sharePostData']
+                                ['postWatching'] !=
+                            '') {
+                          String postFeeling =
+                              _.posts[index]['sharePostData']['postWatching'];
+                          rPostFeelingText = " Watching $postFeeling";
+                          rfeelingType = 3;
+                        } else if (_.posts[index]['sharePostData']
+                                ['postPlaying'] !=
+                            '') {
+                          String postFeeling =
+                              _.posts[index]['sharePostData']['postPlaying'];
+                          rPostFeelingText = " Playing $postFeeling";
+                          rfeelingType = 4;
+                        }
                       }
 
                       List feelingIcon = [
@@ -294,7 +336,15 @@ class _MyWidgetState extends State<ListOfPosts> {
 
                       var multiImage = _.posts[index]['multi_image'];
                       List? multiphoto = _.posts[index]['photo_multi'];
+                      var rmultiImage;
+                      List? rmultiphoto;
 
+                      if (_.posts[index]['sharePostData'] != null) {
+                        var rmultiImage =
+                            _.posts[index]['sharePostData']['multi_image'];
+                        List? rmultiphoto =
+                            _.posts[index]['sharePostData']['photo_multi'];
+                      }
                       String post = _.posts[index]['postFile_full'];
 
                       // String post = BaseConstant.BASE_URL_DEMO + _post;
@@ -311,6 +361,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                       return Container(
                         color: kWhite,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             index == 0
@@ -468,241 +519,884 @@ class _MyWidgetState extends State<ListOfPosts> {
                                     : _popupmenuForOther(postid, index)
                               ],
                             ),
-                            Container(
-                                margin:
-                                    const EdgeInsets.only(left: 20, top: 10),
-                                child: Text(
-                                  title,
-                                  style: Palette.blacktext14B
-                                      .copyWith(fontSize: 16),
-                                )),
-                            options.isNotEmpty && options != []
-                                ? const SizedBox()
-                                : postFeelingText != ''
-                                    ? Container(
-                                        margin: const EdgeInsets.only(
-                                            left: 20, top: 6, bottom: 10),
-                                        child: Row(
-                                          children: [
-                                            Text(postText),
-                                            const Text(" - "),
-                                            feelingType != 10
-                                                ? Icon(
-                                                    feelingIcon[feelingType],
-                                                    size: 16,
-                                                  )
-                                                : const SizedBox(),
-                                            Text(postFeelingText),
-                                          ],
-                                        ))
-                                    : (postText != '')
-                                        ? Container(
-                                            margin: const EdgeInsets.only(
-                                                left: 20, top: 6, bottom: 10),
-                                            child: Text(postText),
-                                          )
-                                        : const SizedBox(
-                                            height: 6,
-                                          ),
-                            post.contains(".jpeg") ||
-                                    post.contains(".jpg") ||
-                                    post.contains(".png")
-                                ? GestureDetector(
-                                    onDoubleTap: () {
-                                      // setState(() {
-                                      //   _.islikeboollist[index] =
-                                      //       !_.islikeboollist[index];
-                                      //   if (_.islikeboollist[index] == true) {
-                                      //     setState(() {
-                                      //       _.posts[index]['reaction']['count']++;
-                                      //     });
-                                      //   } else {
-                                      //     setState(() {
-                                      //       _.posts[index]['reaction']['count']--;
-                                      //     });
-                                      //   }
-                                      LikedBloc(
-                                          postid,
-                                          "2",
-                                          _.posts[index]['reaction']
-                                              ['is_reacted'],
-                                          widget.url);
-
-                                      // });
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              2,
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.contain,
-                                              image: CachedNetworkImageProvider(
-                                                  post))),
+                            _.posts[index]['sharePostData'] == null &&
+                                    _.posts[index]['Orginaltext'] != ''
+                                ? Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 20, top: 8, bottom: 0),
+                                    child: Linkify(
+                                      onOpen: (link) async {
+                                        if (!await launchUrl(
+                                            Uri.parse(link.url))) {
+                                          throw Exception(
+                                              'Could not launch ${link.url}');
+                                        }
+                                      },
+                                      text: EmojiParser().emojify(
+                                          _.posts[index]['title'].toString()),
+                                      style: Palette.blacktext14B
+                                          .copyWith(fontSize: 16),
                                     ),
+                                    // Text(postText),here
                                   )
-                                : post.contains('.mp4')
-                                    ? GestureDetector(
-                                        onDoubleTap: () async {
-                                          // setState(() {
-                                          //   _.islikeboollist[index] =
-                                          //       !_.islikeboollist[index];
-                                          //   if (_.islikeboollist[index] == true) {
-                                          //     setState(() {
-                                          //       _.posts[index]['reaction']
-                                          //           ['count']++;
-                                          //     });
-                                          //   } else {
-                                          //     setState(() {
-                                          //       _.posts[index]['reaction']
-                                          //           ['count']--;
-                                          //     });
-                                          //   }
-                                          LikedBloc(
-                                              postid,
-                                              "2",
-                                              _.posts[index]['reaction']
-                                                  ['is_reacted'],
-                                              widget.url);
+                                : const SizedBox(),
+                            _.posts[index]['sharePostData'] == null
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      options.isNotEmpty && options != []
+                                          ? const SizedBox()
+                                          : postFeelingText != ''
+                                              ? Container(
+                                                  margin: const EdgeInsets.only(
+                                                      left: 20,
+                                                      top: 6,
+                                                      bottom: 10),
+                                                  child: Row(
+                                                    children: [
+                                                      Linkify(
+                                                        onOpen: (link) async {
+                                                          if (!await launchUrl(
+                                                              Uri.parse(
+                                                                  link.url))) {
+                                                            throw Exception(
+                                                                'Could not launch ${link.url}');
+                                                          }
+                                                        },
+                                                        text: postText,
+                                                      ),
+                                                      const Text(" - "),
+                                                      feelingType != 10
+                                                          ? Icon(
+                                                              feelingIcon[
+                                                                  feelingType],
+                                                              size: 16,
+                                                            )
+                                                          : const SizedBox(),
+                                                      Text(postFeelingText),
+                                                    ],
+                                                  ))
+                                              : (postText != '')
+                                                  ? Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              left: 20,
+                                                              top: 6,
+                                                              bottom: 10),
+                                                      child: Linkify(
+                                                        onOpen: (link) async {
+                                                          if (!await launchUrl(
+                                                              Uri.parse(
+                                                                  link.url))) {
+                                                            throw Exception(
+                                                                'Could not launch ${link.url}');
+                                                          }
+                                                        },
+                                                        text: postText,
+                                                      ),
+                                                      // Text(postText),here
+                                                    )
+                                                  : const SizedBox(
+                                                      height: 6,
+                                                    ),
+                                      post.contains(".jpeg") ||
+                                              post.contains(".jpg") ||
+                                              post.contains(".png")
+                                          ? GestureDetector(
+                                              onDoubleTap: () {
+                                                // setState(() {
+                                                //   _.islikeboollist[index] =
+                                                //       !_.islikeboollist[index];
+                                                //   if (_.islikeboollist[index] == true) {
+                                                //     setState(() {
+                                                //       _.posts[index]['reaction']['count']++;
+                                                //     });
+                                                //   } else {
+                                                //     setState(() {
+                                                //       _.posts[index]['reaction']['count']--;
+                                                //     });
+                                                //   }
+                                                LikedBloc(
+                                                    postid,
+                                                    "2",
+                                                    _.posts[index]['reaction']
+                                                        ['is_reacted'],
+                                                    widget.url);
 
-                                          // });
-                                        },
-                                        child: VideoPlayer(post: post))
-                                    // ? VideoPost(post: _post)
-                                    : multiImage == '1' && post != " "
-                                        ? SizedBox(
-                                            height: 395,
-                                            child:
-                                                StaggeredGridView.countBuilder(
-                                              // padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                                              crossAxisCount: 4,
-                                              itemCount: multiphoto!.length,
-                                              primary: true,
-                                              //shrinkWrap: false,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                String mulimage =
-                                                    multiphoto[index]['image'];
-                                                return InkWell(
-                                                  onTap: () {
-                                                    log("  multiphoto.length ${multiphoto.length}");
-                                                    log("multiphoto[index]['image'] ${multiphoto[index]['image']}");
-                                                    MultiImageProvider
-                                                        multiImageProvider =
-                                                        MultiImageProvider(
-                                                            List.generate(
-                                                                multiphoto
-                                                                    .length,
-                                                                ((index) {
-                                                              return Image(
-                                                                  image:
-                                                                      CachedNetworkImageProvider(
-                                                                multiphoto[
-                                                                        index]
-                                                                    ['image'],
-                                                              )).image;
-                                                            })),
-                                                            initialIndex:
-                                                                index);
-                                                    showImageViewerPager(
-                                                        context,
-                                                        backgroundColor: Colors
-                                                            .black
-                                                            .withAlpha(110),
-                                                        multiImageProvider,
-                                                        swipeDismissible: true,
-                                                        doubleTapZoomable: true,
-                                                        useSafeArea: true);
+                                                // });
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    2,
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.contain,
+                                                        image:
+                                                            CachedNetworkImageProvider(
+                                                                post))),
+                                              ),
+                                            )
+                                          : post.contains('.mp4')
+                                              ? GestureDetector(
+                                                  onDoubleTap: () async {
+                                                    // setState(() {
+                                                    //   _.islikeboollist[index] =
+                                                    //       !_.islikeboollist[index];
+                                                    //   if (_.islikeboollist[index] == true) {
+                                                    //     setState(() {
+                                                    //       _.posts[index]['reaction']
+                                                    //           ['count']++;
+                                                    //     });
+                                                    //   } else {
+                                                    //     setState(() {
+                                                    //       _.posts[index]['reaction']
+                                                    //           ['count']--;
+                                                    //     });
+                                                    //   }
+                                                    LikedBloc(
+                                                        postid,
+                                                        "2",
+                                                        _.posts[index]
+                                                                ['reaction']
+                                                            ['is_reacted'],
+                                                        widget.url);
+
+                                                    // });
                                                   },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image:
-                                                                CachedNetworkImageProvider(
-                                                                    mulimage))),
+                                                  child:
+                                                      VideoPlayer(post: post))
+                                              // ? VideoPost(post: _post)
+                                              : multiImage == '1' && post != " "
+                                                  ? SizedBox(
+                                                      height: 400,
+                                                      child: StaggeredGridView
+                                                          .countBuilder(
+                                                        // padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                                                        crossAxisCount: 4,
+                                                        shrinkWrap: true,
+
+                                                        itemCount:
+                                                            multiphoto!.length,
+                                                        primary: true,
+                                                        //shrinkWrap: false,
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          String mulimage =
+                                                              multiphoto[index]
+                                                                  ['image'];
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              log("  multiphoto.length ${multiphoto.length}");
+                                                              log("multiphoto[index]['image'] ${multiphoto[index]['image']}");
+                                                              MultiImageProvider
+                                                                  multiImageProvider =
+                                                                  MultiImageProvider(
+                                                                      List.generate(
+                                                                          multiphoto
+                                                                              .length,
+                                                                          ((index) {
+                                                                        return Image(
+                                                                            image:
+                                                                                CachedNetworkImageProvider(
+                                                                          multiphoto[index]
+                                                                              [
+                                                                              'image'],
+                                                                        )).image;
+                                                                      })),
+                                                                      initialIndex:
+                                                                          index);
+                                                              showImageViewerPager(
+                                                                  context,
+                                                                  backgroundColor: Colors
+                                                                      .black
+                                                                      .withAlpha(
+                                                                          110),
+                                                                  multiImageProvider,
+                                                                  swipeDismissible:
+                                                                      true,
+                                                                  doubleTapZoomable:
+                                                                      true,
+                                                                  useSafeArea:
+                                                                      true);
+                                                            },
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                  image: DecorationImage(
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                      image: CachedNetworkImageProvider(
+                                                                          mulimage))),
+                                                            ),
+                                                          );
+                                                        },
+                                                        mainAxisSpacing: 5.0,
+                                                        crossAxisSpacing: 5.0,
+                                                        staggeredTileBuilder:
+                                                            (int index) {
+                                                          return StaggeredTile
+                                                              .count(
+                                                                  multiphoto.length ==
+                                                                          2
+                                                                      ? 4
+                                                                      : 2,
+                                                                  2);
+                                                        },
+                                                      ),
+                                                    )
+                                                  : const SizedBox(),
+                                      options.isNotEmpty && options != []
+                                          ? GetBuilder<ListOfPostsController>(
+                                              initState: (_) {},
+                                              builder: (_) {
+                                                return SimplePollsWidget(
+                                                  onSelection: (PollFrameModel
+                                                          model,
+                                                      PollOptions
+                                                          selectedOptionModel) {
+                                                    _.pollVoteUp(
+                                                        postID:
+                                                            postid.toString(),
+                                                        voteID:
+                                                            selectedOptionModel
+                                                                .id
+                                                                .toString());
+                                                    // print('Now total polls are : ' +
+                                                    //     model.totalPolls.toString());
+                                                    // print('Selected option has label : ' +
+                                                    //     selectedOptionModel.id);
+                                                  },
+                                                  onReset:
+                                                      (PollFrameModel model) {
+                                                    print(
+                                                        'Poll has been reset, this happens only in case of editable polls');
+                                                  },
+                                                  optionsBorderShape:
+                                                      const StadiumBorder(),
+                                                  model: PollFrameModel(
+                                                    title: Container(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Linkify(
+                                                        onOpen: (link) async {
+                                                          if (!await launchUrl(
+                                                              Uri.parse(
+                                                                  link.url))) {
+                                                            throw Exception(
+                                                                'Could not launch ${link.url}');
+                                                          }
+                                                        },
+                                                        text: postText,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    totalPolls: options[0]
+                                                        ['all'],
+                                                    endTime: DateTime.now()
+                                                        .toUtc()
+                                                        .add(const Duration(
+                                                            days: 10)),
+                                                    hasVoted: _.posts[index]
+                                                            ['voted_id'] !=
+                                                        null,
+                                                    editablePoll: false,
+                                                    options: List.generate(
+                                                        options.length,
+                                                        (j) => PollOptions(
+                                                              label: options[j]
+                                                                  ['text'],
+                                                              pollsCount: int
+                                                                  .parse(options[
+                                                                          j][
+                                                                      'option_votes']),
+                                                              isSelected: _.posts[
+                                                                          index]
+                                                                      [
+                                                                      'voted_id'] ==
+                                                                  options[j]
+                                                                      ['id'],
+                                                              id: options[j]
+                                                                  ['id'],
+                                                            )),
                                                   ),
                                                 );
                                               },
-                                              mainAxisSpacing: 5.0,
-                                              crossAxisSpacing: 5.0,
-                                              staggeredTileBuilder:
-                                                  (int index) {
-                                                return StaggeredTile.count(
-                                                    multiphoto.length == 2
-                                                        ? 4
-                                                        : 2,
-                                                    2);
-                                              },
-                                            ),
-                                          )
-                                        : const SizedBox(),
-                            options.isNotEmpty && options != []
-                                ? GetBuilder<ListOfPostsController>(
-                                    initState: (_) {},
-                                    builder: (_) {
-                                      return SimplePollsWidget(
-                                        onSelection: (PollFrameModel model,
-                                            PollOptions selectedOptionModel) {
-                                          _.pollVoteUp(
-                                              postID: postid.toString(),
-                                              voteID: selectedOptionModel.id
-                                                  .toString());
-                                          // print('Now total polls are : ' +
-                                          //     model.totalPolls.toString());
-                                          // print('Selected option has label : ' +
-                                          //     selectedOptionModel.id);
-                                        },
-                                        onReset: (PollFrameModel model) {
-                                          print(
-                                              'Poll has been reset, this happens only in case of editable polls');
-                                        },
-                                        optionsBorderShape:
-                                            const StadiumBorder(),
-                                        model: PollFrameModel(
-                                          title: Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              postText,
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                          totalPolls: options[0]['all'],
-                                          endTime: DateTime.now()
-                                              .toUtc()
-                                              .add(const Duration(days: 10)),
-                                          hasVoted: _.posts[index]
-                                                  ['voted_id'] !=
-                                              null,
-                                          editablePoll: false,
-                                          options: List.generate(
-                                              options.length,
-                                              (j) => PollOptions(
-                                                    label: options[j]['text'],
-                                                    pollsCount: int.parse(
-                                                        options[j]
-                                                            ['option_votes']),
-                                                    isSelected: _.posts[index]
-                                                            ['voted_id'] ==
-                                                        options[j]['id'],
-                                                    id: options[j]['id'],
-                                                  )),
-                                        ),
-                                      );
-                                    },
+                                            )
+                                          : const SizedBox(),
+                                      _.posts[index]['postRecord'] != '' &&
+                                              _.posts[index]['postRecord'] !=
+                                                  null
+                                          ? AudioPl(_, index)
+                                          : const SizedBox(),
+                                    ],
                                   )
-                                : const SizedBox(),
-                            _.posts[index]['postRecord'] != '' &&
-                                    _.posts[index]['postRecord'] != null
-                                ? AudioPl(_, index)
-                                : const SizedBox(),
+                                : Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          // color: Colors.yellow,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                              color: Colors.black54, width: 1)),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        //reshare
+                                        children: [
+                                          Row(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  profileid !=
+                                                          _.posts[index][
+                                                                  'sharePostData']
+                                                              ['user_id']
+                                                      ? Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ViewProfileScreen(
+                                                                    userviewid: _.posts[index]
+                                                                            [
+                                                                            'sharePostData']
+                                                                        [
+                                                                        'user_id'],
+                                                                  )))
+                                                      : null;
+                                                },
+                                                child: Container(
+                                                  height: 50,
+                                                  width: 50,
+                                                  margin: const EdgeInsets.only(
+                                                      left: 12, top: 12),
+                                                  decoration:
+                                                      Palette.RoundGradient,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            2.0),
+                                                    child: CircleAvatar(
+                                                      backgroundImage:
+                                                          CachedNetworkImageProvider(_
+                                                                          .posts[
+                                                                      index][
+                                                                  'sharePostData']
+                                                              [
+                                                              'publisher']['avatar']),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    GetBuilder<
+                                                        ListOfPostsController>(
+                                                      initState: (_) {},
+                                                      builder: (_) {
+                                                        var grpTitle = _
+                                                            .categoryList
+                                                            .firstWhereOrNull((element) =>
+                                                                _.posts[index][
+                                                                        'sharePostData']
+                                                                    [
+                                                                    'group_id'] ==
+                                                                element[
+                                                                    'group_id']);
+
+                                                        return Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Text(
+                                                              "${_.posts[index]['sharePostData']['publisher']['first_name']} ${_.posts[index]['sharePostData']['publisher']['last_name']}",
+                                                              style: Palette
+                                                                  .blacktext16,
+                                                            ),
+                                                            grpTitle != null
+                                                                ? const Icon(
+                                                                    Icons
+                                                                        .arrow_right_rounded,
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    size: 30)
+                                                                : const SizedBox(),
+                                                            grpTitle != null
+                                                                ? Flexible(
+                                                                    child: Text(
+                                                                      grpTitle[
+                                                                          'group_title'],
+                                                                      style: Palette
+                                                                          .greytext12
+                                                                          .copyWith(
+                                                                              fontSize: 10),
+                                                                    ),
+                                                                  )
+                                                                : const SizedBox(),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ),
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        const SizedBox(
+                                                          width: 3,
+                                                        ),
+                                                        const Icon(
+                                                          Icons.access_time,
+                                                          size: 13,
+                                                          color: kGreyone,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            _.posts[index][
+                                                                    'sharePostData']
+                                                                ['post_time'],
+                                                            style: Palette
+                                                                .greytext12
+                                                                .copyWith(
+                                                                    fontSize:
+                                                                        10),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                              margin: const EdgeInsets.only(
+                                                  left: 20, top: 10),
+                                              child: Text(
+                                                _.posts[index]['sharePostData']
+                                                    ['title'],
+                                                style: Palette.blacktext14B
+                                                    .copyWith(fontSize: 16),
+                                              )),
+                                          //reshare post
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              _
+                                                          .posts[index]
+                                                              ['sharePostData']
+                                                              ['options']
+                                                          .isNotEmpty &&
+                                                      _.posts[index][
+                                                                  'sharePostData']
+                                                              ['options'] !=
+                                                          []
+                                                  ? const SizedBox()
+                                                  : rPostFeelingText != ''
+                                                      ? Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 20,
+                                                                  top: 6,
+                                                                  bottom: 10),
+                                                          child: Row(
+                                                            children: [
+                                                              Linkify(
+                                                                onOpen:
+                                                                    (link) async {
+                                                                  if (!await launchUrl(
+                                                                      Uri.parse(
+                                                                          link.url))) {
+                                                                    throw Exception(
+                                                                        'Could not launch ${link.url}');
+                                                                  }
+                                                                },
+                                                                text: _.posts[
+                                                                            index]
+                                                                        [
+                                                                        'sharePostData']
+                                                                    [
+                                                                    'Orginaltext'],
+                                                              ),
+                                                              const Text(" - "),
+                                                              rfeelingType != 10
+                                                                  ? Icon(
+                                                                      feelingIcon[
+                                                                          rfeelingType],
+                                                                      size: 16,
+                                                                    )
+                                                                  : const SizedBox(),
+                                                              Text(
+                                                                  rPostFeelingText),
+                                                            ],
+                                                          ))
+                                                      : (_.posts[index][
+                                                                      'sharePostData']
+                                                                  ['Orginaltext'] !=
+                                                              '')
+                                                          ? Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      left: 20,
+                                                                      top: 6,
+                                                                      bottom:
+                                                                          10),
+                                                              child: Linkify(
+                                                                onOpen:
+                                                                    (link) async {
+                                                                  if (!await launchUrl(
+                                                                      Uri.parse(
+                                                                          link.url))) {
+                                                                    throw Exception(
+                                                                        'Could not launch ${link.url}');
+                                                                  }
+                                                                },
+                                                                text: _.posts[
+                                                                            index]
+                                                                        [
+                                                                        'sharePostData']
+                                                                    [
+                                                                    'Orginaltext'],
+                                                              ),
+                                                              // Text(postText),here
+                                                            )
+                                                          : const SizedBox(
+                                                              height: 6,
+                                                            ),
+                                              _.posts[index]['sharePostData']
+                                                              ['postFile_full']
+                                                          .contains(".jpeg") ||
+                                                      _.posts[index]
+                                                              ['sharePostData']
+                                                              ['postFile_full']
+                                                          .contains(".jpg") ||
+                                                      _.posts[index]
+                                                              ['sharePostData']
+                                                              ['postFile_full']
+                                                          .contains(".png")
+                                                  ? GestureDetector(
+                                                      onDoubleTap: () {
+                                                        // setState(() {
+                                                        //   _.islikeboollist[index] =
+                                                        //       !_.islikeboollist[index];
+                                                        //   if (_.islikeboollist[index] == true) {
+                                                        //     setState(() {
+                                                        //       _.posts[index]['reaction']['count']++;
+                                                        //     });
+                                                        //   } else {
+                                                        //     setState(() {
+                                                        //       _.posts[index]['reaction']['count']--;
+                                                        //     });
+                                                        //   }
+                                                        LikedBloc(
+                                                            postid,
+                                                            "2",
+                                                            _.posts[index]
+                                                                    ['reaction']
+                                                                ['is_reacted'],
+                                                            widget.url);
+
+                                                        // });
+                                                      },
+                                                      child: Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            2,
+                                                        decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                                image: CachedNetworkImageProvider(
+                                                                    _.posts[index]
+                                                                            [
+                                                                            'sharePostData']
+                                                                        [
+                                                                        'postFile_full']))),
+                                                      ),
+                                                    )
+                                                  : _.posts[index]
+                                                              ['sharePostData']
+                                                              ['postFile_full']
+                                                          .contains('.mp4')
+                                                      ? GestureDetector(
+                                                          onDoubleTap:
+                                                              () async {
+                                                            // setState(() {
+                                                            //   _.islikeboollist[index] =
+                                                            //       !_.islikeboollist[index];
+                                                            //   if (_.islikeboollist[index] == true) {
+                                                            //     setState(() {
+                                                            //       _.posts[index]['reaction']
+                                                            //           ['count']++;
+                                                            //     });
+                                                            //   } else {
+                                                            //     setState(() {
+                                                            //       _.posts[index]['reaction']
+                                                            //           ['count']--;
+                                                            //     });
+                                                            //   }
+                                                            LikedBloc(
+                                                                postid,
+                                                                "2",
+                                                                _.posts[index][
+                                                                            'sharePostData']
+                                                                        [
+                                                                        'reaction']
+                                                                    [
+                                                                    'is_reacted'],
+                                                                widget.url);
+
+                                                            // });
+                                                          },
+                                                          child: VideoPlayer(post: _.posts[index]['sharePostData']['postFile_full']))
+                                                      // ? VideoPost(post: _post) hereitis
+                                                      : rmultiImage == '1' && _.posts[index]['sharePostData']['postFile_full'] != " "
+                                                          ? SizedBox(
+                                                              height: 395,
+                                                              child: StaggeredGridView
+                                                                  .countBuilder(
+                                                                // padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                                                                crossAxisCount:
+                                                                    4,
+                                                                itemCount:
+                                                                    rmultiphoto!
+                                                                        .length,
+                                                                primary: true,
+                                                                //shrinkWrap: false,
+                                                                physics:
+                                                                    const NeverScrollableScrollPhysics(),
+                                                                itemBuilder:
+                                                                    (BuildContext
+                                                                            context,
+                                                                        int index) {
+                                                                  String
+                                                                      mulimage =
+                                                                      rmultiphoto[
+                                                                              index]
+                                                                          [
+                                                                          'image'];
+                                                                  return InkWell(
+                                                                    onTap: () {
+                                                                      log("  multiphoto.length ${rmultiphoto.length}");
+                                                                      log("multiphoto[index]['image'] ${rmultiphoto[index]['image']}");
+                                                                      MultiImageProvider
+                                                                          multiImageProvider =
+                                                                          MultiImageProvider(
+                                                                              List.generate(rmultiphoto.length, ((index) {
+                                                                                return Image(
+                                                                                    image: CachedNetworkImageProvider(
+                                                                                  rmultiphoto[index]['image'],
+                                                                                )).image;
+                                                                              })),
+                                                                              initialIndex: index);
+                                                                      showImageViewerPager(
+                                                                          context,
+                                                                          backgroundColor: Colors.black.withAlpha(
+                                                                              110),
+                                                                          multiImageProvider,
+                                                                          swipeDismissible:
+                                                                              true,
+                                                                          doubleTapZoomable:
+                                                                              true,
+                                                                          useSafeArea:
+                                                                              true);
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      decoration: BoxDecoration(
+                                                                          image: DecorationImage(
+                                                                              fit: BoxFit.cover,
+                                                                              image: CachedNetworkImageProvider(mulimage))),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                                mainAxisSpacing:
+                                                                    5.0,
+                                                                crossAxisSpacing:
+                                                                    5.0,
+                                                                staggeredTileBuilder:
+                                                                    (int
+                                                                        index) {
+                                                                  return StaggeredTile.count(
+                                                                      rmultiphoto.length ==
+                                                                              2
+                                                                          ? 4
+                                                                          : 2,
+                                                                      2);
+                                                                },
+                                                              ),
+                                                            )
+                                                          : const SizedBox(),
+                                              _
+                                                          .posts[index]
+                                                              ['sharePostData']
+                                                              ['options']
+                                                          .isNotEmpty &&
+                                                      _.posts[index][
+                                                                  'sharePostData']
+                                                              ['options'] !=
+                                                          []
+                                                  ? GetBuilder<
+                                                      ListOfPostsController>(
+                                                      initState: (_) {},
+                                                      builder: (_) {
+                                                        return SimplePollsWidget(
+                                                          onSelection:
+                                                              (PollFrameModel
+                                                                      model,
+                                                                  PollOptions
+                                                                      selectedOptionModel) {
+                                                            _.pollVoteUp(
+                                                                postID: _.posts[
+                                                                        index][
+                                                                        'sharePostData']
+                                                                        [
+                                                                        'post_id']
+                                                                    .toString(),
+                                                                voteID: selectedOptionModel
+                                                                    .id
+                                                                    .toString());
+                                                            // print('Now total polls are : ' +
+                                                            //     model.totalPolls.toString());
+                                                            // print('Selected option has label : ' +
+                                                            //     selectedOptionModel.id);
+                                                          },
+                                                          onReset:
+                                                              (PollFrameModel
+                                                                  model) {
+                                                            print(
+                                                                'Poll has been reset, this happens only in case of editable polls');
+                                                          },
+                                                          optionsBorderShape:
+                                                              const StadiumBorder(),
+                                                          model: PollFrameModel(
+                                                            title: Container(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Linkify(
+                                                                onOpen:
+                                                                    (link) async {
+                                                                  if (!await launchUrl(
+                                                                      Uri.parse(
+                                                                          link.url))) {
+                                                                    throw Exception(
+                                                                        'Could not launch ${link.url}');
+                                                                  }
+                                                                },
+                                                                text: _.posts[
+                                                                        index][
+                                                                        'sharePostData']
+                                                                        [
+                                                                        'Orginaltext']
+                                                                    .toString(),
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            totalPolls: _.posts[
+                                                                        index][
+                                                                    'sharePostData']
+                                                                [
+                                                                'options'][0]['all'],
+                                                            endTime: DateTime
+                                                                    .now()
+                                                                .toUtc()
+                                                                .add(const Duration(
+                                                                    days: 10)),
+                                                            hasVoted: _.posts[
+                                                                            index]
+                                                                        [
+                                                                        'sharePostData']
+                                                                    [
+                                                                    'voted_id'] !=
+                                                                null,
+                                                            editablePoll: false,
+                                                            options:
+                                                                List.generate(
+                                                                    _
+                                                                        .posts[
+                                                                            index]
+                                                                            [
+                                                                            'sharePostData']
+                                                                            [
+                                                                            'options']
+                                                                        .length,
+                                                                    (j) =>
+                                                                        PollOptions(
+                                                                          label:
+                                                                              _.posts[index]['sharePostData']['options'][j]['text'],
+                                                                          pollsCount:
+                                                                              int.parse(_.posts[index]['sharePostData']['options'][j]['option_votes']),
+                                                                          isSelected:
+                                                                              _.posts[index]['sharePostData']['voted_id'] == _.posts[index]['sharePostData']['options'][j]['id'],
+                                                                          id: _.posts[index]['sharePostData']['options'][j]
+                                                                              [
+                                                                              'id'],
+                                                                        )),
+                                                          ),
+                                                        );
+                                                      },
+                                                    )
+                                                  : const SizedBox(),
+                                              _.posts[index]['sharePostData']
+                                                              ['postRecord'] !=
+                                                          '' &&
+                                                      _.posts[index][
+                                                                  'sharePostData']
+                                                              ['postRecord'] !=
+                                                          null
+                                                  ? AudioPl(_, index)
+                                                  : const SizedBox(),
+                                              const SizedBox(
+                                                height: 12,
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                             _.isReacting[index]
                                 ? Card(
                                     shape: RoundedRectangleBorder(
@@ -752,7 +1446,9 @@ class _MyWidgetState extends State<ListOfPosts> {
                                     ),
                                   )
                                 : const SizedBox(),
-                            const SizedBox(height: 10),
+                            SizedBox(
+                                height:
+                                    multiImage == '1' && post != " " ? 25 : 10),
                             Container(
                               margin:
                                   const EdgeInsets.only(left: 15, right: 15),
@@ -916,28 +1612,40 @@ class _MyWidgetState extends State<ListOfPosts> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      InkWell(
-                                        onTap: () {
-                                          Share.share(
-                                              'check out this post on Better Solver ${_.posts[index]['post_url']}',
-                                              subject:
-                                                  '${_.posts[index]['title']}');
-                                          // sharePostDialogue(shareUrl);
-                                        },
-                                        child: CircleAvatar(
-                                          radius: 20,
-                                          backgroundColor: kThemeColorLightGrey
-                                              .withOpacity(0.4),
-                                          child: Container(
-                                            height: 20,
-                                            width: 20,
-                                            decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/images/postshareicon.png'))),
-                                          ),
-                                        ),
-                                      ),
+                                      _.posts[index]['sharePostData'] == null
+                                          ? InkWell(
+                                              onTap: () {
+                                                //reshare dialogue
+
+                                                reshareDialogue(
+                                                  context,
+                                                  _.posts[index]['post_url']
+                                                      .toString(),
+                                                  _.posts[index]['title']
+                                                      .toString(),
+                                                  _.posts[index]['post_id']
+                                                      .toString(),
+                                                  _.posts[index]['type_id']
+                                                      .toString(),
+                                                );
+                                                // sharePostDialogue(shareUrl);
+                                              },
+                                              child: CircleAvatar(
+                                                radius: 20,
+                                                backgroundColor:
+                                                    kThemeColorLightGrey
+                                                        .withOpacity(0.4),
+                                                child: Container(
+                                                  height: 20,
+                                                  width: 20,
+                                                  decoration: const BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/images/postshareicon.png'))),
+                                                ),
+                                              ),
+                                            )
+                                          : const SizedBox(),
                                       const SizedBox(
                                         height: 5,
                                       ),
@@ -978,8 +1686,8 @@ class _MyWidgetState extends State<ListOfPosts> {
                                                   !_.issavepostboollist[index];
                                               SavepostBloc(postid,
                                                   _keyLoadersavepost, context);
-                                              _.fetchallpost(
-                                                  _.pageno, widget.url);
+                                              // _.fetchallpost(
+                                              //     _.pageno, widget.url);
                                             });
                                           },
                                           child: _.issavepostboollist[index]
@@ -1093,7 +1801,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                         allowedInteraction: SliderInteraction.tapOnly,
                         onChanged: (value) {
                           log(value.toString());
-                          
+
                           // log('${value.toString()}--->${_.aud[index].duration!.inMilliseconds.toString()}');
                         },
                       );
@@ -1173,7 +1881,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                           child: TextField(
                             controller: _.titleController,
                             keyboardType: TextInputType.emailAddress,
-                            style: GoogleFonts.reemKufi(
+                            style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w400, fontSize: 12),
                             decoration: InputDecoration(
                               fillColor: kWhite,
@@ -1201,7 +1909,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                               contentPadding: const EdgeInsets.all(8.0),
                               hintText: 'Title',
                               labelStyle:
-                                  GoogleFonts.reemKufi(color: Colors.grey),
+                                  GoogleFonts.roboto(color: Colors.grey),
                             ),
                           ),
                         ),
@@ -1218,7 +1926,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                         child: DropdownButtonFormField(
                           isExpanded: true,
                           // icon: Icon(Icons.add_location),
-                          style: GoogleFonts.reemKufi(
+                          style: GoogleFonts.roboto(
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
                             fontSize: 12.0,
@@ -1226,7 +1934,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                           value: _.categoryType,
                           hint: Text(
                             'Select Category',
-                            style: GoogleFonts.reemKufi(
+                            style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
                                 color: kBlack),
@@ -1265,8 +1973,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                             ),
                             contentPadding: const EdgeInsets.all(8.0),
                             hintText: 'type somthing....',
-                            labelStyle:
-                                GoogleFonts.reemKufi(color: Colors.grey),
+                            labelStyle: GoogleFonts.roboto(color: Colors.grey),
                           ),
                           onChanged: (newValue) {
                             _.categoryType = newValue;
@@ -1286,7 +1993,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                           child: TextField(
                             controller: _.captionController,
                             keyboardType: TextInputType.emailAddress,
-                            style: GoogleFonts.reemKufi(
+                            style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w400, fontSize: 12),
                             decoration: InputDecoration(
                               fillColor: kWhite,
@@ -1314,7 +2021,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                               contentPadding: const EdgeInsets.all(8.0),
                               hintText: 'type somthing....',
                               labelStyle:
-                                  GoogleFonts.reemKufi(color: Colors.grey),
+                                  GoogleFonts.roboto(color: Colors.grey),
                             ),
                           ),
                         ),
@@ -1582,7 +2289,7 @@ class _MyWidgetState extends State<ListOfPosts> {
     Widget cancelButton = MaterialButton(
       child: Text(
         "Cancel",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context, false);
@@ -1591,7 +2298,7 @@ class _MyWidgetState extends State<ListOfPosts> {
     Widget continueButton = MaterialButton(
       child: Text(
         "Yes",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context);
@@ -1662,7 +2369,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                   //     child: TextField(
                   //       controller: reportTextController,
                   //       keyboardType: TextInputType.emailAddress,
-                  //       style: GoogleFonts.reemKufi(
+                  //       style: GoogleFonts.roboto(
                   //           fontWeight: FontWeight.w400, fontSize: 12),
                   //       decoration: InputDecoration(
                   //         fillColor: kWhite,
@@ -1689,7 +2396,7 @@ class _MyWidgetState extends State<ListOfPosts> {
                   //         ),
                   //         contentPadding: const EdgeInsets.all(8.0),
                   //         hintText: 'type somthing....',
-                  //         labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+                  //         labelStyle: GoogleFonts.roboto(color: Colors.grey),
                   //       ),
                   //     ),
                   //   ),
@@ -1847,6 +2554,142 @@ class _MyWidgetState extends State<ListOfPosts> {
     );
   }
 
+  Future<void> reshareDialogue(BuildContext context, String post,
+      String content, String postId, String typeId) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: SimpleDialog(
+            backgroundColor: kWhite,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 30,
+                    decoration: Palette.loginGradient,
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      decoration: const BoxDecoration(
+                          color: kWhite,
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(25),
+                              bottomLeft: Radius.circular(25))),
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Center(
+                    child: Text(
+                      'Share Post',
+                      style: Palette.appbarTitle,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: kThemeColorLightBlue,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: InkWell(
+                            onTap: () async {
+                              //timeline
+                              SharedPreferences pref =
+                                  await SharedPreferences.getInstance();
+                              String? s = pref.getString('s');
+                              String? userid = pref.getString('userid');
+                              final requestBody = {
+                                "user_id": userid,
+                                "s": s,
+                                'post_id': postId,
+                                'type_id': typeId,
+                                'share_on': 'timeline',
+                                'text': '',
+                              };
+
+                              final response =
+                                  await ApiProvider().httpMethodWithoutToken(
+                                'post',
+                                'demo2/app_api.php?application=phone&type=share_post',
+                                requestBody,
+                              );
+                              var data = AllPostModel.fromJson(response);
+                              if (data.apiStatus == "200") {
+                                Navigator.pop(context);
+                                _.onRefresh();
+                              }
+                            },
+                            child: const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Share to My Timeline'),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: kThemeColorLightBlue,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                              Share.share(
+                                  'check out this post on Better Solver $post',
+                                  subject: content);
+                            },
+                            child: const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Share to Others'),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: kThemeColorBlue,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Cancel'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   showAlertDialogForHide(
       {required BuildContext context,
       required String postid,
@@ -1855,7 +2698,7 @@ class _MyWidgetState extends State<ListOfPosts> {
     Widget cancelButton = MaterialButton(
       child: Text(
         "Cancel",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context, false);
@@ -1867,16 +2710,15 @@ class _MyWidgetState extends State<ListOfPosts> {
         return MaterialButton(
           child: Text(
             "Yes",
-            style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+            style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
           ),
-          onPressed: () {
+          onPressed: () async {
             setState(() {
+              _.posts.remove(_.posts[index]);
               Navigator.pop(context);
               LoadingDialog.showLoadingDialog(context, _keyLoader);
               HidePostBloc(postid, _keyLoader, context);
-            });
-            setState(() {
-              _.posts.remove(_.posts[index]);
+              _.onRefresh();
             });
           },
         );
@@ -1906,7 +2748,7 @@ class _MyWidgetState extends State<ListOfPosts> {
     Widget cancelButton = MaterialButton(
       child: Text(
         "Cancel",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context, false);
@@ -1918,7 +2760,7 @@ class _MyWidgetState extends State<ListOfPosts> {
         return MaterialButton(
           child: Text(
             "Yes",
-            style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+            style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
           ),
           onPressed: () {
             // Navigator.pop(context);

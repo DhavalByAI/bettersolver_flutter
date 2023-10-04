@@ -201,7 +201,7 @@ class _SocialLinksScreenState extends State<SocialLinksScreen> {
                                 hintText: "user name",
                                 hintStyle: Palette.greytext12,
                                 // labelText: "Email",
-                                labelStyle: GoogleFonts.reemKufi(
+                                labelStyle: GoogleFonts.roboto(
                                     color: const Color(0xFF424242)),
                                 enabledBorder: const UnderlineInputBorder(
                                   borderSide:
@@ -237,7 +237,7 @@ class _SocialLinksScreenState extends State<SocialLinksScreen> {
                                 hintStyle: Palette.greytext12,
 
                                 // labelText: "Email",
-                                labelStyle: GoogleFonts.reemKufi(
+                                labelStyle: GoogleFonts.roboto(
                                     color: const Color(0xFF424242)),
 
                                 enabledBorder: const UnderlineInputBorder(
@@ -280,7 +280,7 @@ class _SocialLinksScreenState extends State<SocialLinksScreen> {
                                 hintText: "youtube link",
                                 hintStyle: Palette.greytext12,
                                 // labelText: "Email",
-                                labelStyle: GoogleFonts.reemKufi(
+                                labelStyle: GoogleFonts.roboto(
                                     color: const Color(0xFF424242)),
                                 enabledBorder: const UnderlineInputBorder(
                                   borderSide:
@@ -316,7 +316,7 @@ class _SocialLinksScreenState extends State<SocialLinksScreen> {
                                 hintStyle: Palette.greytext12,
 
                                 // labelText: "Email",
-                                labelStyle: GoogleFonts.reemKufi(
+                                labelStyle: GoogleFonts.roboto(
                                     color: const Color(0xFF424242)),
 
                                 enabledBorder: const UnderlineInputBorder(
@@ -357,8 +357,8 @@ class _SocialLinksScreenState extends State<SocialLinksScreen> {
                         hintText: "user name",
                         hintStyle: Palette.greytext12,
                         // labelText: "Email",
-                        labelStyle: GoogleFonts.reemKufi(
-                            color: const Color(0xFF424242)),
+                        labelStyle:
+                            GoogleFonts.roboto(color: const Color(0xFF424242)),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey, width: 1),
                           // borderRadius: BorderRadius.circular(30.0),

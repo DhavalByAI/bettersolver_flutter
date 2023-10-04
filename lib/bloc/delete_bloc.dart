@@ -10,11 +10,9 @@ class DeleteBloc {
   DeleteRepository? _deleteRepository;
   StreamController? _streamController;
 
-  StreamSink get deleteblocDatasink =>
-      _streamController!.sink;
+  StreamSink get deleteblocDatasink => _streamController!.sink;
 
-  Stream get deleteblocDataStream =>
-      _streamController!.stream;
+  Stream get deleteblocDataStream => _streamController!.stream;
 
   DeleteBloc(GlobalKey<State> _keyLoader, BuildContext context) {
     print('Call Delete Bloc');
@@ -25,16 +23,16 @@ class DeleteBloc {
     fetchdeleteData(_keyLoader, context);
   }
 
-  fetchdeleteData(GlobalKey<State> _keyLoader, BuildContext context) async {
+  fetchdeleteData(GlobalKey<State> keyLoader, BuildContext context) async {
     deleteblocDatasink.add(Response.loading('Loading....'));
 
     try {
       CommonModel commonModel = await _deleteRepository!.fetchdelete();
       deleteblocDatasink.add(Response.completed(commonModel));
     } catch (e) {
-      Navigator.pop(context);
+      // Navigator.pop(context);
       ErrorDialouge.showErrorDialogue(
-          context, _keyLoader, "Something went wrong, Contact Admin..!");
+          context, keyLoader, "Something went wrong, Contact Admin..!");
       print("Exception === $e");
     }
   }

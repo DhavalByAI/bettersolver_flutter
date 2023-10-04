@@ -147,7 +147,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                   fillColor: kThemeColorLightGrey,
                                   hintStyle: Palette.greytext12,
                                   contentPadding: const EdgeInsets.all(10),
-                                  labelStyle: GoogleFonts.reemKufi(
+                                  labelStyle: GoogleFonts.roboto(
                                       color: const Color(0xFF424242)),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
@@ -601,7 +601,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                                               height: 200,
                                                               margin:
                                                                   const EdgeInsets
-                                                                          .only(
+                                                                      .only(
                                                                       top: 5,
                                                                       bottom:
                                                                           5),
@@ -764,8 +764,7 @@ class _CommentScreenState extends State<CommentScreen> {
                 fillColor: Colors.grey[100], //kThemeColorLightGrey,
                 hintStyle: Palette.greytext12,
                 contentPadding: const EdgeInsets.all(10),
-                labelStyle:
-                    GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+                labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
                 enabledBorder: OutlineInputBorder(
                   borderSide:
                       const BorderSide(color: Colors.transparent, width: 1),
@@ -825,8 +824,7 @@ class _CommentScreenState extends State<CommentScreen> {
                 fillColor: Colors.grey[100], //kThemeColorLightGrey,
                 hintStyle: Palette.greytext12,
                 contentPadding: const EdgeInsets.all(10),
-                labelStyle:
-                    GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+                labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
                 enabledBorder: OutlineInputBorder(
                   borderSide:
                       const BorderSide(color: Colors.transparent, width: 1),
@@ -883,8 +881,7 @@ class _CommentScreenState extends State<CommentScreen> {
                 fillColor: kThemeColorLightGrey,
                 hintStyle: Palette.greytext12,
                 contentPadding: const EdgeInsets.all(10),
-                labelStyle:
-                    GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+                labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
                 enabledBorder: OutlineInputBorder(
                   borderSide:
                       const BorderSide(color: Colors.transparent, width: 1),

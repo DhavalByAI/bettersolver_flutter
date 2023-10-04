@@ -142,7 +142,7 @@ class CreatePollController extends GetxController {
             decoration: InputDecoration(
               hintText: "Option ${index + 1}",
               hintStyle: Palette.greytext12,
-              labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+              labelStyle: GoogleFonts.roboto(color: Colors.grey),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1),
                 // borderRadius: BorderRadius.circular(30.0),

@@ -228,7 +228,7 @@ class _ManageSessionScreenState extends State<ManageSessionScreen> {
     Widget cancelButton = MaterialButton(
       child: Text(
         "Cancel",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context, false);
@@ -237,7 +237,7 @@ class _ManageSessionScreenState extends State<ManageSessionScreen> {
     Widget continueButton = MaterialButton(
       child: Text(
         "Yes",
-        style: GoogleFonts.reemKufi(
+        style: GoogleFonts.roboto(
             fontSize: 14.0, color: kBlack, fontWeight: FontWeight.bold),
       ),
       onPressed: () {

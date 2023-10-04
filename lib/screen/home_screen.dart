@@ -1125,7 +1125,7 @@
 //     Widget cancelButton = MaterialButton(
 //       child: Text(
 //         "Cancel",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         Navigator.pop(context, false);
@@ -1134,7 +1134,7 @@
 //     Widget continueButton = MaterialButton(
 //       child: Text(
 //         "Yes",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         Navigator.pop(context);
@@ -1165,7 +1165,7 @@
 //     Widget cancelButton = MaterialButton(
 //       child: Text(
 //         "Cancel",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         Navigator.pop(context, false);
@@ -1174,7 +1174,7 @@
 //     Widget continueButton = MaterialButton(
 //       child: Text(
 //         "Yes",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         Navigator.pop(context);
@@ -1251,7 +1251,7 @@
 //                       child: TextField(
 //                         controller: reportTextController,
 //                         keyboardType: TextInputType.emailAddress,
-//                         style: GoogleFonts.reemKufi(
+//                         style: GoogleFonts.roboto(
 //                             fontWeight: FontWeight.w400, fontSize: 12),
 //                         decoration: InputDecoration(
 //                           fillColor: kWhite,
@@ -1278,7 +1278,7 @@
 //                           ),
 //                           contentPadding: const EdgeInsets.all(8.0),
 //                           hintText: 'type somthing....',
-//                           labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+//                           labelStyle: GoogleFonts.roboto(color: Colors.grey),
 //                         ),
 //                       ),
 //                     ),
@@ -1565,7 +1565,7 @@
 //                       child: TextField(
 //                         controller: reportTextController,
 //                         keyboardType: TextInputType.emailAddress,
-//                         style: GoogleFonts.reemKufi(
+//                         style: GoogleFonts.roboto(
 //                             fontWeight: FontWeight.w400, fontSize: 12),
 //                         decoration: InputDecoration(
 //                           fillColor: kWhite,
@@ -1592,7 +1592,7 @@
 //                           ),
 //                           contentPadding: const EdgeInsets.all(8.0),
 //                           hintText: 'type somthing....',
-//                           labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+//                           labelStyle: GoogleFonts.roboto(color: Colors.grey),
 //                         ),
 //                       ),
 //                     ),
@@ -1712,7 +1712,7 @@
 //                       child: TextField(
 //                         controller: titleController,
 //                         keyboardType: TextInputType.emailAddress,
-//                         style: GoogleFonts.reemKufi(
+//                         style: GoogleFonts.roboto(
 //                             fontWeight: FontWeight.w400, fontSize: 12),
 //                         decoration: InputDecoration(
 //                           fillColor: kWhite,
@@ -1739,7 +1739,7 @@
 //                           ),
 //                           contentPadding: const EdgeInsets.all(8.0),
 //                           hintText: 'Title',
-//                           labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+//                           labelStyle: GoogleFonts.roboto(color: Colors.grey),
 //                         ),
 //                       ),
 //                     ),
@@ -1756,7 +1756,7 @@
 //                     child: DropdownButtonFormField(
 //                       isExpanded: true,
 //                       // icon: Icon(Icons.add_location),
-//                       style: GoogleFonts.reemKufi(
+//                       style: GoogleFonts.roboto(
 //                         color: Colors.grey,
 //                         fontWeight: FontWeight.w400,
 //                         fontSize: 12.0,
@@ -1764,7 +1764,7 @@
 //                       value: categoryType,
 //                       hint: Text(
 //                         'Select Category',
-//                         style: GoogleFonts.reemKufi(
+//                         style: GoogleFonts.roboto(
 //                             fontWeight: FontWeight.w400,
 //                             fontSize: 12,
 //                             color: kBlack),
@@ -1803,7 +1803,7 @@
 //                         ),
 //                         contentPadding: const EdgeInsets.all(8.0),
 //                         hintText: 'type somthing....',
-//                         labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+//                         labelStyle: GoogleFonts.roboto(color: Colors.grey),
 //                       ),
 //                       onChanged: (newValue) {
 //                         setState(() {
@@ -1825,7 +1825,7 @@
 //                       child: TextField(
 //                         controller: postTextController,
 //                         keyboardType: TextInputType.emailAddress,
-//                         style: GoogleFonts.reemKufi(
+//                         style: GoogleFonts.roboto(
 //                             fontWeight: FontWeight.w400, fontSize: 12),
 //                         decoration: InputDecoration(
 //                           fillColor: kWhite,
@@ -1852,7 +1852,7 @@
 //                           ),
 //                           contentPadding: const EdgeInsets.all(8.0),
 //                           hintText: 'type somthing....',
-//                           labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+//                           labelStyle: GoogleFonts.roboto(color: Colors.grey),
 //                         ),
 //                       ),
 //                     ),
@@ -1934,7 +1934,7 @@
 //     Widget cancelButton = MaterialButton(
 //       child: Text(
 //         "Cancel",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         Navigator.pop(context, false);
@@ -1943,7 +1943,7 @@
 //     Widget continueButton = MaterialButton(
 //       child: Text(
 //         "Yes",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         setState(() {

@@ -189,7 +189,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
               // labelText: "Email",
               hintMaxLines: 2,
-              labelStyle: GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+              labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1),
                 // borderRadius: BorderRadius.circular(30.0),
@@ -227,7 +227,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   hintStyle: Palette.greytext12,
                   // labelText: "Email",
                   labelStyle:
-                      GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+                      GoogleFonts.roboto(color: const Color(0xFF424242)),
                   enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
@@ -261,7 +261,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
                   // labelText: "Email",
                   labelStyle:
-                      GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+                      GoogleFonts.roboto(color: const Color(0xFF424242)),
 
                   enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -297,7 +297,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
           width: MediaQuery.of(context).size.width / 2,
           child: DropdownButtonFormField(
             // icon: Icon(Icons.add_location),
-            style: GoogleFonts.reemKufi(
+            style: GoogleFonts.roboto(
               color: Colors.grey,
               fontWeight: FontWeight.w400,
               fontSize: 12.0,
@@ -305,8 +305,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
             value: auth,
             hint: Text(
               'Disable',
-              style: GoogleFonts.reemKufi(
-                  fontWeight: FontWeight.w400, fontSize: 12),
+              style:
+                  GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
             ),
             items: authList.map((item) {
               return DropdownMenuItem(

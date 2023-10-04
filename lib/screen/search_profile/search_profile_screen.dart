@@ -51,8 +51,12 @@ class _SearchProfileScreenState extends State<SearchProfileScreen> {
           centerTitle: true,
           backgroundColor: kWhite,
           title: Text(
-            'better solver',
-            style: Palette.greytext20B,
+            'Search',
+            style: GoogleFonts.reemKufi(
+              fontWeight: FontWeight.w700,
+              fontSize: 20.0,
+              color: kThemeColorGrey,
+            ),
           ),
         ),
         body: Stack(
@@ -94,8 +98,8 @@ class _SearchProfileScreenState extends State<SearchProfileScreen> {
                           color: Colors.grey,
                         ),
                         hintStyle: Palette.greytext12,
-                        labelStyle: GoogleFonts.reemKufi(
-                            color: const Color(0xFF424242)),
+                        labelStyle:
+                            GoogleFonts.roboto(color: const Color(0xFF424242)),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Colors.transparent, width: 1),
@@ -186,58 +190,72 @@ class _SearchProfileScreenState extends State<SearchProfileScreen> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   image: DecorationImage(
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(image))),
               child: Container(
-                margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 10, bottom: 5),
-                      child: Text(
-                        name,
-                        style: Palette.whiteText15,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: const LinearGradient(colors: [
+                    Colors.black87,
+                    Colors.black38,
+                    Colors.transparent,
+                    Colors.transparent,
+                    Colors.transparent
+                  ], begin: Alignment.bottomCenter, end: Alignment.topCenter),
+                ),
+                // margin:
+                //     const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(left: 10, bottom: 5),
+                        child: Text(
+                          name,
+                          style: Palette.whiteText15,
+                        ),
                       ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CircleAvatar(
-                          radius: 12,
-                          backgroundColor:
-                              kThemeColorLightGrey.withOpacity(0.4),
-                          child: Text(
-                            postnumber,
-                            style: Palette.whiteText12,
-                          ),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(bottom: 5),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CircleAvatar(
+                            radius: 12,
+                            backgroundColor:
+                                kThemeColorLightGrey.withOpacity(0.4),
                             child: Text(
-                              'post',
+                              postnumber,
                               style: Palette.whiteText12,
-                            )),
-                        CircleAvatar(
-                          radius: 12,
-                          backgroundColor:
-                              kThemeColorLightGrey.withOpacity(0.4),
-                          child: Text(
-                            followernumber,
-                            style: Palette.whiteText12,
+                            ),
                           ),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(bottom: 5),
+                          Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              child: Text(
+                                'post',
+                                style: Palette.whiteText12,
+                              )),
+                          CircleAvatar(
+                            radius: 12,
+                            backgroundColor:
+                                kThemeColorLightGrey.withOpacity(0.4),
                             child: Text(
-                              'Followers',
+                              followernumber,
                               style: Palette.whiteText12,
-                            )),
-                      ],
-                    ),
-                  ],
+                            ),
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              child: Text(
+                                'Followers',
+                                style: Palette.whiteText12,
+                              )),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -18,7 +18,7 @@ class CustomEditText extends StatelessWidget {
       child: TextField(
         controller: controller,
         keyboardType: TextInputType.text,
-        style: GoogleFonts.reemKufi(fontWeight: FontWeight.w500, fontSize: 16),
+        style: GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 16),
         decoration: InputDecoration(
           fillColor: kWhite,
           filled: true,
@@ -40,7 +40,7 @@ class CustomEditText extends StatelessWidget {
           ),
           contentPadding: const EdgeInsets.all(15.0),
           hintText: label,
-          labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+          labelStyle: GoogleFonts.roboto(color: Colors.grey),
         ),
       ),
     );

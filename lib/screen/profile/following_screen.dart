@@ -75,8 +75,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                       ),
                       hintStyle: Palette.greytext12,
                       // labelText: "Email",
-                      labelStyle:
-                          GoogleFonts.reemKufi(color: Color(0xFF424242)),
+                      labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
                             color: Colors.transparent, width: 1),

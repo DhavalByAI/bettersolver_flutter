@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,14 +22,14 @@ class HomeScreenController extends GetxController {
 
   void onRefresh() async {
     log("onRefresh()");
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     fetchallpost("1");
     refreshController.refreshCompleted();
   }
 
   void onLoading() async {
     log("onLoading()");
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     pageno = (int.parse(pageno) + 1).toString();
     await fetchallpost(pageno);
     refreshController.loadComplete();
@@ -36,6 +37,8 @@ class HomeScreenController extends GetxController {
 
   @override
   void onInit() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     fetchallpost("1");
     // scrollController.addListener(() {
     //   if (scrollController.position.atEdge) {

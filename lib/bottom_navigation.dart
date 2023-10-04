@@ -2,6 +2,7 @@ import 'package:bettersolver/screen/category/category_screen.dart';
 import 'package:bettersolver/screen/notification/notification_screen.dart';
 import 'package:bettersolver/style/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'screen/create_post/create_post_screen.dart';
 import 'screen/home_Screen_getx.dart';
 import 'screen/search_profile/search_profile_screen.dart';
@@ -36,6 +37,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     _children = [
       const GetHomeScreen(),
       const SearchProfileScreen(),

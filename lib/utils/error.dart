@@ -25,7 +25,7 @@ class Errors extends StatelessWidget {
           MaterialButton(
             color: Colors.white,
             child:
-                Text('Retry', style: GoogleFonts.reemKufi(color: Colors.black)),
+                Text('Retry', style: GoogleFonts.roboto(color: Colors.black)),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,

@@ -115,7 +115,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
                   //     child: const DottedLine()),
                   Text(
                     '- - - - - - - - - - - - -',
-                    style: GoogleFonts.reemKufi(color: kThemeColorBlue),
+                    style: GoogleFonts.roboto(color: kThemeColorBlue),
                   ),
                   Card(
                     elevation: 8,
@@ -151,7 +151,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
                   ),
                   Text(
                     '- - - - - - - - - - - - -',
-                    style: GoogleFonts.reemKufi(color: kThemeColorGreen),
+                    style: GoogleFonts.roboto(color: kThemeColorGreen),
                   ),
                   Card(
                     elevation: 8,
@@ -222,8 +222,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.text,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -246,7 +245,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -266,8 +265,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
           controller: controller,
           keyboardType: TextInputType.text,
           enabled: false,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -290,7 +288,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             //  hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -310,8 +308,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
           controller: controller,
           keyboardType: TextInputType.text,
           enabled: false,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -334,7 +331,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             //  hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -353,8 +350,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.text,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -377,7 +373,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -416,7 +412,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
                     child: Text(
                       "$formattedDob".split(' ')[0],
                       // selectedDob != null ? "$formattedDob".split(' ')[0] : "DOB",
-                      style: GoogleFonts.reemKufi(
+                      style: GoogleFonts.roboto(
                           color: kDarkThemecolor, fontWeight: FontWeight.w400),
                     ),
                   ),
@@ -466,7 +462,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w500,
             fontSize: 16.0,
@@ -475,7 +471,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
           hint: Text(
             'Country',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           ),
           items: countryList.map((item) {
             return DropdownMenuItem(

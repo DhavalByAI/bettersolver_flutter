@@ -3,7 +3,7 @@ import 'package:bettersolver/utils/apiprovider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DeleteRepository {
-  ApiProvider _provider = ApiProvider();
+  final ApiProvider _provider = ApiProvider();
 
   Future<CommonModel> fetchdelete() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -17,7 +17,7 @@ class DeleteRepository {
 
     final response = await _provider.httpMethodWithoutToken(
       'post',
-      'demo2/app_api.php?application=phone&type=get_blocked_users',
+      'demo2/app_api.php?application=phone&type=delete_user',
       requestBody,
     );
 

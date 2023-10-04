@@ -13,8 +13,9 @@ import 'package:bettersolver/utils/loading.dart';
 import 'package:bettersolver/utils/response.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../../bloc/blocked_bloc.dart';
 
 class ViewProfileScreen extends StatefulWidget {
@@ -162,44 +163,58 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                       image: DecorationImage(
                           fit: BoxFit.cover,
                           image: CachedNetworkImageProvider(coverimage))),
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 0, right: 0, top: 40),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          width: 20,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 110,
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Colors.black87, Colors.transparent])),
+                      ),
+                      Container(
+                        margin:
+                            const EdgeInsets.only(left: 0, right: 0, top: 25),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          //   mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            InkWell(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => SettingScreen()));
+                                  Navigator.pop(context);
+                                },
+                                child: const Icon(
+                                  Icons.arrow_back_outlined,
+                                  color: kWhite,
+                                )),
+                            Container(
+                                margin: const EdgeInsets.only(left: 20),
+                                child: Text(
+                                  'PROFILE',
+                                  style: Palette.whitetext20,
+                                )),
+                            const Spacer(),
+                            _popupmenuForBlock(
+                                uID: uid,
+                                isBlocked:
+                                    userDetailModel.user_data['is_blocked'],
+                                isReposrted:
+                                    userDetailModel.user_data['isReported']),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                          ],
                         ),
-                        InkWell(
-                            onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => SettingScreen()));
-                              Navigator.pop(context);
-                            },
-                            child: const Icon(
-                              Icons.arrow_back_outlined,
-                              color: kWhite,
-                            )),
-                        Container(
-                            margin: const EdgeInsets.only(left: 20),
-                            child: Text(
-                              'PROFILE',
-                              style: Palette.whitetext20,
-                            )),
-                        const Spacer(),
-                        _popupmenuForBlock(
-                            uID: uid,
-                            isBlocked: userDetailModel.user_data['is_blocked'],
-                            isReposrted:
-                                userDetailModel.user_data['isReported']),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -513,121 +528,137 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                                 padding: const EdgeInsets.all(12),
                                 child: Column(
                                   children: [
-                                    Row(
+                                    userDetailModel.user_data['about']
+                                            .toString()
+                                            .isNotEmpty
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 12),
+                                            child: Row(
+                                              children: [
+                                                const CircleAvatar(
+                                                  radius: 16,
+                                                  child: Icon(
+                                                    Icons.info_outline_rounded,
+                                                    size: 20,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Flexible(
+                                                    child: Text(userDetailModel
+                                                        .user_data['about']))
+                                              ],
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                                    userDetailModel.user_data['working_link']
+                                            .toString()
+                                            .isNotEmpty
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 12),
+                                            child: Row(
+                                              children: [
+                                                const CircleAvatar(
+                                                  radius: 16,
+                                                  child: Icon(
+                                                    Icons.link_rounded,
+                                                    size: 20,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Linkify(
+                                                  onOpen: (link) async {
+                                                    if (!await launchUrl(
+                                                        Uri.parse(link.url))) {
+                                                      throw Exception(
+                                                          'Could not launch ${link.url}');
+                                                    }
+                                                  },
+                                                  text:
+                                                      userDetailModel.user_data[
+                                                          'working_link'],
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                                    userDetailModel.user_data['address']
+                                            .toString()
+                                            .isNotEmpty
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 12),
+                                            child: Row(
+                                              children: [
+                                                const CircleAvatar(
+                                                  radius: 16,
+                                                  child: Icon(
+                                                    Icons.location_city_rounded,
+                                                    size: 20,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Flexible(
+                                                  child: Text(userDetailModel
+                                                      .user_data['address']),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                                    userDetailModel.user_data['occupation']
+                                            .toString()
+                                            .isNotEmpty
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 12),
+                                            child: Row(
+                                              children: [
+                                                const CircleAvatar(
+                                                  radius: 16,
+                                                  child: Icon(
+                                                    Icons
+                                                        .business_center_rounded,
+                                                    size: 20,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(userDetailModel.user_data[
+                                                        'occupation'] ??
+                                                    "Proffesional")
+                                              ],
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                                    const Row(
                                       children: [
-                                        Flexible(
-                                          child: Row(
-                                            children: [
-                                              const CircleAvatar(
-                                                radius: 16,
-                                                child: Icon(
-                                                  Icons.person_3_rounded,
-                                                  size: 20,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(userDetailModel
-                                                  .user_data['gender_text'])
-                                            ],
+                                        CircleAvatar(
+                                          radius: 16,
+                                          child: Icon(
+                                            Icons.place_rounded,
+                                            size: 20,
+                                            color: Colors.blue,
                                           ),
+                                        ),
+                                        SizedBox(
+                                          width: 8,
                                         ),
                                         Flexible(
-                                          child: Row(
-                                            children: [
-                                              const CircleAvatar(
-                                                radius: 16,
-                                                child: Icon(
-                                                  Icons.cake_rounded,
-                                                  size: 20,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(userDetailModel
-                                                  .user_data['birthday'])
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Flexible(
-                                          child: Row(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 16,
-                                                child: Icon(
-                                                  Icons.place_rounded,
-                                                  size: 20,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Flexible(
-                                                child: Text('Living in India'),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        userDetailModel.user_data['address'] !=
-                                                ''
-                                            ? Flexible(
-                                                child: Row(
-                                                  children: [
-                                                    const CircleAvatar(
-                                                      radius: 16,
-                                                      child: Icon(
-                                                        Icons
-                                                            .location_city_rounded,
-                                                        size: 20,
-                                                        color: Colors.blue,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 8,
-                                                    ),
-                                                    Flexible(
-                                                      child: Text(
-                                                          userDetailModel
-                                                                  .user_data[
-                                                              'address']),
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            : Flexible(
-                                                child: Row(
-                                                  children: [
-                                                    const CircleAvatar(
-                                                      radius: 16,
-                                                      child: Icon(
-                                                        Icons
-                                                            .business_center_rounded,
-                                                        size: 20,
-                                                        color: Colors.blue,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 8,
-                                                    ),
-                                                    Text(userDetailModel
-                                                                .user_data[
-                                                            'occupation'] ??
-                                                        "Proffesional")
-                                                  ],
-                                                ),
-                                              ),
+                                          child: Text('Living in India'),
+                                        )
                                       ],
                                     ),
                                   ],

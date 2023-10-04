@@ -4,52 +4,52 @@ import 'package:google_fonts/google_fonts.dart';
 import 'constants.dart';
 
 class Palette {
-  static TextStyle title = GoogleFonts.reemKufi(
+  static TextStyle title = GoogleFonts.roboto(
     //
     fontWeight: FontWeight.w700,
     fontSize: 16.0,
   );
 
-  static TextStyle blackText30 = GoogleFonts.reemKufi(
+  static TextStyle blackText30 = GoogleFonts.roboto(
       fontWeight: FontWeight.w700, fontSize: 30.0, color: kBlack);
 
-  static TextStyle blackText11 = GoogleFonts.reemKufi(
+  static TextStyle blackText11 = GoogleFonts.roboto(
       fontWeight: FontWeight.w500, fontSize: 11.0, color: Colors.black38);
 
-  static TextStyle blackText12 = GoogleFonts.reemKufi(
+  static TextStyle blackText12 = GoogleFonts.roboto(
       fontWeight: FontWeight.w700, fontSize: 11.0, color: Colors.black38);
 
-  static TextStyle blackTextDark12 = GoogleFonts.reemKufi(
+  static TextStyle blackTextDark12 = GoogleFonts.roboto(
       fontWeight: FontWeight.w700, fontSize: 11.0, color: kBlack);
 
-  static TextStyle themText15 = GoogleFonts.reemKufi(
+  static TextStyle themText15 = GoogleFonts.roboto(
       fontWeight: FontWeight.w700, fontSize: 15.0, color: kThemeColorBlue);
 
-  static TextStyle themText18 = GoogleFonts.reemKufi(
+  static TextStyle themText18 = GoogleFonts.roboto(
       fontWeight: FontWeight.w700, fontSize: 18.0, color: kThemeColorBlue);
 
-  static TextStyle themText15L = GoogleFonts.reemKufi(
+  static TextStyle themText15L = GoogleFonts.roboto(
       fontWeight: FontWeight.w500, fontSize: 15.0, color: kThemeColorBlue);
 
-  static TextStyle themText11 = GoogleFonts.reemKufi(
+  static TextStyle themText11 = GoogleFonts.roboto(
       fontWeight: FontWeight.w700, fontSize: 11.0, color: kThemeColorBlue);
 
-  static TextStyle whiteText15 = GoogleFonts.reemKufi(
+  static TextStyle whiteText15 = GoogleFonts.roboto(
       fontWeight: FontWeight.w700, fontSize: 15.0, color: kWhite);
 
-  static TextStyle whiteText10 = GoogleFonts.reemKufi(
+  static TextStyle whiteText10 = GoogleFonts.roboto(
       fontWeight: FontWeight.w500, fontSize: 14.0, color: kWhite);
 
-  static TextStyle whiteText10L = GoogleFonts.reemKufi(
+  static TextStyle whiteText10L = GoogleFonts.roboto(
       fontWeight: FontWeight.w400, fontSize: 10.0, color: kWhite);
 
-  static TextStyle buleText10 = GoogleFonts.reemKufi(
+  static TextStyle buleText10 = GoogleFonts.roboto(
       fontWeight: FontWeight.w400, fontSize: 10.0, color: kColorBlue);
 
-  static TextStyle darkBuleText14B = GoogleFonts.reemKufi(
+  static TextStyle darkBuleText14B = GoogleFonts.roboto(
       fontWeight: FontWeight.w700, fontSize: 14.0, color: kThemeColorLightBlue);
 
-  static TextStyle whiteText12 = GoogleFonts.reemKufi(
+  static TextStyle whiteText12 = GoogleFonts.roboto(
       fontWeight: FontWeight.w500, fontSize: 12.0, color: kWhite);
 
   static RoundedRectangleBorder btnShape =
@@ -60,222 +60,222 @@ class Palette {
 
   ////
 
-  static TextStyle appbarTitle = GoogleFonts.reemKufi(
+  static TextStyle appbarTitle = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     fontSize: 18.0,
   );
 
-  static TextStyle appbarWhiteTitle = GoogleFonts.reemKufi(
+  static TextStyle appbarWhiteTitle = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 18.0,
     color: kWhite,
   );
 
-  static TextStyle splashscreenskip = GoogleFonts.reemKufi(
+  static TextStyle splashscreenskip = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     fontSize: 14.0,
     color: kWhite,
   );
 
-  static TextStyle splashscreenwelcome = GoogleFonts.reemKufi(
+  static TextStyle splashscreenwelcome = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     color: kWhite,
     fontSize: 32.0,
   );
 
-  static TextStyle splashscreentext22 = GoogleFonts.reemKufi(
+  static TextStyle splashscreentext22 = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     color: kWhite,
     fontSize: 22.0,
   );
 
-  static TextStyle blacktext32 = GoogleFonts.reemKufi(
+  static TextStyle blacktext32 = GoogleFonts.roboto(
     fontWeight: FontWeight.w600,
     fontSize: 32.0,
     color: kWhite,
   );
 
-  static TextStyle blacktext22 = GoogleFonts.reemKufi(
+  static TextStyle blacktext22 = GoogleFonts.roboto(
     fontWeight: FontWeight.w600,
     fontSize: 22.0,
     color: kWhite,
   );
 
-  static TextStyle whiettext32 = GoogleFonts.reemKufi(
+  static TextStyle whiettext32 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 32.0,
     color: kWhite,
   );
 
-  static TextStyle whiettext18 = GoogleFonts.reemKufi(
+  static TextStyle whiettext18 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 18.0,
     color: kWhite,
   );
 
-  static TextStyle whiettext8 = GoogleFonts.reemKufi(
+  static TextStyle whiettext8 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 8.0,
     color: kWhite,
   );
 
-  static TextStyle whiettext20B = GoogleFonts.reemKufi(
+  static TextStyle whiettext20B = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     fontSize: 20.0,
     color: kWhite,
   );
 
-  static TextStyle blacktext20 = GoogleFonts.reemKufi(
+  static TextStyle blacktext20 = GoogleFonts.roboto(
     fontWeight: FontWeight.w600,
     fontSize: 20.0,
     color: kWhite,
   );
 
-  static TextStyle edit_title = GoogleFonts.reemKufi(
+  static TextStyle edit_title = GoogleFonts.roboto(
     fontWeight: FontWeight.w600,
     fontSize: 20.0,
     color: kBlack,
   );
 
-  static TextStyle blacktext20M = GoogleFonts.reemKufi(
+  static TextStyle blacktext20M = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 20.0,
     color: kBlack,
   );
 
-  static TextStyle blacktext20L = GoogleFonts.reemKufi(
+  static TextStyle blacktext20L = GoogleFonts.roboto(
     fontWeight: FontWeight.w400,
     fontSize: 12.0,
     color: kWhite,
   );
 
-  static TextStyle redText20 = GoogleFonts.reemKufi(
+  static TextStyle redText20 = GoogleFonts.roboto(
     fontWeight: FontWeight.w600,
     fontSize: 20.0,
     color: kred,
   );
 
-  static TextStyle redText12 = GoogleFonts.reemKufi(
+  static TextStyle redText12 = GoogleFonts.roboto(
     fontWeight: FontWeight.w600,
     fontSize: 12.0,
     color: kred,
   );
 
-  static TextStyle redText12l = GoogleFonts.reemKufi(
+  static TextStyle redText12l = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
     color: kred,
   );
 
-  static TextStyle blacktextlight20 = GoogleFonts.reemKufi(
+  static TextStyle blacktextlight20 = GoogleFonts.roboto(
     fontWeight: FontWeight.w400,
     fontSize: 20.0,
     color: kWhite,
   );
 
-  static TextStyle blacktext16 = GoogleFonts.reemKufi(
+  static TextStyle blacktext16 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 16.0,
     color: kBlack,
   );
 
-  static TextStyle blacktext14 = GoogleFonts.reemKufi(
+  static TextStyle blacktext14 = GoogleFonts.roboto(
     fontWeight: FontWeight.w400,
     fontSize: 14.0,
     color: kBlack,
   );
 
-  static TextStyle blacktext10 = GoogleFonts.reemKufi(
+  static TextStyle blacktext10 = GoogleFonts.roboto(
     fontWeight: FontWeight.w400,
     fontSize: 10.0,
     color: kBlack,
   );
 
-  static TextStyle wihtetext14 = GoogleFonts.reemKufi(
+  static TextStyle wihtetext14 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
     color: kWhite,
   );
 
-  static TextStyle greytext14 = GoogleFonts.reemKufi(
+  static TextStyle greytext14 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
     color: kGreyone,
   );
 
-  static TextStyle greytext15 = GoogleFonts.reemKufi(
+  static TextStyle greytext15 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 15.0,
     color: kThemeColorGrey,
   );
 
-  static TextStyle greytext16B = GoogleFonts.reemKufi(
+  static TextStyle greytext16B = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     fontSize: 16.0,
     color: kGreyone,
   );
 
-  static TextStyle greytext20B = GoogleFonts.reemKufi(
+  static TextStyle greytext20B = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     fontSize: 20.0,
     color: kThemeColorGrey,
   );
 
-  static TextStyle whitetext20 = GoogleFonts.reemKufi(
+  static TextStyle whitetext20 = GoogleFonts.roboto(
     fontWeight: FontWeight.w600,
     fontSize: 20.0,
     color: kWhite,
   );
-  static TextStyle whitetext18 = GoogleFonts.reemKufi(
+  static TextStyle whitetext18 = GoogleFonts.roboto(
     fontWeight: FontWeight.w600,
     fontSize: 18.0,
     color: kWhite,
   );
 
-  static TextStyle greytext18B = GoogleFonts.reemKufi(
+  static TextStyle greytext18B = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     fontSize: 18.0,
     color: kThemeColorGrey,
   );
 
-  static TextStyle greytext12 = GoogleFonts.reemKufi(
+  static TextStyle greytext12 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
     color: kGreyone,
   );
 
-  static TextStyle black_title = GoogleFonts.reemKufi(
+  static TextStyle black_title = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
     color: kBlack,
   );
 
-  static TextStyle greytext9 = GoogleFonts.reemKufi(
+  static TextStyle greytext9 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 9.0,
     color: kGreyone,
   );
 
-  static TextStyle greyDarktext12 = GoogleFonts.reemKufi(
+  static TextStyle greyDarktext12 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
     color: kThemeColorGrey,
   );
 
-  static TextStyle blacktext14italic = GoogleFonts.reemKufi(
+  static TextStyle blacktext14italic = GoogleFonts.roboto(
     fontStyle: FontStyle.italic,
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
     color: kWhite,
   );
 
-  static TextStyle blacktext14B = GoogleFonts.reemKufi(
+  static TextStyle blacktext14B = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
     color: kBlack,
   );
 
-  static TextStyle blacktext14Bold = GoogleFonts.reemKufi(
+  static TextStyle blacktext14Bold = GoogleFonts.roboto(
     fontWeight: FontWeight.w700,
     fontSize: 14.0,
     color: kBlack,
@@ -359,152 +359,152 @@ class Palette {
   //dashboard grid theme
 
   static TextStyle nameNumTitle =
-      GoogleFonts.reemKufi(color: kWhite, fontSize: 17.0);
+      GoogleFonts.roboto(color: kWhite, fontSize: 17.0);
 
-  static TextStyle headerTitle = GoogleFonts.reemKufi(fontSize: 10.0);
+  static TextStyle headerTitle = GoogleFonts.roboto(fontSize: 10.0);
 
   static TextStyle headerCard =
-      GoogleFonts.reemKufi(fontWeight: FontWeight.w700);
+      GoogleFonts.roboto(fontWeight: FontWeight.w700);
 
-  static TextStyle amountHeader = GoogleFonts.reemKufi(
+  static TextStyle amountHeader = GoogleFonts.roboto(
       fontSize: 20.0, fontWeight: FontWeight.w700, color: kred);
 
-  static TextStyle heading = GoogleFonts.reemKufi(
+  static TextStyle heading = GoogleFonts.roboto(
       fontSize: 20.0, fontWeight: FontWeight.w700, color: kdarblue);
 
   static TextStyle PaymentListCardDec =
-      GoogleFonts.reemKufi(fontSize: 15.0, fontWeight: FontWeight.w700);
+      GoogleFonts.roboto(fontSize: 15.0, fontWeight: FontWeight.w700);
 
-  static TextStyle PaymentListDate = GoogleFonts.reemKufi(
+  static TextStyle PaymentListDate = GoogleFonts.roboto(
     fontSize: 15.0,
   );
 
-  static TextStyle PaymentListPaid = GoogleFonts.reemKufi(
+  static TextStyle PaymentListPaid = GoogleFonts.roboto(
       fontSize: 15.0, fontWeight: FontWeight.w700, color: kgreen);
 
-  static TextStyle PaymentListTook = GoogleFonts.reemKufi(
+  static TextStyle PaymentListTook = GoogleFonts.roboto(
       fontSize: 15.0, fontWeight: FontWeight.w700, color: kred);
 
-  static TextStyle PaymentCard = GoogleFonts.reemKufi(
+  static TextStyle PaymentCard = GoogleFonts.roboto(
     fontSize: 15.0,
     fontWeight: FontWeight.w700,
     color: kdarblue,
   );
 
-  static TextStyle buttonStaff = GoogleFonts.reemKufi(
+  static TextStyle buttonStaff = GoogleFonts.roboto(
     fontSize: 15.0,
     fontWeight: FontWeight.w700,
     color: kWhite,
   );
 
-  static TextStyle searchText = GoogleFonts.reemKufi(
+  static TextStyle searchText = GoogleFonts.roboto(
     fontSize: 17.0,
     color: kGreyone,
   );
 
-  static TextStyle staffName = GoogleFonts.reemKufi(
+  static TextStyle staffName = GoogleFonts.roboto(
     fontSize: 15.0,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle staffAttendance = GoogleFonts.reemKufi(
+  static TextStyle staffAttendance = GoogleFonts.roboto(
     fontSize: 14.0,
     color: Colors.grey,
   );
 
-  static TextStyle openingBalAmt = GoogleFonts.reemKufi(
+  static TextStyle openingBalAmt = GoogleFonts.roboto(
     fontSize: 15.0,
     color: Colors.red,
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle listTitle = GoogleFonts.reemKufi(
+  static TextStyle listTitle = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     color: Colors.green,
   );
 
-  static TextStyle listTitleBlue = GoogleFonts.reemKufi(
+  static TextStyle listTitleBlue = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     color: Colors.blue,
   );
 
-  static TextStyle listTitleOrange = GoogleFonts.reemKufi(
+  static TextStyle listTitleOrange = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     color: Colors.orange,
   );
 
-  static TextStyle listTitleone = GoogleFonts.reemKufi(
+  static TextStyle listTitleone = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     color: Colors.red,
   );
 
-  static TextStyle profiletitle = GoogleFonts.reemKufi(
+  static TextStyle profiletitle = GoogleFonts.roboto(
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
 
-  static TextStyle titleOne = GoogleFonts.reemKufi(
+  static TextStyle titleOne = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );
 
-  static TextStyle dateTitle = GoogleFonts.reemKufi(
+  static TextStyle dateTitle = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     color: kWhite60,
   );
 
-  static TextStyle otpTitle = GoogleFonts.reemKufi(
+  static TextStyle otpTitle = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     color: kdarblue,
     fontSize: 18.0,
   );
 
-  static TextStyle statusTitle = GoogleFonts.reemKufi(
+  static TextStyle statusTitle = GoogleFonts.roboto(
     fontSize: 10.0,
     fontWeight: FontWeight.w500,
     color: kWhite,
   );
 
-  static TextStyle status = GoogleFonts.reemKufi(
+  static TextStyle status = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
   );
 
-  static TextStyle listSubTitle = GoogleFonts.reemKufi(
+  static TextStyle listSubTitle = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
   );
 
-  static TextStyle listTrailing = GoogleFonts.reemKufi(
+  static TextStyle listTrailing = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
   );
-  static TextStyle listTrailing2 = GoogleFonts.reemKufi(
+  static TextStyle listTrailing2 = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 10.0,
     color: Colors.white,
   );
 
-  static TextStyle statusClr = GoogleFonts.reemKufi(
+  static TextStyle statusClr = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
     color: Colors.white,
   );
 
-  static TextStyle listSubTrailing = GoogleFonts.reemKufi(
+  static TextStyle listSubTrailing = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     fontSize: 10.0,
   );
 
-  static TextStyle titleProfile = GoogleFonts.reemKufi(
+  static TextStyle titleProfile = GoogleFonts.roboto(
     fontWeight: FontWeight.w500,
     color: Colors.white,
     fontSize: 25.0,
   );
 
-  static TextStyle listFieldsText = GoogleFonts.reemKufi(
+  static TextStyle listFieldsText = GoogleFonts.roboto(
       fontSize: 14.0, fontWeight: FontWeight.w500, color: kWhite60);
-  static TextStyle listBodyText = GoogleFonts.reemKufi(
+  static TextStyle listBodyText = GoogleFonts.roboto(
     fontSize: 14.0,
     fontWeight: FontWeight.w700,
   );
@@ -541,7 +541,7 @@ class Palette {
     ],
   );
 
-  static TextStyle editText = GoogleFonts.reemKufi(
+  static TextStyle editText = GoogleFonts.roboto(
     color: kWhite70,
     fontWeight: FontWeight.w500,
   );

@@ -340,7 +340,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -349,7 +349,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'Everyone',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: followmeList.map((item) {
             return DropdownMenuItem(
@@ -392,7 +392,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -401,7 +401,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'Everyone',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: messageList.map((item) {
             return DropdownMenuItem(
@@ -444,7 +444,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -453,7 +453,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'Everyone',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: myFollowersList.map((item) {
             return DropdownMenuItem(
@@ -505,7 +505,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -514,7 +514,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'Everyone',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: myTimelineList.map((item) {
             return DropdownMenuItem(
@@ -565,7 +565,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -574,7 +574,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'Everyone',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: messageList.map((item) {
             return DropdownMenuItem(
@@ -617,7 +617,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -626,7 +626,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'yes',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: visitProfileList.map((item) {
             return DropdownMenuItem(
@@ -669,7 +669,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -678,7 +678,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'yes',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: myactivitiesList.map((item) {
             return DropdownMenuItem(
@@ -727,7 +727,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -736,7 +736,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'online',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: myStatusList.map((item) {
             return DropdownMenuItem(
@@ -779,7 +779,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -788,7 +788,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'yes',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: myactivitiesList.map((item) {
             return DropdownMenuItem(
@@ -837,7 +837,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         padding: const EdgeInsets.all(0.8),
         child: DropdownButtonFormField(
           // icon: Icon(Icons.add_location),
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 14.0,
@@ -846,7 +846,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           hint: Text(
             'yes',
             style:
-                GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 14),
+                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           items: myactivitiesList.map((item) {
             return DropdownMenuItem(

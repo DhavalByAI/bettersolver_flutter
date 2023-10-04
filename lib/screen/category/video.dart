@@ -662,7 +662,7 @@
 //     Widget cancelButton = MaterialButton(
 //       child: Text(
 //         "Cancel",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         Navigator.pop(context, false);
@@ -671,7 +671,7 @@
 //     Widget continueButton = MaterialButton(
 //       child: Text(
 //         "Yes",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         Navigator.pop(context);
@@ -742,7 +742,7 @@
 //                       child: TextField(
 //                         controller: reportTextController,
 //                         keyboardType: TextInputType.emailAddress,
-//                         style: GoogleFonts.reemKufi(
+//                         style: GoogleFonts.roboto(
 //                             fontWeight: FontWeight.w400, fontSize: 12),
 //                         decoration: InputDecoration(
 //                           fillColor: kWhite,
@@ -769,7 +769,7 @@
 //                           ),
 //                           contentPadding: const EdgeInsets.all(8.0),
 //                           hintText: 'type somthing....',
-//                           labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+//                           labelStyle: GoogleFonts.roboto(color: Colors.grey),
 //                         ),
 //                       ),
 //                     ),
@@ -845,7 +845,7 @@
 //     Widget cancelButton = MaterialButton(
 //       child: Text(
 //         "Cancel",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         Navigator.pop(context, false);
@@ -854,7 +854,7 @@
 //     Widget continueButton = MaterialButton(
 //       child: Text(
 //         "Yes",
-//         style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+//         style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
 //       ),
 //       onPressed: () {
 //         setState(() {

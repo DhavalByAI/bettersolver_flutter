@@ -19,7 +19,7 @@ class CustomEditTextMobile extends StatelessWidget {
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.phone,
-          style: GoogleFonts.reemKufi(
+          style: GoogleFonts.roboto(
             fontWeight: FontWeight.w700,
           ),
           decoration: InputDecoration(
@@ -47,7 +47,7 @@ class CustomEditTextMobile extends StatelessWidget {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             labelText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),

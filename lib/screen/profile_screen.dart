@@ -260,56 +260,70 @@ class _ProfileState extends State<Profile> {
                       image: DecorationImage(
                           fit: BoxFit.cover,
                           image: CachedNetworkImageProvider(coverimage))),
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 0, right: 0, top: 40),
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.only(left: 15),
-                            child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => BioProfile()));
-                                },
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 110,
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Colors.black87, Colors.transparent])),
+                      ),
+                      Container(
+                        margin:
+                            const EdgeInsets.only(left: 0, right: 0, top: 25),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 15),
+                                child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  BioProfile()));
+                                    },
+                                    child: Text(
+                                      'Edit',
+                                      style: Palette.whitetext18,
+                                    )),
+                              ),
+                            ),
+                            Container(
+                                alignment: Alignment.topLeft,
+                                //margin: EdgeInsets.only(left: 20),
                                 child: Text(
-                                  'Edit',
-                                  style: Palette.whitetext18,
+                                  'PROFILE',
+                                  style: Palette.whitetext20,
                                 )),
-                          ),
+                            Expanded(
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 15),
+                                alignment: Alignment.topRight,
+                                child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SettingScreen()));
+                                      //_showMoreBottomSheet();
+                                    },
+                                    child: const Icon(
+                                      Icons.settings,
+                                      color: kWhite,
+                                    )),
+                              ),
+                            )
+                          ],
                         ),
-                        Container(
-                            alignment: Alignment.topLeft,
-                            //margin: EdgeInsets.only(left: 20),
-                            child: Text(
-                              'PROFILE',
-                              style: Palette.whitetext20,
-                            )),
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 15),
-                            alignment: Alignment.topRight,
-                            child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SettingScreen()));
-                                  //_showMoreBottomSheet();
-                                },
-                                child: const Icon(
-                                  Icons.settings,
-                                  color: kWhite,
-                                )),
-                          ),
-                        )
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -760,7 +774,8 @@ class _ProfileState extends State<Profile> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SettingScreen()));
+                                        builder: (context) =>
+                                            const SettingScreen()));
                               },
                               child: Container(
                                   decoration: const BoxDecoration(
@@ -773,7 +788,7 @@ class _ProfileState extends State<Profile> {
                                       margin: const EdgeInsets.only(left: 15),
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'SETTING',
+                                        'SETTINGS',
                                         style: Palette.greytext12,
                                       ))),
                             ),

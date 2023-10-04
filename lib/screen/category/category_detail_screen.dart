@@ -666,7 +666,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                               borderRadius: BorderRadius.circular(30),
                               image: const DecorationImage(
                                   image: AssetImage(
-                                      'assets/images/photoicon.png'))),
+                                      'assets/images/photosicon.png'))),
                         )),
                   ),
                   const SizedBox(
@@ -707,7 +707,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                               borderRadius: BorderRadius.circular(30),
                               image: const DecorationImage(
                                   image: AssetImage(
-                                      'assets/images/videolisticon.png'))),
+                                      'assets/images/videosicon.png'))),
                         )),
                   ),
                   const SizedBox(
@@ -874,7 +874,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     Widget cancelButton = MaterialButton(
       child: Text(
         "Cancel",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context, false);
@@ -886,7 +886,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         return MaterialButton(
           child: Text(
             "Yes",
-            style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+            style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
           ),
           onPressed: () async {
             Get.back();

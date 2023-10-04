@@ -4,7 +4,9 @@ import 'package:bettersolver/screen/auth/login.dart';
 import 'package:bettersolver/style/palette.dart';
 import 'package:bettersolver/utils/base_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/userdetail_model.dart';
@@ -23,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     EasyLoading.instance
       ..indicatorType = EasyLoadingIndicatorType.chasingDots
       ..loadingStyle = EasyLoadingStyle.light
@@ -73,11 +76,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 // const SizedBox(
                 //   height: 2,
                 // ),
-                Text(
-                  'Better Solver',
-                  style: Palette.whiettext20B.copyWith(
-                      fontSize: 22, color: Colors.black.withOpacity(0.5)),
-                ),
+                Text('Better Solver',
+                    style: GoogleFonts.reemKufi(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 22,
+                        color: Colors.black.withOpacity(0.5))),
               ],
             ),
           ),
@@ -117,17 +120,23 @@ class _SplashScreenState extends State<SplashScreen> {
       currUser = await fetchUserDetail();
       pref.setString('profileimage', currUser!.user_data['avatar']);
     } catch (e) {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Login()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const Login()),
+          (route) => false);
     }
 
     print('login----$login');
     if (login == true && currUser!.api_status == "200" && currUser != null) {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Home()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const Home()),
+          (route) => false);
     } else {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Login()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const Login()),
+          (route) => false);
     }
   }
 }

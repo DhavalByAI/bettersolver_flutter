@@ -103,7 +103,7 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
           hintText: "Group Name",
 
           // labelText: "Email",
-          labelStyle: GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+          labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey, width: 1),
             // borderRadius: BorderRadius.circular(30.0),

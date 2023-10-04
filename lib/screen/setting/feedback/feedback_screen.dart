@@ -41,8 +41,10 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
         actions: [
           InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingScreen()));
             },
             child: Container(
               height: 50,
@@ -97,7 +99,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
             Container(
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: Text(
-                'let us know if you have ideas/ suggestions that can help make our product and services better',
+                'let us know if you have ideas/suggestions that can help make our product and services better',
                 style: Palette.greytext12,
                 textAlign: TextAlign.center,
               ),
@@ -131,7 +133,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
 
               // labelText: "Email",
               hintMaxLines: 2,
-              labelStyle: GoogleFonts.reemKufi(color: const Color(0xFF424242)),
+              labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1),
                 // borderRadius: BorderRadius.circular(30.0),

@@ -81,7 +81,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   setupToken() async {
-    fcmToken = await FirebaseMessaging.instance.getToken();
+    fcmToken = 'token';
     print('fcmToken_sign_up:::::::::::::::::::$fcmToken');
   }
 
@@ -142,7 +142,7 @@ class _SignUpState extends State<SignUp> {
           // Align(
           //   child: Text(
           //     "Forget Password?",
-          //     style: GoogleFonts.reemKufi(fontWeight: FontWeight.w700, fontSize: 12),
+          //     style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 12),
           //   ),
           //   alignment: Alignment(0.9, -0.5),
           // ),
@@ -151,7 +151,7 @@ class _SignUpState extends State<SignUp> {
             alignment: Alignment.bottomLeft,
             child: Text(
               "Gender",
-              style: GoogleFonts.reemKufi(
+              style: GoogleFonts.roboto(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   fontStyle: FontStyle.normal),
@@ -278,7 +278,7 @@ class _SignUpState extends State<SignUp> {
           //         alignment: Alignment.center,
           //         child: Text(
           //           "SIGN UP",
-          //           style: GoogleFonts.reemKufi(
+          //           style: GoogleFonts.roboto(
           //               fontSize: 18,
           //               fontWeight: FontWeight.w700,
           //               fontStyle: FontStyle.normal,
@@ -549,8 +549,7 @@ class _SignUpState extends State<SignUp> {
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.text,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -577,7 +576,7 @@ class _SignUpState extends State<SignUp> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -596,8 +595,7 @@ class _SignUpState extends State<SignUp> {
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.text,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -624,7 +622,7 @@ class _SignUpState extends State<SignUp> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -643,8 +641,7 @@ class _SignUpState extends State<SignUp> {
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.emailAddress,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -671,7 +668,7 @@ class _SignUpState extends State<SignUp> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -691,8 +688,7 @@ class _SignUpState extends State<SignUp> {
           controller: controller,
           obscureText: _obsecurePass,
           keyboardType: TextInputType.text,
-          style:
-              GoogleFonts.reemKufi(fontWeight: FontWeight.w400, fontSize: 12),
+          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
@@ -730,7 +726,7 @@ class _SignUpState extends State<SignUp> {
             ),
             contentPadding: const EdgeInsets.all(15.0),
             hintText: label,
-            labelStyle: GoogleFonts.reemKufi(color: Colors.grey),
+            labelStyle: GoogleFonts.roboto(color: Colors.grey),
           ),
         ),
       ),
@@ -771,7 +767,7 @@ class _SignUpState extends State<SignUp> {
                           ? '    Date of Birth'
                           : "$selectedDate".split(' ')[0],
                       //   formattedDob != null ? "$selectedDate".split(' ')[0] : "DOB",
-                      style: GoogleFonts.reemKufi(
+                      style: GoogleFonts.roboto(
                           color: kDarkThemecolor, fontWeight: FontWeight.w400),
                     ),
                   ),

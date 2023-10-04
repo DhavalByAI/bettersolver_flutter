@@ -222,7 +222,7 @@ class PostCommentController extends GetxController {
     String? commentId,
     bool? isEdit = false,
   }) async {
-    EasyLoading.show();
+    // EasyLoading.show();
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? s = pref.getString('s');
     String? userid = pref.getString('userid');
@@ -270,7 +270,7 @@ class PostCommentController extends GetxController {
   getCommentData(
     String postid,
   ) async {
-    EasyLoading.show();
+    // EasyLoading.show();
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? s = pref.getString('s');
     String? userid = pref.getString('userid');

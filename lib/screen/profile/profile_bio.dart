@@ -379,7 +379,7 @@ class _BioProfileState extends State<BioProfile> {
                             // labelText: "Email",
                             hintMaxLines: 2,
                             labelStyle:
-                                GoogleFonts.reemKufi(color: Color(0xFF424242)),
+                                GoogleFonts.roboto(color: Color(0xFF424242)),
                             enabledBorder: UnderlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.grey, width: 1),
@@ -453,7 +453,7 @@ class _BioProfileState extends State<BioProfile> {
                 decoration: InputDecoration(
                   hintText: "Enter your first name",
                   // labelText: "Email",
-                  hintStyle: GoogleFonts.reemKufi(color: Color(0xFF424242)),
+                  hintStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
@@ -484,7 +484,7 @@ class _BioProfileState extends State<BioProfile> {
                 decoration: InputDecoration(
                   hintText: "Enter your last name",
                   // labelText: "Email",
-                  labelStyle: GoogleFonts.reemKufi(color: Color(0xFF424242)),
+                  labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
 
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -525,7 +525,7 @@ class _BioProfileState extends State<BioProfile> {
               hintText: "Enter Bio",
               // labelText: "Email",
               hintMaxLines: 2,
-              labelStyle: GoogleFonts.reemKufi(color: Color(0xFF424242)),
+              labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1),
                 // borderRadius: BorderRadius.circular(30.0),
@@ -561,7 +561,7 @@ class _BioProfileState extends State<BioProfile> {
         //         decoration: const InputDecoration(
         //           hintText: "Website name",
         //           // labelText: "Email",
-        //           labelStyle: GoogleFonts.reemKufi(color: Color(0xFF424242)),
+        //           labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
         //           enabledBorder: UnderlineInputBorder(
         //             borderSide: BorderSide(color: Colors.grey, width: 1),
         //             // borderRadius: BorderRadius.circular(30.0),
@@ -592,7 +592,7 @@ class _BioProfileState extends State<BioProfile> {
                 decoration: InputDecoration(
                   hintText: "Website link",
                   // labelText: "Email",
-                  labelStyle: GoogleFonts.reemKufi(color: Color(0xFF424242)),
+                  labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
 
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -621,7 +621,7 @@ class _BioProfileState extends State<BioProfile> {
           hintText: "Enter Location",
           // labelText: "Email",
           hintMaxLines: 2,
-          labelStyle: GoogleFonts.reemKufi(color: Color(0xFF424242)),
+          labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey, width: 1),
             // borderRadius: BorderRadius.circular(30.0),
@@ -640,7 +640,7 @@ class _BioProfileState extends State<BioProfile> {
   //     margin: EdgeInsets.only(left: 15, right: 15),
   //     child: DropdownButtonFormField(
   //       // icon: Icon(Icons.add_location),
-  //       style: GoogleFonts.reemKufi(
+  //       style: GoogleFonts.roboto(
   //         color: Colors.black,
   //         fontWeight: FontWeight.w500,
   //         fontSize: 16.0,
@@ -648,7 +648,7 @@ class _BioProfileState extends State<BioProfile> {
   //       value: occupationType,
   //       hint:Text(
   //         'Select Location',
-  //         style: GoogleFonts.reemKufi(
+  //         style: GoogleFonts.roboto(
   //
   //             //fontWeight: FontWeight.w400,
   //             fontSize: 12),

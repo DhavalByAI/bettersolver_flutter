@@ -13,7 +13,7 @@
 //   // List<Widget> emojis = emojiNames.map((emojiName) {
 //   //   return Text(
 //   //     String.fromCharCode(int.parse('0x1F$emojiName', radix: 16)),
-//   //     style: GoogleFonts.reemKufi(fontSize: 24), // Set the desired font size for emojis
+//   //     style: GoogleFonts.roboto(fontSize: 24), // Set the desired font size for emojis
 //   //   );
 //   // }).toList();
 

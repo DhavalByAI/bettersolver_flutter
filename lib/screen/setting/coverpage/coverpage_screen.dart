@@ -361,7 +361,8 @@ class _CoverPageScreenState extends State<CoverPageScreen> {
       Navigator.pop(context);
     } catch (e) {
       Navigator.pop(context);
-      ErrorDialouge.showErrorDialogue(context, _keyError, e.toString());
+      EasyLoading.dismiss();
+      // ErrorDialouge.showErrorDialogue(context, _keyError, e.toString());
       print("Exeption $e");
     }
   }

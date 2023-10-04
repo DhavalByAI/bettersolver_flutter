@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -62,11 +63,10 @@ class _ChatScreenState extends State<ChatScreen> {
           },
           child: Scaffold(
             resizeToAvoidBottomInset: true,
-            // persistentFooterButtons: const [],
             body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   height: 100,
@@ -137,7 +137,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 // const Spacer(),
-                Flexible(
+                Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 10, bottom: 0, left: 10, right: 10),
@@ -188,7 +188,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                             child: Text(
                                                 _.messages[index]['text'],
                                                 softWrap: true,
-                                                style: GoogleFonts.reemKufi(
+                                                style: GoogleFonts.roboto(
                                                     color: Colors.white)),
                                           ),
                                         ),
@@ -210,11 +210,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   ),
                                                   Text(
                                                       " ${formatTimeDifference(_.messages[index]['seen'])}",
-                                                      style:
-                                                          GoogleFonts.reemKufi(
-                                                              fontSize: 10,
-                                                              color: Colors
-                                                                  .black)),
+                                                      style: GoogleFonts.roboto(
+                                                          fontSize: 10,
+                                                          color: Colors.black)),
                                                 ],
                                               )
                                             : const SizedBox()
@@ -251,7 +249,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 12, vertical: 8),
                                         child: Text(_.messages[index]['text'],
-                                            style: GoogleFonts.reemKufi(
+                                            style: GoogleFonts.roboto(
                                                 color: Colors.black)),
                                       ),
                                     ),
@@ -263,88 +261,93 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  // color: Colors.red,
-                  alignment: Alignment.bottomCenter,
-                  child: Card(
-                      elevation: 0.0,
-                      color: kWhite,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                margin: const EdgeInsets.only(left: 5, top: 5),
-                                child: TextField(
-                                  onTap: () {
-                                    log('ontap');
-                                    sc.animateTo(
-                                        duration:
-                                            const Duration(milliseconds: 300),
-                                        sc.position.viewportDimension + 1000,
-                                        curve: Curves.linear);
-                                    // Timer(
-                                    //     const Duration(milliseconds: 300),
-                                    //     () => sc.jumpTo(
-                                    //         sc.position.maxScrollExtent));
-                                  },
-                                  controller: msgcontroller,
-                                  keyboardType: TextInputType.text,
-                                  decoration: InputDecoration(
-                                    hintText: "Write message…",
-                                    filled: true,
-                                    fillColor: kThemeColorLightGrey,
-                                    hintStyle: Palette.greytext12,
-                                    // labelText: "Email",
-                                    contentPadding: const EdgeInsets.all(5),
-                                    labelStyle: GoogleFonts.reemKufi(
-                                        color: const Color(0xFF424242)),
-                                    // fillColor: kBlack,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.transparent, width: 1),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.transparent, width: 1),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Card(
+                    margin: const EdgeInsets.all(0),
+                    elevation: 0.0,
+                    color: kWhite,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 5, top: 5),
+                              child: TextField(
+                                onTap: () {
+                                  log('ontap');
+                                  sc.jumpTo(0);
+                                  sc.animateTo(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      sc.position.maxScrollExtent + 1000,
+                                      curve: Curves.linear);
+                                  // Timer(
+                                  //     const Duration(milliseconds: 300),
+                                  //     () => sc.jumpTo(
+                                  //         sc.position.maxScrollExtent));
+                                },
+                                controller: msgcontroller,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: "Write Message…",
+                                  filled: true,
+                                  fillColor: kThemeColorLightGrey,
+                                  hintStyle: Palette.greytext12,
+                                  // labelText: "Email",
+                                  contentPadding: const EdgeInsets.all(5),
+                                  labelStyle: GoogleFonts.roboto(
+                                      color: const Color(0xFF424242)),
+                                  // fillColor: kBlack,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.transparent, width: 1),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.transparent, width: 1),
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                msgcontroller.text == ''
-                                    ? null
-                                    : _
-                                        .sendMessage(
-                                            ID: widget.userID,
-                                            text: msgcontroller.text)
-                                        .then(msgcontroller.clear());
-                              },
-                              child: Container(
-                                height: 35,
-                                width: 35,
-                                margin:
-                                    const EdgeInsets.only(right: 10, left: 10),
-                                decoration: Palette.buttonGradient,
-                                child: const Icon(
-                                  Icons.send_rounded,
-                                  color: kWhite,
-                                ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              msgcontroller.text == ''
+                                  ? null
+                                  : _
+                                      .sendMessage(
+                                          ID: widget.userID,
+                                          text: msgcontroller.text)
+                                      .then(msgcontroller.clear());
+                              sc.animateTo(
+                                  duration: const Duration(milliseconds: 300),
+                                  sc.position.maxScrollExtent,
+                                  curve: Curves.linear);
+                            },
+                            child: Container(
+                              height: 35,
+                              width: 35,
+                              margin:
+                                  const EdgeInsets.only(right: 10, left: 10),
+                              decoration: Palette.buttonGradient,
+                              child: const Icon(
+                                Icons.send_rounded,
+                                color: kWhite,
                               ),
-                            )
-                          ],
-                        ),
-                      )),
-                ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
               ],
             ),
           ),

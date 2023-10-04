@@ -1,5 +1,6 @@
 import 'package:bettersolver/bloc/delete_bloc.dart';
 import 'package:bettersolver/screen/auth/login.dart';
+import 'package:bettersolver/screen/auth/webview.dart';
 import 'package:bettersolver/screen/profile/profile_bio.dart';
 import 'package:bettersolver/screen/profile/profile_general_screen.dart';
 import 'package:bettersolver/screen/setting/blockuser/blockuser_screen.dart';
@@ -13,6 +14,7 @@ import 'package:bettersolver/screen/setting/verification/verification_screen.dar
 import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +37,7 @@ class _SettingScreenState extends State<SettingScreen> {
         centerTitle: true,
         backgroundColor: kWhite,
         title: Text(
-          'SETTING',
+          'SETTINGS',
           style: Palette.greytext20B,
         ),
         actions: [
@@ -472,7 +474,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (contex) =>
-                                                  NotificationScreen()));
+                                                  const NotificationScreen()));
                                     },
                                     child:
                                         _textDesign('NOTIFICATION SETTINGS'))),
@@ -711,6 +713,180 @@ class _SettingScreenState extends State<SettingScreen> {
                       ],
                     ),
                   ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 15, top: 20, right: 15),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: Palette.RoundGradient,
+                          height: 50,
+                          width: 50,
+                          child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Container(
+                                // height: 50,
+                                // width: 50,
+
+                                decoration: BoxDecoration(
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/deleteicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child:
+                                      Image.asset('assets/images/info_s.png'),
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => WebViewScreen(
+                                title: 'About us',
+                                url:
+                                    'https://bettersolver.com/demo2/terms/about-us'));
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 1.4,
+                            height: 50,
+                            decoration: Palette.cardShapGradient,
+                            child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Container(
+                                  decoration: const BoxDecoration(
+                                      color: kWhite,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          bottomLeft: Radius.circular(30),
+                                          bottomRight: Radius.circular(25))),
+                                  child: _textDesign('ABOUT US')),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 15, top: 20, right: 15),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: Palette.RoundGradient,
+                          height: 50,
+                          width: 50,
+                          child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Container(
+                                // height: 50,
+                                // width: 50,
+
+                                decoration: BoxDecoration(
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/deleteicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child:
+                                      Image.asset('assets/images/terms_s.png'),
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => WebViewScreen(
+                                title: 'Terms & Policies',
+                                url:
+                                    'https://bettersolver.com/demo2/terms/privacy-policy'));
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 1.4,
+                            height: 50,
+                            decoration: Palette.cardShapGradient,
+                            child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Container(
+                                  decoration: const BoxDecoration(
+                                      color: kWhite,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          bottomLeft: Radius.circular(30),
+                                          bottomRight: Radius.circular(25))),
+                                  child: _textDesign('TERMS & POLICIES')),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 15, top: 20, right: 15),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: Palette.RoundGradient,
+                          height: 50,
+                          width: 50,
+                          child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Container(
+                                // height: 50,
+                                // width: 50,
+
+                                decoration: BoxDecoration(
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(30),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage(
+                                  //         'assets/images/deleteicon.png'))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Image.asset(
+                                      'assets/images/contact_us.png'),
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => WebViewScreen(
+                                title: 'Contact Us',
+                                url:
+                                    'https://bettersolver.com/demo2/contact-us'));
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 1.4,
+                            height: 50,
+                            decoration: Palette.cardShapGradient,
+                            child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Container(
+                                  decoration: const BoxDecoration(
+                                      color: kWhite,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          bottomLeft: Radius.circular(30),
+                                          bottomRight: Radius.circular(25))),
+                                  child: _textDesign('CONTACT US')),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     height: 30,
                   )
@@ -750,7 +926,7 @@ class _SettingScreenState extends State<SettingScreen> {
     Widget cancelButton = MaterialButton(
       child: Text(
         "Cancel",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context, false);
@@ -759,7 +935,7 @@ class _SettingScreenState extends State<SettingScreen> {
     Widget continueButton = MaterialButton(
       child: Text(
         "Yes",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context, false);
@@ -791,7 +967,7 @@ class _SettingScreenState extends State<SettingScreen> {
     Widget cancelButton = MaterialButton(
       child: Text(
         "Cancel",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
         Navigator.pop(context, false);
@@ -800,9 +976,10 @@ class _SettingScreenState extends State<SettingScreen> {
     Widget continueButton = MaterialButton(
       child: Text(
         "Yes",
-        style: GoogleFonts.reemKufi(fontSize: 14.0, color: Colors.black),
+        style: GoogleFonts.roboto(fontSize: 14.0, color: Colors.black),
       ),
       onPressed: () {
+        //delete acc
         Navigator.pop(context, false);
         DeleteBloc(KeyLoader, context);
         logoutUser();
