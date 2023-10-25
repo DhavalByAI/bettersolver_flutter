@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     EasyLoading.instance
       ..indicatorType = EasyLoadingIndicatorType.chasingDots
       ..loadingStyle = EasyLoadingStyle.light
@@ -39,7 +38,6 @@ class _SplashScreenState extends State<SplashScreen> {
       ..userInteractions = true
       ..maskType = EasyLoadingMaskType.black
       ..dismissOnTap = false;
-
     // navigateUser();
     // _onBoardingApi();
     Timer(const Duration(seconds: 3), () {

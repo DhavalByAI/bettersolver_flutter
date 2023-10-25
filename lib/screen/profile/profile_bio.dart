@@ -19,6 +19,8 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:path/path.dart' as p;
 
 class BioProfile extends StatefulWidget {
+  const BioProfile({super.key});
+
   @override
   State<BioProfile> createState() => _BioProfileState();
 }
@@ -148,7 +150,7 @@ class _BioProfileState extends State<BioProfile> {
                     break;
                   case Status.ERROR:
                     return Container(
-                      child: Text(
+                      child: const Text(
                         'Error msg',
                       ),
                     );
@@ -342,7 +344,7 @@ class _BioProfileState extends State<BioProfile> {
                     child: GradientText(
                       'LOCATION',
                       style: Palette.whiteText10,
-                      colors: [kThemeColorBlue, kThemeColorGreen],
+                      colors: const [kThemeColorBlue, kThemeColorGreen],
                     ),
                   ),
                   _location(),
@@ -358,7 +360,7 @@ class _BioProfileState extends State<BioProfile> {
                     child: GradientText(
                       'OCCUPATION',
                       style: Palette.whiteText10,
-                      colors: [kThemeColorBlue, kThemeColorGreen],
+                      colors: const [kThemeColorBlue, kThemeColorGreen],
                     ),
                   ),
                   //_occupation(),
@@ -378,14 +380,14 @@ class _BioProfileState extends State<BioProfile> {
                             hintText: "Enter occupation",
                             // labelText: "Email",
                             hintMaxLines: 2,
-                            labelStyle:
-                                GoogleFonts.roboto(color: Color(0xFF424242)),
-                            enabledBorder: UnderlineInputBorder(
+                            labelStyle: GoogleFonts.roboto(
+                                color: const Color(0xFF424242)),
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.grey, width: 1),
                               // borderRadius: BorderRadius.circular(30.0),
                             ),
-                            focusedBorder: UnderlineInputBorder(
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.grey, width: 1),
                               // borderRadius: BorderRadius.circular(30.0),
@@ -412,21 +414,26 @@ class _BioProfileState extends State<BioProfile> {
         occupations.length,
         (index) {
           print(selectedOccupation);
-          return RadioMenuButton(
-            value: occupations[index],
-            groupValue: selectedOccupation,
-            onChanged: (value) {
-              setState(() {
-                other = false;
-                print(value);
-                selectedOccupation = value!;
-              });
-              print(selectedOccupation);
-            },
-            child: Text(
-              occupations[index],
-              style: Palette.greytext14,
-            ),
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioMenuButton(
+                value: occupations[index],
+                groupValue: selectedOccupation,
+                onChanged: (value) {
+                  setState(() {
+                    other = false;
+                    print(value);
+                    selectedOccupation = value!;
+                  });
+                  print(selectedOccupation);
+                },
+                child: Text(
+                  occupations[index],
+                  style: Palette.greytext14,
+                ),
+              ),
+            ],
           );
         },
       ),
@@ -445,7 +452,7 @@ class _BioProfileState extends State<BioProfile> {
               GradientText(
                 'FIRST NAME',
                 style: Palette.whiteText10,
-                colors: [kThemeColorBlue, kThemeColorGreen],
+                colors: const [kThemeColorBlue, kThemeColorGreen],
               ),
               TextField(
                 controller: firstnameController,
@@ -453,12 +460,12 @@ class _BioProfileState extends State<BioProfile> {
                 decoration: InputDecoration(
                   hintText: "Enter your first name",
                   // labelText: "Email",
-                  hintStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
-                  enabledBorder: UnderlineInputBorder(
+                  hintStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -476,7 +483,7 @@ class _BioProfileState extends State<BioProfile> {
               GradientText(
                 'LAST NAME',
                 style: Palette.whiteText10,
-                colors: [kThemeColorBlue, kThemeColorGreen],
+                colors: const [kThemeColorBlue, kThemeColorGreen],
               ),
               TextField(
                 controller: lastnameController,
@@ -484,13 +491,14 @@ class _BioProfileState extends State<BioProfile> {
                 decoration: InputDecoration(
                   hintText: "Enter your last name",
                   // labelText: "Email",
-                  labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
+                  labelStyle:
+                      GoogleFonts.roboto(color: const Color(0xFF424242)),
 
-                  enabledBorder: UnderlineInputBorder(
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -512,7 +520,7 @@ class _BioProfileState extends State<BioProfile> {
           child: GradientText(
             'ENTER BIO',
             style: Palette.whiteText10,
-            colors: [kThemeColorBlue, kThemeColorGreen],
+            colors: const [kThemeColorBlue, kThemeColorGreen],
           ),
         ),
         Container(
@@ -525,12 +533,12 @@ class _BioProfileState extends State<BioProfile> {
               hintText: "Enter Bio",
               // labelText: "Email",
               hintMaxLines: 2,
-              labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
-              enabledBorder: UnderlineInputBorder(
+              labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
+              enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1),
                 // borderRadius: BorderRadius.circular(30.0),
               ),
-              focusedBorder: UnderlineInputBorder(
+              focusedBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1),
                 // borderRadius: BorderRadius.circular(30.0),
               ),
@@ -584,7 +592,7 @@ class _BioProfileState extends State<BioProfile> {
               GradientText(
                 'WEBSITE URL',
                 style: Palette.whiteText10,
-                colors: [kThemeColorBlue, kThemeColorGreen],
+                colors: const [kThemeColorBlue, kThemeColorGreen],
               ),
               TextField(
                 controller: websitelinkController,
@@ -592,13 +600,14 @@ class _BioProfileState extends State<BioProfile> {
                 decoration: InputDecoration(
                   hintText: "Website link",
                   // labelText: "Email",
-                  labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
+                  labelStyle:
+                      GoogleFonts.roboto(color: const Color(0xFF424242)),
 
-                  enabledBorder: UnderlineInputBorder(
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1),
                     // borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -621,12 +630,12 @@ class _BioProfileState extends State<BioProfile> {
           hintText: "Enter Location",
           // labelText: "Email",
           hintMaxLines: 2,
-          labelStyle: GoogleFonts.roboto(color: Color(0xFF424242)),
-          enabledBorder: UnderlineInputBorder(
+          labelStyle: GoogleFonts.roboto(color: const Color(0xFF424242)),
+          enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey, width: 1),
             // borderRadius: BorderRadius.circular(30.0),
           ),
-          focusedBorder: UnderlineInputBorder(
+          focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey, width: 1),
             // borderRadius: BorderRadius.circular(30.0),
           ),

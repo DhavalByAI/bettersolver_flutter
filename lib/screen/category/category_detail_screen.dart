@@ -899,7 +899,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       // title:Text("Logout"),
-      content: const Text("Are you sure you want to left Group?"),
+      content: const Text("Are you sure you want to leave Group?"),
       actions: [
         cancelButton,
         continueButton,

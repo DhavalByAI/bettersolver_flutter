@@ -131,6 +131,7 @@ class ListOfPostsController extends GetxController {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? s = pref.getString('s');
       String? userid = pref.getString('userid');
+      EasyLoading.dismiss();
       final requestBody = {
         "user_id": userid,
         "s": s,

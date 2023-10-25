@@ -44,6 +44,11 @@ class _ChatScreenState extends State<ChatScreen> {
   ScrollController sc = ScrollController();
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (sc.hasClients) {
+        sc.jumpTo(sc.position.maxScrollExtent);
+      }
+    });
     _.fetchMEssage(widget.userID);
     _timer = Timer.periodic(const Duration(milliseconds: 2000), (timer) {
       _.fetchMEssage(widget.userID);
@@ -141,123 +146,132 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 10, bottom: 0, left: 10, right: 10),
-                    child: ListView.separated(
-                      controller: sc,
-                      addAutomaticKeepAlives: true,
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: _.messages.isEmpty ? 0 : _.messages.length,
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 8,
-                        );
-                      },
-                      itemBuilder: (context, index) {
-                        // MediaQuery.of(context).viewInsets.bottom == 0
-                        //     ? sc.animateTo(sc.position.maxScrollExtent,
-                        //         duration: Duration(milliseconds: 500),
-                        //         curve: Curves.fastOutSlowIn)
-                        //     : null;
-                        return _.messages[index]['position'] == 'right'
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Spacer(),
-                                  Flexible(
-                                    flex: 6,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          decoration: const BoxDecoration(
-                                            color: Colors.green,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(12),
-                                              bottomLeft: Radius.circular(12),
-                                              // bottomRight: Radius.circular(20),
-                                              topRight: Radius.circular(12),
+                    child: SingleChildScrollView(
+                      child: ListView.separated(
+                        controller: sc,
+                        addAutomaticKeepAlives: true,
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: _.messages.isEmpty ? 0 : _.messages.length,
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            height: 8,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          // MediaQuery.of(context).viewInsets.bottom == 0
+                          //     ? sc.animateTo(sc.position.maxScrollExtent,
+                          //         duration: Duration(milliseconds: 500),
+                          //         curve: Curves.fastOutSlowIn)
+                          //     : null;
+                          return _.messages[index]['position'] == 'right'
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    const Spacer(),
+                                    Flexible(
+                                      flex: 6,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            decoration: const BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(12),
+                                                bottomLeft: Radius.circular(12),
+                                                // bottomRight: Radius.circular(20),
+                                                topRight: Radius.circular(12),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 8),
+                                              child: Text(
+                                                  _.messages[index]['text'],
+                                                  softWrap: true,
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.white)),
                                             ),
                                           ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 12, vertical: 8),
-                                            child: Text(
-                                                _.messages[index]['text'],
-                                                softWrap: true,
-                                                style: GoogleFonts.roboto(
-                                                    color: Colors.white)),
+                                          const SizedBox(
+                                            height: 1,
+                                          ),
+                                          (_.messages.length - 1 == index &&
+                                                  _.messages[index]['seen'] !=
+                                                      '0')
+                                              ? Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    const Icon(
+                                                      Icons
+                                                          .remove_red_eye_rounded,
+                                                      size: 10,
+                                                    ),
+                                                    Text(
+                                                        " ${formatTimeDifference(_.messages[index]['seen'])}",
+                                                        style:
+                                                            GoogleFonts.roboto(
+                                                                fontSize: 10,
+                                                                color: Colors
+                                                                    .black)),
+                                                  ],
+                                                )
+                                              : const SizedBox()
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 14,
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                              widget.image),
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Flexible(
+                                      flex: 6,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(12),
+                                            // bottomLeft: Radius.circular(12),
+                                            bottomRight: Radius.circular(12),
+                                            topRight: Radius.circular(12),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 1,
-                                        ),
-                                        (_.messages.length - 1 == index &&
-                                                _.messages[index]['seen'] !=
-                                                    '0')
-                                            ? Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  const Icon(
-                                                    Icons
-                                                        .remove_red_eye_rounded,
-                                                    size: 10,
-                                                  ),
-                                                  Text(
-                                                      " ${formatTimeDifference(_.messages[index]['seen'])}",
-                                                      style: GoogleFonts.roboto(
-                                                          fontSize: 10,
-                                                          color: Colors.black)),
-                                                ],
-                                              )
-                                            : const SizedBox()
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 14,
-                                    backgroundImage: CachedNetworkImageProvider(
-                                        widget.image),
-                                  ),
-                                  const SizedBox(
-                                    width: 6,
-                                  ),
-                                  Flexible(
-                                    flex: 6,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(12),
-                                          // bottomLeft: Radius.circular(12),
-                                          bottomRight: Radius.circular(12),
-                                          topRight: Radius.circular(12),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 8),
+                                          child: Text(_.messages[index]['text'],
+                                              style: GoogleFonts.roboto(
+                                                  color: Colors.black)),
                                         ),
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 8),
-                                        child: Text(_.messages[index]['text'],
-                                            style: GoogleFonts.roboto(
-                                                color: Colors.black)),
-                                      ),
                                     ),
-                                  ),
-                                  const Spacer(),
-                                ],
-                              );
-                      },
+                                    const Spacer(),
+                                  ],
+                                );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -282,12 +296,18 @@ class _ChatScreenState extends State<ChatScreen> {
                               child: TextField(
                                 onTap: () {
                                   log('ontap');
-                                  sc.jumpTo(0);
-                                  sc.animateTo(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      sc.position.maxScrollExtent + 1000,
-                                      curve: Curves.linear);
+                                  // sc.jumpTo(0);
+                                  Future.delayed(
+                                    const Duration(seconds: 3),
+                                    () {
+                                      log('sc.position.maxScrollExtent');
+                                      sc.animateTo(
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          sc.position.maxScrollExtent,
+                                          curve: Curves.linear);
+                                    },
+                                  );
                                   // Timer(
                                   //     const Duration(milliseconds: 300),
                                   //     () => sc.jumpTo(

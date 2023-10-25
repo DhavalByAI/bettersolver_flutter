@@ -1,6 +1,7 @@
 import 'package:bettersolver/models/commonModel.dart';
 import 'package:bettersolver/screen/ListOfPosts_controller.dart';
 import 'package:bettersolver/utils/apiprovider.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +10,7 @@ class LikedRepository {
 
   Future<CommonModel> fetchLiked(
       String postid, String reaction, bool isDelete, String url) async {
+    EasyLoading.dismiss();
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? s = pref.getString('s');
     String? userid = pref.getString('userid');

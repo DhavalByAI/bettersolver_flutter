@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:bettersolver/bloc/userdetail_bloc.dart';
+import 'package:bettersolver/bottom_navigation.dart';
 import 'package:bettersolver/models/userdetail_model.dart';
 import 'package:bettersolver/screen/profile/categories_screen.dart';
 import 'package:bettersolver/screen/profile/followers_screen.dart';
@@ -16,6 +19,7 @@ import 'package:bettersolver/utils/loading.dart';
 import 'package:bettersolver/utils/response.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -52,61 +56,65 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kWhite,
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: kWhite,
-      //   title: Text(
-      //     'PROFILE',
-      //     style: Palette.greytext20B,
-      //   ),
-      //   centerTitle: true,
-      //   leading: Container(
-      //       alignment: Alignment.center,
-      //       child: InkWell(
-      //         onTap: () {
-      //           Navigator.push(context,
-      //               MaterialPageRoute(builder: (context) => BioProfile()));
-      //         },
-      //         child: GradientText(
-      //           'Edit',
-      //           style: Palette.themText15,
-      //           colors: [kThemeColorBlue, kThemeColorGreen],
-      //         ),
-      //       )),
-      //   actions: [
-      //     IconButton(
-      //         onPressed: () {
-      //           _showMoreBottomSheet();
-      //         },
-      //         icon: Icon(Icons.segment_outlined))
-      //   ],
-      // ),
-      body: StreamBuilder(
-        stream: _userDetailBloc!.userdetailblocDataStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            switch (snapshot.data.status) {
-              case Status.LOADING:
-                return Loading(
-                  loadingMessage: snapshot.data.message,
-                );
-                break;
-              case Status.COMPLETED:
-                return _detail(snapshot.data.data);
-                break;
-              case Status.ERROR:
-                return Container(
-                  child: const Text(
+    return WillPopScope(
+      onWillPop: () async {
+        log('back Pressed');
+        Get.back();
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: kWhite,
+        // appBar: AppBar(
+        //   elevation: 0,
+        //   backgroundColor: kWhite,
+        //   title: Text(
+        //     'PROFILE',
+        //     style: Palette.greytext20B,
+        //   ),
+        //   centerTitle: true,
+        //   leading: Container(
+        //       alignment: Alignment.center,
+        //       child: InkWell(
+        //         onTap: () {
+        //           Navigator.push(context,
+        //               MaterialPageRoute(builder: (context) => BioProfile()));
+        //         },
+        //         child: GradientText(
+        //           'Edit',
+        //           style: Palette.themText15,
+        //           colors: [kThemeColorBlue, kThemeColorGreen],
+        //         ),
+        //       )),
+        //   actions: [
+        //     IconButton(
+        //         onPressed: () {
+        //           _showMoreBottomSheet();
+        //         },
+        //         icon: Icon(Icons.segment_outlined))
+        //   ],
+        // ),
+        body: StreamBuilder(
+          stream: _userDetailBloc!.userdetailblocDataStream,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              switch (snapshot.data.status) {
+                case Status.LOADING:
+                  return Loading(
+                    loadingMessage: snapshot.data.message,
+                  );
+
+                case Status.COMPLETED:
+                  return _detail(snapshot.data.data);
+
+                case Status.ERROR:
+                  return const Text(
                     'Errror msg',
-                  ),
-                );
-                break;
+                  );
+              }
             }
-          }
-          return Container();
-        },
+            return Container();
+          },
+        ),
       ),
     );
   }
@@ -277,6 +285,20 @@ class _ProfileState extends State<Profile> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (_) => const Home(),
+                                  ),
+                                );
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child:
+                                    Icon(Icons.arrow_back, color: Colors.white),
+                              ),
+                            ),
                             Expanded(
                               child: Container(
                                 margin: const EdgeInsets.only(left: 15),
@@ -286,7 +308,7 @@ class _ProfileState extends State<Profile> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  BioProfile()));
+                                                  const BioProfile()));
                                     },
                                     child: Text(
                                       'Edit',
@@ -295,12 +317,13 @@ class _ProfileState extends State<Profile> {
                               ),
                             ),
                             Container(
-                                alignment: Alignment.topLeft,
-                                //margin: EdgeInsets.only(left: 20),
-                                child: Text(
-                                  'PROFILE',
-                                  style: Palette.whitetext20,
-                                )),
+                              alignment: Alignment.topLeft,
+                              margin: const EdgeInsets.only(right: 20 + 16),
+                              child: Text(
+                                'PROFILE',
+                                style: Palette.whitetext20,
+                              ),
+                            ),
                             Expanded(
                               child: Container(
                                 margin: const EdgeInsets.only(right: 15),
@@ -308,10 +331,15 @@ class _ProfileState extends State<Profile> {
                                 child: InkWell(
                                     onTap: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const SettingScreen()));
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const SettingScreen()))
+                                          .then((value) async {
+                                        _userDetailBloc =
+                                            UserDetailBloc(_keyLoader, context);
+                                        setState(() {});
+                                      });
                                       //_showMoreBottomSheet();
                                     },
                                     child: const Icon(
@@ -416,7 +444,6 @@ class _ProfileState extends State<Profile> {
                       const SizedBox(
                         height: 20,
                       ),
-
                       Container(
                         margin: const EdgeInsets.only(left: 20, right: 20),
                         child: Row(
@@ -518,7 +545,6 @@ class _ProfileState extends State<Profile> {
                       child: Container(
                         // height: 50,
                         // width: 50,
-
                         decoration: BoxDecoration(
                             color: kWhite,
                             borderRadius: BorderRadius.circular(30),

@@ -103,7 +103,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                 return GetBuilder<ViewProfileController>(
                   initState: (_) {},
                   builder: (_) {
-                    return _detail(_.userDetailModel!);
+                    return _detail(_.userDetailModel ?? UserDetailModel());
                   },
                 );
               case Status.ERROR:
@@ -549,7 +549,9 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                                                 ),
                                                 Flexible(
                                                     child: Text(userDetailModel
-                                                        .user_data['about']))
+                                                                .user_data[
+                                                            'about'] ??
+                                                        '-'))
                                               ],
                                             ),
                                           )

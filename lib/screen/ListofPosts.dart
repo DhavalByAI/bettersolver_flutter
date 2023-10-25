@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:bettersolver/bloc/delete_post_bloc.dart';
 import 'package:bettersolver/bloc/enable_disable_comment_bloc.dart';
 import 'package:bettersolver/bloc/hide_post_bloc.dart';
@@ -32,6 +31,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../bloc/edit_post_bloc.dart';
 import '../bloc/report_post_bloc.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'auth/login.dart';
 import 'create_post/get_post_comment_screen.dart';
 import 'msg_group_chat/message_screen.dart';
 import 'profile/video_player.dart';
@@ -68,10 +68,8 @@ class _MyWidgetState extends State<ListOfPosts> {
   String? profileid;
   String? profilePic;
   final GlobalKey<State> _keyLoader = GlobalKey<State>();
-  final GlobalKey<State> _keyError = GlobalKey<State>();
   final GlobalKey<State> _keyLoadercomment = GlobalKey<State>();
   final GlobalKey<State> _keyLoadersavepost = GlobalKey<State>();
-  final GlobalKey<State> _keyLoaderlike = GlobalKey<State>();
   final GlobalKey<State> _keyLoaderreport = GlobalKey<State>();
   TextEditingController reportTextController = TextEditingController();
 
@@ -175,11 +173,68 @@ class _MyWidgetState extends State<ListOfPosts> {
                                     children: [
                                       InkWell(
                                           onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const Profile()));
+                                            currUser!.user_data[
+                                                        'is_email_verify'] !=
+                                                    '1'
+                                                ? Get.dialog(Dialog(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            height: 8,
+                                                          ),
+                                                          const Icon(
+                                                            Icons.error_outline,
+                                                            size: 30,
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 8,
+                                                          ),
+                                                          const Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Text(
+                                                              'Important! To access the profile, please confirm your email address in your mail inbox',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              MaterialButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context,
+                                                                      false);
+                                                                  logoutUser();
+                                                                },
+                                                                child: const Text(
+                                                                    'Logout'),
+                                                              ),
+                                                              const Spacer(),
+                                                              MaterialButton(
+                                                                onPressed:
+                                                                    () {},
+                                                                child: const Text(
+                                                                    'Resend Email'),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ))
+                                                : Get.to(() => const Profile());
                                           },
                                           child: Image.asset(
                                             'assets/images/profilewhite.png',
@@ -1417,13 +1472,13 @@ class _MyWidgetState extends State<ListOfPosts> {
                                             onTap: () {
                                               // _.selectedReaction[index] = subIndex;
                                               _.isReacting[index] = false;
+
                                               log(subIndex.toString());
                                               LikedBloc(
                                                   postid,
                                                   _.reactionsURL[subIndex].id,
                                                   false,
                                                   widget.url);
-
                                               // _.update();
                                             },
                                             child: CachedNetworkImage(
@@ -1462,29 +1517,32 @@ class _MyWidgetState extends State<ListOfPosts> {
                                               .withOpacity(0.4),
                                           child: GestureDetector(
                                             onTap: () {
-                                              // setState(() {
-                                              //   _.islikeboollist[index] =
-                                              //       !_.islikeboollist[index];
-                                              //   if (_.islikeboollist[index] ==
-                                              //       true) {
-                                              //     setState(() {
-                                              //       _.posts[index]['reaction']
-                                              //           ['count']++;
-                                              //     });
-                                              //   } else {
-                                              //     setState(() {
-                                              //       _.posts[index]['reaction']
-                                              //           ['count']--;
-                                              //     });
-                                              //   }
-                                              LikedBloc(
-                                                  postid,
-                                                  "2",
-                                                  _.posts[index]['reaction']
-                                                      ['is_reacted'],
-                                                  widget.url);
-
-                                              // });
+                                              setState(() {
+                                                _.islikeboollist[index] =
+                                                    !_.islikeboollist[index];
+                                                if (_.islikeboollist[index] ==
+                                                    true) {
+                                                  setState(() {
+                                                    _.posts[index]['reaction']
+                                                        ['count']++;
+                                                    _.posts[index]['reaction']
+                                                        ['type'] = '2';
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    _.posts[index]['reaction']
+                                                        ['count']--;
+                                                    _.posts[index]['reaction']
+                                                        ['type'] = '';
+                                                  });
+                                                }
+                                                LikedBloc(
+                                                    postid,
+                                                    "2",
+                                                    _.posts[index]['reaction']
+                                                        ['is_reacted'],
+                                                    widget.url);
+                                              });
                                             },
                                             onLongPress: () {
                                               _.isReacting[index] = true;
@@ -1511,10 +1569,8 @@ class _MyWidgetState extends State<ListOfPosts> {
                                                       progressIndicatorBuilder: (context,
                                                               url,
                                                               downloadProgress) =>
-                                                          CircularProgressIndicator(
-                                                              value:
-                                                                  downloadProgress
-                                                                      .progress),
+                                                          const CupertinoActivityIndicator
+                                                              .partiallyRevealed(),
                                                       errorWidget: (context,
                                                               url, error) =>
                                                           const Icon(
@@ -2795,6 +2851,15 @@ class _MyWidgetState extends State<ListOfPosts> {
         return alert;
       },
     );
+  }
+
+  void logoutUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.clear();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Login()),
+        (route) => false);
   }
 }
 

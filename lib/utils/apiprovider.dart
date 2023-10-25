@@ -62,22 +62,18 @@ class ApiProvider {
         var responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;
-        break;
       case 401:
         var responseJson = json.decode(response.body.toString());
         throw UnauthorisedException(response.body.toString());
-        return responseJson;
       case 403:
         var responseJson = json.decode(response.body.toString());
         throw UnauthorisedException(response.body.toString());
-        return responseJson;
       case 404:
       case 422:
       case 500:
         var responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;
-        break;
       default:
         var responseJson = json.decode(response.body.toString());
         throw FetchDataException(

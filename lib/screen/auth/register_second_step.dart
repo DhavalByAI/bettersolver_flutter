@@ -1,21 +1,26 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:bettersolver/bloc/signup_steptwo_bloc.dart';
-import 'package:bettersolver/screen/auth/register_thired_step.dart';
+
 import 'package:bettersolver/style/constants.dart';
 import 'package:bettersolver/style/palette.dart';
+import 'package:bettersolver/utils/apiprovider.dart';
 import 'package:bettersolver/widgets/error_dialouge.dart';
-import 'package:bettersolver/widgets/loading_dialogue.dart';
+
 import 'package:flutter/material.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'auto_text_field.dart';
+
 class RegisterSecondScreen extends StatefulWidget {
   String? email, fname, date;
 
-  RegisterSecondScreen({this.email, this.fname, this.date});
+  RegisterSecondScreen({super.key, this.email, this.fname, this.date});
 
   @override
   State<RegisterSecondScreen> createState() => _RegisterSecondScreenState();
@@ -29,12 +34,19 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
 
   DateTime selectedDate = DateTime.now();
   String? formattedDob;
-
+  String? selectedOccupation = "Professional";
   String? countryType;
   List countryList = [];
-
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-
+  bool other = false;
+  List<String> occupations = [
+    "Business owner",
+    "Professional",
+    "Student",
+    "Housewife",
+    "Service"
+  ];
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
+  String? userCheckError;
   @override
   void initState() {
     // TODO: implement initState
@@ -52,8 +64,9 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: 230,
@@ -62,18 +75,18 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
                 child: Container(
                   height: 150,
                   width: 150,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
                               'assets/images/bettersolver_logo.png'))),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Container(
-              margin: EdgeInsets.only(left: 15, right: 15),
+              margin: const EdgeInsets.only(left: 15, right: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -86,7 +99,7 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
                         decoration: Palette.buttonGradient,
                         child: Padding(
                           padding: const EdgeInsets.all(0.9),
-                          child: Container(
+                          child: SizedBox(
                               height: 30,
                               width: 30,
                               // decoration: BoxDecoration(
@@ -188,20 +201,54 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _userNameEditText(userNameController, 'User Name'),
+            Padding(
+              padding: const EdgeInsets.only(left: 50),
+              child: Row(
+                children: [
+                  Icon(
+                    userCheckError != null
+                        ? Icons.verified_user_outlined
+                        : Icons.error_outline,
+                    color: userCheckError != null ? Colors.green : Colors.red,
+                    size: 12,
+                  ),
+                  Text(
+                    ' ${userCheckError ?? 'Invalid User Name'}',
+                    style: TextStyle(
+                        fontSize: 11,
+                        color:
+                            userCheckError != null ? Colors.green : Colors.red),
+                  ),
+                ],
+              ),
+            ),
             _nameEditText(NameController, 'Name'),
             _emailEditText(emailController, 'Email Address'),
-            _occupationEditText(occupationController, 'Occupation'),
+            // _occupationEditText(occupationController, 'Occupation'),
             _chooseFieldType(),
             _calenderDobDate(),
-            SizedBox(
+            Padding(
+              padding: const EdgeInsets.all(8.0).copyWith(left: 20),
+              child: const Text('Occupation',
+                  style: TextStyle(fontWeight: FontWeight.w500)),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: occup(occupations),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: _chehckBoxRowThird(),
+            ),
+            const SizedBox(
               height: 10,
             ),
             _gradientBtn(),
-            SizedBox(
+            const SizedBox(
               height: 20,
             )
           ],
@@ -210,37 +257,123 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
     );
   }
 
+  Wrap occup(List<String> occupations) {
+    return Wrap(
+      alignment: WrapAlignment.start,
+      children: List.generate(
+        occupations.length,
+        (index) {
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioMenuButton(
+                value: occupations[index],
+                groupValue: selectedOccupation,
+                onChanged: (value) {
+                  setState(() {
+                    other = false;
+                    selectedOccupation = value!;
+                  });
+                },
+                child: Text(
+                  occupations[index],
+                  style: Palette.greytext14,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _chehckBoxRowThird() {
+    return Row(
+      children: [
+        Checkbox(
+          checkColor: kBlack,
+          activeColor: kThemeColorBlue,
+          //fillColor: MaterialStateProperty.resolveWith(getColor),
+          value: other,
+          onChanged: (value) {
+            setState(() {
+              selectedOccupation = "Any other";
+              other = value!;
+            });
+          },
+        ),
+        Text(
+          'Any other',
+          style: Palette.greytext14,
+        ),
+        // Checkbox(
+        //   checkColor: kBlack,
+        //   activeColor: kThemeColorBlue,
+        //   //fillColor: MaterialStateProperty.resolveWith(getColor),
+        //   value: service,
+        //   onChanged: (value) {
+        //     setState(() {
+        //       service = value!;
+        //     });
+        //   },
+        // ),
+        // Text(
+        //   'Service',
+        //   style: Palette.greytext14,
+        // ),
+      ],
+    );
+  }
+
   Widget _userNameEditText(TextEditingController controller, String label) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+      margin: const EdgeInsets.fromLTRB(15, 10, 15, 4),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          gradient:
-              LinearGradient(colors: [kThemeColorBlue, kThemeColorGreen])),
+          gradient: const LinearGradient(
+              colors: [kThemeColorBlue, kThemeColorGreen])),
       child: Padding(
         padding: const EdgeInsets.all(0.8),
         child: TextField(
           controller: controller,
           keyboardType: TextInputType.text,
           style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
+          onChanged: (value) async {
+            final ApiProvider provider = ApiProvider();
+            final response = await provider.httpMethodWithoutToken('post',
+                'demo2/app_api.php?application=phone&type=user_name_check', {
+              'search_user_name': value,
+            });
+            log(response['api_check'].toString());
+
+            setState(() {
+              value.length > 6 && response['api_check'] == 'true'
+                  ? userCheckError = 'Available'
+                  : userCheckError = null;
+            });
+          },
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
-            prefixIcon: Icon(Icons.person),
+            prefixIcon: const Icon(Icons.person),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             contentPadding: const EdgeInsets.all(15.0),
@@ -257,8 +390,8 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
       margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          gradient:
-              LinearGradient(colors: [kThemeColorBlue, kThemeColorGreen])),
+          gradient: const LinearGradient(
+              colors: [kThemeColorBlue, kThemeColorGreen])),
       child: Padding(
         padding: const EdgeInsets.all(0.8),
         child: TextField(
@@ -269,21 +402,25 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
-            prefixIcon: Icon(Icons.person),
+            prefixIcon: const Icon(Icons.person),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             contentPadding: const EdgeInsets.all(15.0),
@@ -300,8 +437,8 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
       margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          gradient:
-              LinearGradient(colors: [kThemeColorBlue, kThemeColorGreen])),
+          gradient: const LinearGradient(
+              colors: [kThemeColorBlue, kThemeColorGreen])),
       child: Padding(
         padding: const EdgeInsets.all(0.8),
         child: TextField(
@@ -312,21 +449,25 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
-            prefixIcon: Icon(Icons.email),
+            prefixIcon: const Icon(Icons.email),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             contentPadding: const EdgeInsets.all(15.0),
@@ -343,8 +484,8 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
       margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          gradient:
-              LinearGradient(colors: [kThemeColorBlue, kThemeColorGreen])),
+          gradient: const LinearGradient(
+              colors: [kThemeColorBlue, kThemeColorGreen])),
       child: Padding(
         padding: const EdgeInsets.all(0.8),
         child: TextField(
@@ -354,21 +495,25 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
           decoration: InputDecoration(
             fillColor: kWhite,
             filled: true,
-            prefixIcon: Icon(Icons.business_center),
+            prefixIcon: const Icon(Icons.business_center),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 1.0),
               borderRadius: BorderRadius.circular(30.0),
             ),
             contentPadding: const EdgeInsets.all(15.0),
@@ -383,9 +528,9 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
   Widget _calenderDobDate() {
     return Container(
       decoration: Palette.buttonGradient,
-      margin: EdgeInsets.fromLTRB(15, 10, 15, 10),
+      margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: Padding(
-        padding: EdgeInsets.all(0.8),
+        padding: const EdgeInsets.all(0.8),
         child: GestureDetector(
           onTap: () {
             _selectDate(context);
@@ -394,18 +539,18 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
             decoration: BoxDecoration(
                 color: kWhite,
                 border: Border.all(color: Colors.transparent, width: 2),
-                borderRadius: BorderRadius.all(Radius.circular(33.0))),
+                borderRadius: const BorderRadius.all(Radius.circular(33.0))),
             // decoration: Palette.buttonGradient,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   // Icon(Icons.calendar_today,  size: 17.0),
-                  Icon(
+                  const Icon(
                     Icons.calendar_today_rounded,
                     color: kGreyone,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Expanded(
@@ -455,93 +600,117 @@ class _RegisterSecondScreenState extends State<RegisterSecondScreen> {
   }
 
   Widget _chooseFieldType() {
+    TextEditingController _ = TextEditingController();
     return Container(
-      margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      decoration: Palette.buttonGradient,
-      child: Padding(
-        padding: const EdgeInsets.all(0.8),
-        child: DropdownButtonFormField(
-          // icon: Icon(Icons.add_location),
-          style: GoogleFonts.roboto(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-            fontSize: 16.0,
-          ),
-          value: countryType,
-          hint: Text(
-            'Country',
-            style:
-                GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
-          ),
-          items: countryList.map((item) {
-            return DropdownMenuItem(
-              child: Text(
-                item['name'],
-                style: Palette.greytext15,
+        margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+        decoration: Palette.buttonGradient,
+        child: Padding(
+          padding: const EdgeInsets.all(0.8),
+          child: DropdownButtonFormField2<String>(
+            // icon: Icon(Icons.add_location),
+            style: GoogleFonts.roboto(
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 16.0,
+            ),
+            dropdownSearchData: DropdownSearchData(
+              searchController: _,
+              searchInnerWidget: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: const InputDecoration(hintText: '   Search'),
+                  controller: _,
+                ),
               ),
-              value: item['id'].toString(),
-            );
-          }).toList(),
-          decoration: InputDecoration(
-            fillColor: kWhite,
-            filled: true,
-            prefixIcon: Icon(Icons.location_on),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1),
-              borderRadius: BorderRadius.circular(30.0),
+              searchInnerWidgetHeight: 30,
+              searchMatchFn: (item, searchValue) {
+                return countryList
+                    .firstWhereOrNull(
+                        (element) => element['id'] == item.value)['name']
+                    .toString()
+                    .toLowerCase()
+                    .contains(searchValue.toLowerCase());
+              },
             ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 1),
-              borderRadius: BorderRadius.circular(30.0),
+            value: countryType,
+            hint: Text(
+              'Country',
+              style:
+                  GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12),
             ),
-            contentPadding: const EdgeInsets.all(10.0),
+            items: countryList.map((item) {
+              return DropdownMenuItem(
+                value: item['id'].toString(),
+                child: Text(
+                  item['name'],
+                  style: Palette.greytext15,
+                ),
+              );
+            }).toList(),
+            decoration: InputDecoration(
+              fillColor: kWhite,
+              filled: true,
+              prefixIcon: const Icon(Icons.location_on),
+              enabledBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: Colors.transparent, width: 1),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: Colors.transparent, width: 1),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              contentPadding: const EdgeInsets.all(10.0),
+            ),
+            isDense: true,
+            isExpanded: true,
+
+            onChanged: (newValue) {
+              setState(() {
+                countryType = newValue;
+                print('countryType-------$countryType');
+              });
+            },
           ),
-          onChanged: (newValue) {
-            setState(() {
-              countryType = newValue;
-              print('countryType-------$countryType');
-            });
-          },
-        ),
-      ),
-    );
+        ));
   }
 
   Widget _gradientBtn() {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 50,
-      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       decoration: Palette.buttonGradient,
       child: InkWell(
         onTap: () async {
           SharedPreferences pref = await SharedPreferences.getInstance();
 
-          var _userid = pref.getString("userid");
-          var _sid = pref.getString("s");
+          var userid = pref.getString("userid");
+          var sid = pref.getString("s");
 
           // print('----${NameController.text}');
 
           if (userNameController.text.length <= 6) {
             ErrorDialouge.showErrorDialogue(
                 context, _keyLoader, "username length mini 6");
-          } else if (occupationController.text.isEmpty) {
-            ErrorDialouge.showErrorDialogue(
-                context, _keyLoader, "Please enter your occupation");
           } else if (countryType == null) {
             ErrorDialouge.showErrorDialogue(
-                context, _keyLoader, "Please seletc country");
+                context, _keyLoader, "Please select country");
+          } else if (userCheckError == null) {
+            ErrorDialouge.showErrorDialogue(
+                context, _keyLoader, "Please Change the Username");
           } else {
             //  LoadingDialog.showLoadingDialog(context, _keyLoader);
 
             SignupStepTwoBloc(
                 'register_settings',
-                _userid!,
-                _sid!,
+                userid!,
+                sid!,
                 userNameController.text,
                 formattedDob!,
                 countryType!,
-                occupationController.text,
+                selectedOccupation ?? '',
                 NameController.text,
                 _keyLoader,
                 context);

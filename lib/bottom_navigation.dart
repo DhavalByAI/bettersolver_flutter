@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bettersolver/screen/category/category_screen.dart';
 import 'package:bettersolver/screen/notification/notification_screen.dart';
 import 'package:bettersolver/style/constants.dart';
@@ -50,53 +52,58 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        extendBody: true,
-        // backgroundColor: kWhite,
-
-        body: _children[currentIndex],
-        bottomNavigationBar: Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              // color: kThemeColorLightBlue,
-              borderRadius: BorderRadius.circular(0),
-              // border: Border.all(color: kWhite, width: 2),
-              boxShadow: [
-                BoxShadow(
-                    color: kThemeColorGrey.withOpacity(0.5),
-                    blurRadius: 10,
-                    offset: const Offset(0.0, 5.0))
-              ]),
-          child: Container(
-            // margin: const EdgeInsets.only(left: 10, right: 10),
-            // alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.all(6),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(
-                      _children.length,
-                      (index) => InkWell(
-                            onTap: () {
-                              setState(() {
-                                currentIndex = index;
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Image.asset(
-                                currentIndex != index
-                                    ? selectedIcon[index]
-                                    : icon[index],
-                                height: 25,
-                                width: 25,
+    return WillPopScope(
+      onWillPop: () async {
+        log('From btmNav');
+        return false;
+      },
+      child: Scaffold(
+          extendBody: true,
+          // backgroundColor: kWhite,
+          body: _children[currentIndex],
+          bottomNavigationBar: Container(
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                // color: kThemeColorLightBlue,
+                borderRadius: BorderRadius.circular(0),
+                // border: Border.all(color: kWhite, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                      color: kThemeColorGrey.withOpacity(0.5),
+                      blurRadius: 10,
+                      offset: const Offset(0.0, 5.0))
+                ]),
+            child: Container(
+              // margin: const EdgeInsets.only(left: 10, right: 10),
+              // alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(
+                        _children.length,
+                        (index) => InkWell(
+                              onTap: () {
+                                setState(() {
+                                  currentIndex = index;
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Image.asset(
+                                  currentIndex != index
+                                      ? selectedIcon[index]
+                                      : icon[index],
+                                  height: 25,
+                                  width: 25,
+                                ),
                               ),
-                            ),
-                          ))),
+                            ))),
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 
   Widget _virticalDivider() {

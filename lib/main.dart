@@ -1,5 +1,4 @@
 import 'package:bettersolver/splash.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -9,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent, // Set status bar color to transparent
+    statusBarColor: Colors.transparent,
   ));
   runApp(const MyApp());
 }

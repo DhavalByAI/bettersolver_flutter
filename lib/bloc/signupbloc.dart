@@ -13,11 +13,9 @@ class SignupBloc {
   SignupRepository? _signupRepository;
   StreamController? _streamController;
 
-  StreamSink get SignupBlocDataSink =>
-      _streamController!.sink;
+  StreamSink get SignupBlocDataSink => _streamController!.sink;
 
-  Stream get SignupBlocDatStream =>
-      _streamController!.stream;
+  Stream get SignupBlocDatStream => _streamController!.stream;
 
   SignupBloc(
       String email,
@@ -32,14 +30,15 @@ class SignupBloc {
       String s,
       GlobalKey<State> keyLoader,
       BuildContext context,
-      String date,var fcmToken) {
+      String date,
+      var fcmToken) {
     print("call==== SignupBLOC");
 
     _streamController = StreamController();
     _signupRepository = SignupRepository();
 
     fetchSingupData(email, fname, lname, password, byear, bmonth, bday, gender,
-        emailorsms, s, keyLoader, context, date,fcmToken);
+        emailorsms, s, keyLoader, context, date, fcmToken);
   }
 
   fetchSingupData(
@@ -55,31 +54,41 @@ class SignupBloc {
       String s,
       GlobalKey<State> keyLoader,
       BuildContext context,
-      String date,var fcmToken) async {
+      String date,
+      var fcmToken) async {
     try {
       print("call==== SignupBLOC 2 ");
 
-      SignUpModel signUpModel = await _signupRepository!.fetchSign(email, fname,
-          lname, password, byear, bmonth, bday, gender, emailorsms, s,fcmToken);
+      SignUpModel signUpModel = await _signupRepository!.fetchSign(
+          email,
+          fname,
+          lname,
+          password,
+          byear,
+          bmonth,
+          bday,
+          gender,
+          emailorsms,
+          s,
+          fcmToken);
 
       SignupBlocDataSink.add(Response.completed(signUpModel));
       Navigator.pop(context);
       //  Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-      String? _status = signUpModel.apiStatus;
-      String? _text = signUpModel.apiText;
-      String? _version = signUpModel.apiVersion;
-      String _sid = signUpModel.data['session_id'];
-      String _userid = signUpModel.data['user_id'];
+      String? status = signUpModel.apiStatus;
+      String? text = signUpModel.apiText;
+      String? version = signUpModel.apiVersion;
+      String sid = signUpModel.data['session_id'];
+      String userid = signUpModel.data['user_id'];
 
-      if (_status!.contains("200")) {
+      if (status!.contains("200")) {
         SharedPreferences pref = await SharedPreferences.getInstance();
-        pref.setString('s', _sid);
-        pref.setString('userid', _userid);
+        pref.setString('s', sid);
+        pref.setString('userid', userid);
         signupLoginBloc('user_login', email, fname, password, byear, bmonth,
-            bday, keyLoader, context, date,fcmToken);
+            bday, keyLoader, context, date, fcmToken);
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => RegisterFirstScreen()));
-
       }
 
       SignupBlocDataSink.add(Response.completed(signUpModel));

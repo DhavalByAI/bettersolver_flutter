@@ -220,7 +220,7 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                             ),
                             Container(
                                 alignment: Alignment.center,
-                                child: Text('Follow People',
+                                child: Text('May follow users',
                                     style: Palette.blackText30)),
                             const SizedBox(
                               height: 8,
@@ -315,58 +315,62 @@ class _RegisterThiredScreenState extends State<RegisterThiredScreen> {
                       fit: BoxFit.fill,
                       image: CachedNetworkImageProvider(image))),
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            // const SizedBox(
+            //   height: 8,
+            // ),
             Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '$username',
-                        style: Palette.themText11,
-                        maxLines: 1,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '$username',
+                          style: Palette.themText11,
+                          maxLines: 1,
+                        ),
                       ),
                     ),
-                  ),
-                  //  Spacer(),
-                  InkWell(
-                      onTap: () {
-                        setState(() {
-                          LoadingDialog.showLoadingDialog(context, _keyLoader);
-                          if (userlist.contains(index)) {
-                            setState(() => userlist.remove(index));
-                            count--;
-                          } else {
-                            setState(() => userlist.add(index));
-                            count++;
-                          }
-                          SignupStepFollowBloc(widget.uid!, widget.sid!, userId,
-                              keyLoader, context);
-                        });
-                      },
-                      child: userlist.contains(index)
-                          ? Container(
-                              height: 20,
-                              width: 20,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/accepticon.png'))),
-                            )
-                          : Container(
-                              height: 20,
-                              width: 20,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/requesticon.png'))),
-                            )),
-                ],
+                    //  Spacer(),
+                    InkWell(
+                        onTap: () {
+                          setState(() {
+                            LoadingDialog.showLoadingDialog(
+                                context, _keyLoader);
+                            if (userlist.contains(index)) {
+                              setState(() => userlist.remove(index));
+                              count--;
+                            } else {
+                              setState(() => userlist.add(index));
+                              count++;
+                            }
+                            SignupStepFollowBloc(widget.uid!, widget.sid!,
+                                userId, keyLoader, context);
+                          });
+                        },
+                        child: userlist.contains(index)
+                            ? Container(
+                                height: 30,
+                                width: 30,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/accepticon.png'))),
+                              )
+                            : Container(
+                                height: 30,
+                                width: 30,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/requesticon.png'))),
+                              )),
+                  ],
+                ),
               ),
             ),
           ],

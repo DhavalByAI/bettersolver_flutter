@@ -217,10 +217,10 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              'Show your unique personality and style.',
-                              style: Palette.blackText11,
-                            ),
+                            // Text(
+                            //   'Show your unique personality and style.',
+                            //   style: Palette.blackText11,
+                            // ),
                             const SizedBox(height: 30),
                             roundedRectBorderWidget
                           ],
@@ -296,7 +296,8 @@ class _RegisterFirstScreenState extends State<RegisterFirstScreen> {
                   child: CircleAvatar(
                     radius: 60,
                     backgroundColor: kWhite,
-                    backgroundImage: CachedNetworkImageProvider(_logoImg!),
+                    backgroundImage:
+                        CachedNetworkImageProvider(_logoImg.toString()),
                   ),
                 ),
     );
